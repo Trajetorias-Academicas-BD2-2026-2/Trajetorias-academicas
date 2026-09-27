@@ -25,7 +25,6 @@ def run() -> tuple[str, str]:
     cursos_rows = []
     curriculo_rows = []
 
-    # Cursos oficiais do Campus Gama (FGA / FCTE)
     cursos_alvo = [
         {"codigo": "FGA_SOFT", "termo": "ENGENHARIA DE SOFTWARE"},
         {"codigo": "FGA_AERO", "termo": "ENGENHARIA AEROESPACIAL"},
@@ -37,7 +36,6 @@ def run() -> tuple[str, str]:
     with sync_playwright() as p:
         browser, page = nova_pagina_disfarcada(p)
 
-        # 1. Acede à listagem pública de cursos de graduação
         url_lista = "https://sigaa.unb.br/sigaa/public/curso/lista.jsf?nivel=G&aba=p-graduacao"
         page.goto(url_lista, wait_until="networkidle")
 
@@ -48,7 +46,6 @@ def run() -> tuple[str, str]:
 
         print(f"[debug] Página de cursos aberta: {page.url}", file=sys.stderr)
 
-        # Localiza todas as linhas da tabela de cursos
         table_rows = page.locator("table.listagem tbody tr, table.tabelaRelatorio tbody tr, table tr").all()
 
         links_portais = []
@@ -57,19 +54,16 @@ def run() -> tuple[str, str]:
             cells = [c.inner_text().strip() for c in tr.locator("td").all()]
             full_text = " ".join(cells).upper()
 
-            # Filtra estritamente pelos cursos do Campus Gama / FCTE
             if "GAMA" in full_text or "FCTE" in full_text:
                 for alvo in cursos_alvo:
                     if alvo["termo"] in full_text:
-                        # Encontra o link do portal (ícone de visualização / portal.jsf)
                         link_portal = tr.locator("a[href*='portal.jsf']").first
                         if link_portal.count() > 0:
                             href = link_portal.get_attribute("href")
                             if href:
                                 if not href.startswith("http"):
                                     href = "https://sigaa.unb.br/sigaa/public/curso/" + href.lstrip("/")
-                                
-                                # Evita duplicados
+
                                 if not any(p["codigo"] == alvo["codigo"] for p in links_portais):
                                     links_portais.append({
                                         "codigo": alvo["codigo"],
@@ -77,7 +71,6 @@ def run() -> tuple[str, str]:
                                         "url": href
                                     })
 
-        # 2. Visita o portal de cada curso do Gama para extrair a Estrutura Curricular
         for curso in links_portais:
             cursos_rows.append({
                 "codigo": curso["codigo"],
@@ -91,25 +84,22 @@ def run() -> tuple[str, str]:
                 print(f"[debug] Acedendo ao portal do curso: {curso['nome']} ({curso['url']})", file=sys.stderr)
                 page.goto(curso["url"], wait_until="networkidle")
 
-                # Clica na aba ou link de "Estrutura Curricular" / "Currículo"
                 link_estrutura = page.locator("a:has-text('Estrutura Curricular'), a:has-text('Currículo'), a:has-text('Matriz')").first
                 if link_estrutura.count() > 0:
                     link_estrutura.click()
                     page.wait_for_load_state("networkidle")
 
-                # Percorre as linhas da tabela de estrutura curricular para detetar secções de optativas
                 linhas_tabela = page.locator("table.listagem tr, table tr").all()
                 is_obrigatoria = True
 
                 for tr in linhas_tabela:
                     texto_linha = tr.inner_text().upper()
-                    
+
                     if "OPTATIVA" in texto_linha:
                         is_obrigatoria = False
                     elif "OBRIGATÓRIA" in texto_linha or "OBRIGATORIA" in texto_linha:
                         is_obrigatoria = True
 
-                    # Procura células com códigos de disciplina
                     celulas = tr.locator("td").all()
                     for cel in celulas:
                         txt = cel.inner_text().strip()
@@ -127,7 +117,6 @@ def run() -> tuple[str, str]:
 
         browser.close()
 
-    # Fallback caso a navegação web precise de ajuste em ambiente isolado
     if not cursos_rows:
         for alvo in cursos_alvo:
             cursos_rows.append({
@@ -139,7 +128,6 @@ def run() -> tuple[str, str]:
             })
 
     if not curriculo_rows:
-        # Lê os componentes já extraídos em staging e associa às engenharias do Gama
         componentes_lidos = []
         if os.path.exists(config.STAGING_DIR):
             for f in os.listdir(config.STAGING_DIR):
@@ -149,7 +137,7 @@ def run() -> tuple[str, str]:
                         for row in reader:
                             if row.get("codigo"):
                                 componentes_lidos.append(row["codigo"])
-        
+
         for i, disc_codigo in enumerate(componentes_lidos):
             curso_codigo = cursos_alvo[i % len(cursos_alvo)]["codigo"]
             curriculo_rows.append({
@@ -160,7 +148,6 @@ def run() -> tuple[str, str]:
                 "ingerido_em": ingerido_em
             })
 
-    # Gravação dos ficheiros de staging
     with open(cursos_out_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=list(cursos_rows[0].keys()))
         writer.writeheader()
