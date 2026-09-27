@@ -118,8 +118,7 @@ Resumo, o raciocínio completo está no ADR:
 - **Linhagem em toda oferta**: cada linha carrega `fonte`, `carga_id` e
   `ingerido_em`, para rastrear de qual execução do loader ela veio,
   necessário porque a fonte é raspada, não uma API estável.
-- Ver `docs/adr/0001-modelagem-fonte-origem.md`,
-  `docs/historico.md` e `docs/carga-de-trabalho.md` para a justificativa
+- Ver `docs/adr/0001-modelagem-fonte-origem.md`, para a justificativa
   completa de cada decisão.
 
 ## Por que um browser real para raspar
@@ -143,5 +142,5 @@ formulário que mudam entre versões.
 
 ## Uso de IA
 
-Ver [`AI-USAGE.md`](docs\AI-USAGE.md) para o registro de onde e como IA foi usada, e como
+Ver [`AI-USAGE.md`](docs/AI-USAGE.md) para o registro de onde e como IA foi usada, e como
 cada decisão foi validada antes de entrar no código.
