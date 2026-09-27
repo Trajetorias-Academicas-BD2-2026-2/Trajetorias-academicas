@@ -93,7 +93,10 @@ senha `g2_dev_only`) e navegue pelas tabelas.
 ```
 db/migrations/    esquema versionado, aplicado em ordem pelo serviço migrate
 docs/
+    adr/0001-modelagem-fonte-origem.md   decisões de modelagem e por quê
     AI-USAGE.md       uso de IA no projeto e como cada solução foi validada
+    carga-de-trabalho.md
+    historico.md                         por que oferta_turma é insert-only
 loader/           scrapers (Playwright) + carga idempotente no banco
   config.py         URLs, filtros (unidade/ano/período) e flags de diagnóstico
   sigaa_utils.py    utilitários compartilhados (seleção tolerante, disfarce do navegador)
