@@ -1,0 +1,8 @@
+# Staging de dados do pipeline
+loader/staging/
+staging/
+
+# Arquivos e pastas temporárias do Python
+__pycache__/
+*.py[cod]
+*$py.class
