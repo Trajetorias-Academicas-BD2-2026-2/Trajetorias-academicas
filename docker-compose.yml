@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ofertas_unb
+      POSTGRES_USER: g2
+      POSTGRES_PASSWORD: g2_dev_only
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U g2 -d ofertas_unb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    image: postgres:16
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./db/migrations:/migrations:ro
+    environment:
+      PGPASSWORD: g2_dev_only
+    entrypoint: >
+      bash -c "
+      for f in /migrations/*.sql; do
+        echo \"Aplicando $$f\";
+        psql -h db -U g2 -d ofertas_unb -f \"$$f\" || exit 1;
+      done"
+
+  loader:
+    build: ./loader
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DB_HOST: db
+      DB_NAME: ofertas_unb
+      DB_USER: g2
+      DB_PASSWORD: g2_dev_only
+      # Ajuste conforme o curso/unidade a carregar (ver loader/config.py)
+      SIGAA_UNIDADE: "CAMPUS UNB GAMA: FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA"
+      SIGAA_ANO: "2026"
+      SIGAA_PERIODO: "2"
+      TESTE_SEM_UNIDADE: "0"
+      TESTE_MINIMO: "0"
+    volumes:
+      - ./loader/staging:/app/staging
+
+volumes:
+  db_data:
