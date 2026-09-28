@@ -2,7 +2,7 @@
 
 - **Status:** aceito
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — ⟨PREENCHER: nomes dos integrantes⟩
+- **Decisores:** Squad G2 — ⟨Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo⟩
 
 ## Contexto
 
