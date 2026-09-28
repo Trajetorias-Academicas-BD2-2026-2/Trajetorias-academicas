@@ -1,36 +1,64 @@
 """
-Configuração central do loader.
+Configuração central do loader (tudo pode ser sobrescrito por variável de
+ambiente no docker-compose.yml).
 
-IMPORTANTE (leia antes de rodar):
-Os dois formulários do SIGAA (Consulta de Turmas e Busca de Componentes
-Curriculares) são páginas JSF: os campos reais (name dos <select>, ids)
-só aparecem no HTML renderizado, e mudam entre reinstalações do sistema.
-Os seletores abaixo foram escritos por TEXTO VISÍVEL (rótulo/label), que é
-estável entre versões do JSF — mas antes da primeira carga real, rode um
-scraper em modo headed (headless=False) e confirme visualmente que cada
-select_option encontrou a opção certa. Ajuste os textos aqui se algo não
-bater.
+Os formulários do SIGAA são páginas JSF: os atributos internos (name, id)
+mudam entre versões, então os scrapers localizam campos pelo TEXTO VISÍVEL
+dos rótulos. Se o SIGAA mudar um rótulo, é aqui e em sigaa_utils.py que se
+ajusta.
 """
 
 import os
 
-TURMAS_URL = "https://sigaa.unb.br/sigaa/public/turmas/listar.jsf"
-COMPONENTES_URL = "https://sigaa.unb.br/sigaa/public/componentes/busca_componentes.jsf"
+import semestres
+
+HOME_URL = "https://sigaa.unb.br/sigaa/public/home.jsf"
+CURSOS_URL = "https://sigaa.unb.br/sigaa/public/curso/lista.jsf?nivel=G&aba=p-graduacao"
 
 NIVEL_ENSINO = "GRADUAÇÃO"
 UNIDADE = os.getenv("SIGAA_UNIDADE", "FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA")
-ANO = os.getenv("SIGAA_ANO", "2026")
-PERIODO = os.getenv("SIGAA_PERIODO", "2")
+
+# Recorte temporal da carga: semestres ENCERRADOS, inclusive nas pontas.
+SEMESTRE_INICIO = os.getenv("SIGAA_SEMESTRE_INICIO", "2022.1")
+SEMESTRE_FIM = os.getenv("SIGAA_SEMESTRE_FIM", "2026.1")
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = int(os.getenv("DB_PORT", "5432"))
 DB_NAME = os.getenv("DB_NAME", "ofertas_unb")
 DB_USER = os.getenv("DB_USER", "g2")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "g2_dev_only")
 
-STAGING_DIR = os.getenv("STAGING_DIR", "staging")
+# Recorte versionado no git (reprodutível sem acessar o SIGAA).
+DATA_DIR = os.getenv("DATA_DIR", "data/raw")
+# Prints e HTML salvos quando uma raspagem falha (fora do git).
+DEBUG_DIR = os.getenv("DEBUG_DIR", "debug")
+
+# auto: raspa só o que ainda não está em DATA_DIR; 1: raspa tudo de novo;
+# 0: nunca acessa o SIGAA (falha se faltar arquivo).
+RASPAR = os.getenv("RASPAR", "auto")
+
 FONTE_TURMAS = "sigaa_turmas"
 FONTE_COMPONENTES = "sigaa_componentes"
+FONTE_CURSOS = "sigaa_cursos"
 
-TESTE_SEM_UNIDADE = os.getenv("TESTE_SEM_UNIDADE", "0") == "1"
+ARQ_COMPONENTES = "componentes.csv"
+ARQ_PRE_REQUISITOS = "pre_requisitos.csv"
+ARQ_CURSOS = "cursos.csv"
+ARQ_CURSO_DISCIPLINA = "curso_disciplina.csv"
 
-TESTE_MINIMO = os.getenv("TESTE_MINIMO", "0") == "1"
+
+def arq_turmas(ano: int, periodo: int) -> str:
+    return f"turmas_{ano}_{periodo}.csv"
+
+
+def semestres_da_carga() -> list[tuple[int, int]]:
+    """Semestres configurados; recusa qualquer semestre ainda em andamento."""
+    lista = semestres.intervalo(SEMESTRE_INICIO, SEMESTRE_FIM)
+    abertos = [semestres.rotulo(a, p) for a, p in lista if not semestres.encerrado(a, p)]
+    if abertos:
+        raise SystemExit(
+            f"Semestre(s) em andamento no recorte: {', '.join(abertos)}. "
+            "Só carregamos semestres encerrados (ver docs/historico.md). "
+            "Ajuste SIGAA_SEMESTRE_FIM."
+        )
+    return lista

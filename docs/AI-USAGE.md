@@ -60,17 +60,45 @@ problema.
    disciplinas com mais de um pré-requisito listado. Corrigido para
    capturar até a próxima seção da página.
 
-## O que ainda precisa de validação humana antes da entrega
+## Revisão pós-entrega da E1 (28/09/2026)
 
-- Conferir se os números em `docs/carga-de-trabalho.md` batem com o
-  volume real carregado no banco (a versão inicial era uma estimativa).
-- Revisar o `ADR-0001` para que reflita as decisões acima (chegar via
-  link da home, disfarce do navegador), não só o plano original.
-- Remover do `config.py` as flags `TESTE_SEM_UNIDADE` e `TESTE_MINIMO`,
-  usadas só para isolar os problemas acima, não fazem parte da solução
-  final.
-- Qualquer integrante do grupo deve conseguir explicar, sem citar a IA
-  como fonte, por que `oferta_turma` é insert-only, por que o loader usa
-  um browser real (Playwright) em vez de requisições HTTP diretas, e por
-  que a URL de busca precisa do parâmetro `?aba=p-ensino`, essas são as
-  perguntas mais prováveis numa defesa.
+Pedimos à IA (Claude) que conferisse o repositório contra o checklist de
+aceite da E1 e corrigisse o que não atendia. O que ela apontou e o que
+mudou:
+
+| Problema apontado | Correção |
+|---|---|
+| `scrape_cursos.py` inventava a matriz curricular (distribuía disciplinas entre os cursos em rodízio, todas obrigatórias) quando a raspagem falhava | Trecho removido; a raspagem agora falha com erro |
+| `scrape_turmas.py` trocava vagas ofertadas e ocupadas quando a ocupação passava da oferta, escondendo turmas superlotadas | Troca removida; a V002 aceita ocupação acima da oferta, e os testes de dados sinalizam valores implausíveis |
+| Carga de um único semestre (2026.2, ainda em andamento) | Recorte 2022.1–2026.1, só semestres encerrados; o loader recusa semestre aberto |
+| Carga dependia do SIGAA no ar e o staging estava no `.gitignore` | Recorte bruto versionado em `data/raw/`; o SIGAA só é acessado para o que falta ([ADR-0002](adr/0002-extracao-via-navegador-real.md)) |
+| `scrape_prerequisitos.py` deduzia pré-requisitos por posição na tabela e sobrescrevia os do `scrape_componentes.py` | Script removido; a expressão E/OU do SIGAA é guardada em `disciplina.pre_requisito_expressao` |
+| `fonte` truncada para `sigaa_turm`; `horario` truncado em 10 caracteres | Truncamentos removidos |
+| `curso_disciplina` usava `DO NOTHING`, contradizendo o `historico.md` | Upsert de verdade |
+| `psql` sem `ON_ERROR_STOP`: migração com erro terminava com código 0 | `db/migrate.sh` com `ON_ERROR_STOP` e controle em `schema_migrations` |
+| Insert-only só por convenção | Trigger bloqueia UPDATE, DELETE e TRUNCATE em `oferta_turma` |
+| Turma sem horário virava DIURNO por padrão | Turno `SEM_HORARIO` explícito |
+| Caracterização estimada "no olho" | `loader/caracterizar.py` mede no banco e gera `docs/carga-medida.md` |
+| ADR fora do template Nygard, sem opção nula nem gatilho de revisão | ADR-0001 reescrito; decisão de extração separada no ADR-0002 |
+| Pergunta de gestão com duas perguntas e sem recorte temporal | Uma frase com sujeito e recorte; o pré-requisito virou pergunta derivada |
+| Testes de sanidade só listavam linhas, sem falhar | `tests/sanity_checks.sql` termina com erro se algum teste falhar |
+
+**Como validamos:** testes unitários do parsing
+(`loader/tests/test_parsing.py`); migrações aplicadas num banco novo, num
+banco que já tinha a V001 e com uma migração propositalmente quebrada
+(que interrompeu a execução com erro); loader rodado duas vezes sobre um
+recorte sintético de 9 semestres (a segunda rodada não inseriu nada);
+UPDATE em `oferta_turma` bloqueado pelo trigger; testes de dados e
+`caracterizar.py` executados sobre essa carga; travas de semestre em
+andamento, semestre faltando e semestres idênticos testadas. Os scrapers
+não foram executados contra o SIGAA nesta revisão: isso é feito pela
+Squad na primeira carga real, que também gera `data/raw/` e
+`docs/carga-medida.md`.
+
+## Perguntas prováveis na defesa
+
+Qualquer integrante deve conseguir explicar, sem citar a IA como fonte:
+por que `oferta_turma` é insert-only e só aceita semestres encerrados; por
+que 3FN e não uma tabela única; o que significa cada carimbo de tempo;
+por que o loader usa um navegador real e por que a URL de busca precisa
+do parâmetro `?aba=p-ensino`; por que o recorte bruto está versionado.

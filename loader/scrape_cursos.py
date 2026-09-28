@@ -1,166 +1,135 @@
 """
-Extrai os cursos do Campus Gama e suas respetivas Estruturas Curriculares
-seguindo o fluxo oficial de portais de cursos do SIGAA.
+Extrai os cursos de graduação do Campus Gama e a estrutura curricular de
+cada um (fonte: sigaa_cursos). Grava em DATA_DIR:
+  - cursos.csv            um curso por linha
+  - curso_disciplina.csv  disciplina da matriz do curso e se é obrigatória
+
+Falha com erro se algum curso-alvo não for encontrado ou vier sem matriz:
+esses dados sustentam o filtro "disciplina obrigatória" da pergunta de
+gestão, então não há valor padrão aceitável para eles.
 """
 
-import csv
-import os
 import sys
 import uuid
-from datetime import datetime, timezone
 
 from playwright.sync_api import sync_playwright
 
 import config
-from sigaa_utils import nova_pagina_disfarcada
+from parsing import CODIGO_DISCIPLINA_RE
+from sigaa_utils import (
+    agora_utc,
+    fechar_aviso,
+    gravar_csv,
+    nova_pagina_disfarcada,
+    precisa_raspar,
+    salvar_debug,
+)
+
+# O SIGAA não mostra um código público estável na listagem de cursos, então
+# o projeto define o seu (curso.codigo). "termo" é como o nome aparece na lista.
+CURSOS_ALVO = [
+    {"codigo": "FGA_SOFT", "termo": "ENGENHARIA DE SOFTWARE"},
+    {"codigo": "FGA_AERO", "termo": "ENGENHARIA AEROESPACIAL"},
+    {"codigo": "FGA_AUTO", "termo": "ENGENHARIA AUTOMOTIVA"},
+    {"codigo": "FGA_ENERG", "termo": "ENGENHARIA DE ENERGIA"},
+    {"codigo": "FGA_ELET", "termo": "ENGENHARIA ELETRÔNICA"},
+]
+
+CAMPOS_CURSOS = ["codigo", "nome", "unidade", "fonte", "carga_id", "coletado_em"]
+CAMPOS_CURRICULO = ["curso_codigo", "disciplina_codigo", "obrigatoria", "fonte", "carga_id", "coletado_em"]
 
 
-def run() -> tuple[str, str]:
+def run() -> None:
+    if not precisa_raspar(config.ARQ_CURSOS, config.ARQ_CURSO_DISCIPLINA):
+        print("Cursos: já estão em", config.DATA_DIR)
+        return
+
     carga_id = str(uuid.uuid4())
-    ingerido_em = datetime.now(timezone.utc).isoformat()
-    os.makedirs(config.STAGING_DIR, exist_ok=True)
-    cursos_out_path = os.path.join(config.STAGING_DIR, f"cursos_raw_{carga_id}.csv")
-    curriculo_out_path = os.path.join(config.STAGING_DIR, f"curso_disciplina_raw_{carga_id}.csv")
+    coletado_em = agora_utc()
+    cursos: list[dict] = []
+    curriculo: list[dict] = []
+    problemas: list[str] = []
 
-    cursos_rows = []
-    curriculo_rows = []
-
-    cursos_alvo = [
-        {"codigo": "FGA_SOFT", "termo": "ENGENHARIA DE SOFTWARE"},
-        {"codigo": "FGA_AERO", "termo": "ENGENHARIA AEROESPACIAL"},
-        {"codigo": "FGA_AUTO", "termo": "ENGENHARIA AUTOMOTIVA"},
-        {"codigo": "FGA_ENERG", "termo": "ENGENHARIA DE ENERGIA"},
-        {"codigo": "FGA_ELET", "termo": "ENGENHARIA ELETRÔNICA"},
-    ]
-
-    with sync_playwright() as p:
-        browser, page = nova_pagina_disfarcada(p)
-
-        url_lista = "https://sigaa.unb.br/sigaa/public/curso/lista.jsf?nivel=G&aba=p-graduacao"
-        page.goto(url_lista, wait_until="networkidle")
-
+    with sync_playwright() as pw:
+        browser, page = nova_pagina_disfarcada(pw)
         try:
-            page.get_by_role("button", name="Ciente").click(timeout=3000)
-        except Exception:
-            pass
+            page.goto(config.CURSOS_URL, wait_until="networkidle")
+            fechar_aviso(page)
 
-        print(f"[debug] Página de cursos aberta: {page.url}", file=sys.stderr)
+            portais: dict[str, str] = {}
+            for tr in page.locator("table tr").all():
+                texto = " ".join(c.inner_text().strip() for c in tr.locator("td").all()).upper()
+                if "GAMA" not in texto and "FCTE" not in texto:
+                    continue
+                for alvo in CURSOS_ALVO:
+                    if alvo["termo"] in texto and alvo["codigo"] not in portais:
+                        link = tr.locator("a[href*='portal.jsf']").first
+                        href = link.get_attribute("href") if link.count() > 0 else None
+                        if href:
+                            if not href.startswith("http"):
+                                href = "https://sigaa.unb.br/sigaa/public/curso/" + href.lstrip("/")
+                            portais[alvo["codigo"]] = href
 
-        table_rows = page.locator("table.listagem tbody tr, table.tabelaRelatorio tbody tr, table tr").all()
+            for alvo in CURSOS_ALVO:
+                if alvo["codigo"] not in portais:
+                    problemas.append(f"{alvo['termo']}: curso não encontrado na listagem")
+                    continue
+                cursos.append({
+                    "codigo": alvo["codigo"],
+                    "nome": alvo["termo"],
+                    "unidade": config.UNIDADE,
+                    "fonte": config.FONTE_CURSOS,
+                    "carga_id": carga_id,
+                    "coletado_em": coletado_em,
+                })
 
-        links_portais = []
-
-        for tr in table_rows:
-            cells = [c.inner_text().strip() for c in tr.locator("td").all()]
-            full_text = " ".join(cells).upper()
-
-            if "GAMA" in full_text or "FCTE" in full_text:
-                for alvo in cursos_alvo:
-                    if alvo["termo"] in full_text:
-                        link_portal = tr.locator("a[href*='portal.jsf']").first
-                        if link_portal.count() > 0:
-                            href = link_portal.get_attribute("href")
-                            if href:
-                                if not href.startswith("http"):
-                                    href = "https://sigaa.unb.br/sigaa/public/curso/" + href.lstrip("/")
-
-                                if not any(p["codigo"] == alvo["codigo"] for p in links_portais):
-                                    links_portais.append({
-                                        "codigo": alvo["codigo"],
-                                        "nome": alvo["termo"],
-                                        "url": href
-                                    })
-
-        for curso in links_portais:
-            cursos_rows.append({
-                "codigo": curso["codigo"],
-                "nome": curso["nome"],
-                "unidade": config.UNIDADE,
-                "carga_id": carga_id,
-                "ingerido_em": ingerido_em
-            })
-
-            try:
-                print(f"[debug] Acedendo ao portal do curso: {curso['nome']} ({curso['url']})", file=sys.stderr)
-                page.goto(curso["url"], wait_until="networkidle")
-
-                link_estrutura = page.locator("a:has-text('Estrutura Curricular'), a:has-text('Currículo'), a:has-text('Matriz')").first
+                page.goto(portais[alvo["codigo"]], wait_until="networkidle")
+                link_estrutura = page.locator(
+                    "a:has-text('Estrutura Curricular'), a:has-text('Currículo'), a:has-text('Matriz')"
+                ).first
                 if link_estrutura.count() > 0:
                     link_estrutura.click()
                     page.wait_for_load_state("networkidle")
 
-                linhas_tabela = page.locator("table.listagem tr, table tr").all()
-                is_obrigatoria = True
-
-                for tr in linhas_tabela:
-                    texto_linha = tr.inner_text().upper()
-
-                    if "OPTATIVA" in texto_linha:
-                        is_obrigatoria = False
-                    elif "OBRIGATÓRIA" in texto_linha or "OBRIGATORIA" in texto_linha:
-                        is_obrigatoria = True
-
-                    celulas = tr.locator("td").all()
-                    for cel in celulas:
+                # A matriz lista blocos "Obrigatórias" e "Optativas"; o último
+                # cabeçalho visto define a natureza das disciplinas seguintes.
+                obrigatoria = True
+                vistos: set[str] = set()
+                for tr in page.locator("table tr").all():
+                    texto = tr.inner_text().upper()
+                    if "OPTATIVA" in texto:
+                        obrigatoria = False
+                    elif "OBRIGATÓRIA" in texto or "OBRIGATORIA" in texto:
+                        obrigatoria = True
+                    for cel in tr.locator("td").all():
                         txt = cel.inner_text().strip()
-                        if len(txt) >= 6 and txt[:3].isalpha() and txt[3:].isdigit():
-                            if not any(r["disciplina_codigo"] == txt and r["curso_codigo"] == curso["codigo"] for r in curriculo_rows):
-                                curriculo_rows.append({
-                                    "curso_codigo": curso["codigo"],
-                                    "disciplina_codigo": txt,
-                                    "obrigatoria": is_obrigatoria,
-                                    "carga_id": carga_id,
-                                    "ingerido_em": ingerido_em
-                                })
-            except Exception as e:
-                print(f"[debug] Erro ao extrair estrutura para {curso['nome']}: {e}", file=sys.stderr)
+                        if CODIGO_DISCIPLINA_RE.fullmatch(txt) and txt not in vistos:
+                            vistos.add(txt)
+                            curriculo.append({
+                                "curso_codigo": alvo["codigo"],
+                                "disciplina_codigo": txt,
+                                "obrigatoria": obrigatoria,
+                                "fonte": config.FONTE_CURSOS,
+                                "carga_id": carga_id,
+                                "coletado_em": coletado_em,
+                            })
+                if not vistos:
+                    salvar_debug(page, f"curso_{alvo['codigo']}_matriz")
+                    problemas.append(f"{alvo['termo']}: matriz curricular vazia")
+        except Exception as e:
+            problemas.append(f"erro inesperado: {e}")
+        finally:
+            browser.close()
 
-        browser.close()
+    if problemas:
+        print("Raspagem de cursos incompleta; nada foi gravado:", file=sys.stderr)
+        for p in problemas:
+            print(f"  - {p}", file=sys.stderr)
+        sys.exit(1)
 
-    if not cursos_rows:
-        for alvo in cursos_alvo:
-            cursos_rows.append({
-                "codigo": alvo["codigo"],
-                "nome": alvo["termo"],
-                "unidade": config.UNIDADE,
-                "carga_id": carga_id,
-                "ingerido_em": ingerido_em
-            })
-
-    if not curriculo_rows:
-        componentes_lidos = []
-        if os.path.exists(config.STAGING_DIR):
-            for f in os.listdir(config.STAGING_DIR):
-                if "componentes_raw" in f:
-                    with open(os.path.join(config.STAGING_DIR, f), encoding="utf-8") as cf:
-                        reader = csv.DictReader(cf)
-                        for row in reader:
-                            if row.get("codigo"):
-                                componentes_lidos.append(row["codigo"])
-
-        for i, disc_codigo in enumerate(componentes_lidos):
-            curso_codigo = cursos_alvo[i % len(cursos_alvo)]["codigo"]
-            curriculo_rows.append({
-                "curso_codigo": curso_codigo,
-                "disciplina_codigo": disc_codigo,
-                "obrigatoria": True,
-                "carga_id": carga_id,
-                "ingerido_em": ingerido_em
-            })
-
-    with open(cursos_out_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(cursos_rows[0].keys()))
-        writer.writeheader()
-        writer.writerows(cursos_rows)
-
-    if curriculo_rows:
-        with open(curriculo_out_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=["curso_codigo", "disciplina_codigo", "obrigatoria", "carga_id", "ingerido_em"])
-            writer.writeheader()
-            writer.writerows(curriculo_rows)
-
-    print(f"{len(cursos_rows)} cursos do Gama e {len(curriculo_rows)} relações de currículo gravadas.")
-    return cursos_out_path, curriculo_out_path
+    gravar_csv(config.ARQ_CURSOS, CAMPOS_CURSOS, cursos)
+    gravar_csv(config.ARQ_CURSO_DISCIPLINA, CAMPOS_CURRICULO, curriculo)
+    print(f"{len(cursos)} cursos e {len(curriculo)} relações curso-disciplina em {config.DATA_DIR}")
 
 
 if __name__ == "__main__":

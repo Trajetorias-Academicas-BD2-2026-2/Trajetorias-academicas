@@ -1,3 +1,9 @@
+x-pg-env: &pg-env
+  PGHOST: db
+  PGUSER: g2
+  PGDATABASE: ofertas_unb
+  PGPASSWORD: g2_dev_only
+
 services:
   db:
     image: postgres:16
@@ -20,16 +26,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment: *pg-env
     volumes:
       - ./db/migrations:/migrations:ro
-    environment:
-      PGPASSWORD: g2_dev_only
-    entrypoint: >
-      bash -c "
-      for f in /migrations/*.sql; do
-        echo \"Aplicando $$f\";
-        psql -h db -U g2 -d ofertas_unb -f \"$$f\" || exit 1;
-      done"
+      - ./db/migrate.sh:/migrate.sh:ro
+    entrypoint: ["bash", "/migrate.sh"]
 
   loader:
     build: ./loader
@@ -41,14 +42,30 @@ services:
       DB_NAME: ofertas_unb
       DB_USER: g2
       DB_PASSWORD: g2_dev_only
-      # Ajuste conforme o curso/unidade a carregar (ver loader/config.py)
       SIGAA_UNIDADE: "CAMPUS UNB GAMA: FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA"
-      SIGAA_ANO: "2026"
-      SIGAA_PERIODO: "2"
-      TESTE_SEM_UNIDADE: "0"
-      TESTE_MINIMO: "0"
+      # Recorte: semestres encerrados, inclusive (o loader recusa semestre em andamento)
+      SIGAA_SEMESTRE_INICIO: "2022.1"
+      SIGAA_SEMESTRE_FIM: "2026.1"
+      # auto: raspa só o que falta em data/raw | 1: raspa tudo de novo | 0: nunca raspa
+      RASPAR: ${RASPAR:-auto}
+      DATA_DIR: /app/data/raw
+      DEBUG_DIR: /app/debug
     volumes:
-      - ./loader/staging:/app/staging
+      - ./data:/app/data
+      - ./debug:/app/debug
+      - ./db/consultas:/app/consultas:ro
+
+  # Testes de dados pós-carga: docker compose run --rm tests
+  tests:
+    image: postgres:16
+    profiles: ["test"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *pg-env
+    volumes:
+      - ./tests:/tests:ro
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/sanity_checks.sql"]
 
 volumes:
   db_data:

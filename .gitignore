@@ -1,8 +1,9 @@
-# Staging de dados do pipeline
-loader/staging/
-staging/
+# O recorte em data/raw/ É versionado (carga reprodutível sem o SIGAA).
+# Só ficam fora do git os artefatos de diagnóstico e temporários.
+debug/
+data/raw/*.tmp
 
-# Arquivos e pastas temporárias do Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
