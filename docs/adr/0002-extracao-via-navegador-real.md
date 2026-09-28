@@ -2,7 +2,7 @@
 
 - **Status:** substituído pelo [ADR-0004](0004-coleta-publica-versionada.md) em 2026-09-28
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — ⟨Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo⟩
+- **Decisores:** Squad G2 — Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo
 
 > **Substituído.** Na coleta real, os scrapers Playwright falharam em quatro pontos do
 > site e foram removidos; a carga passou a ler um lote versionado (ADR-0004).
