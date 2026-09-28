@@ -3,36 +3,54 @@
 **Presentes:** ⟨PREENCHER⟩
 
 ## O que foi medido
-- Nada ainda sobre dados reais: o recorte de `data/raw/` não foi raspado.
-- As correções foram testadas num Postgres 16 local com um recorte
-  sintético de 9 semestres (registro em [`docs/AI-USAGE.md`](../AI-USAGE.md)):
-  - migrações aplicadas num banco novo e num que já tinha a V001;
-  - uma migração com erro interrompeu a execução com código 3;
-  - a segunda carga do mesmo recorte não inseriu nenhuma linha;
-  - o trigger bloqueou UPDATE em `oferta_turma`.
-- ⟨PREENCHER: o que a Squad mediu nesta semana, se algo⟩
+- Coleta real do SIGAA em 28/09
+  ([relatório](../COLETA_SIGAA_2026-09-28.md), lote em
+  `data/coleta_publica_2026-09-28/`):
+  - 45 consultas curso x semestre (5 cursos, 2022.1 a 2026.1);
+  - 1.786 reservas, 585 componentes da FCTE, 6 versões curriculares;
+  - pré-requisitos de 23 componentes.
+- Teste manual de `listar.jsf` para 2023.1 e 2025.2 (Davi Araújo):
+  - sem unidade a consulta é recusada;
+  - com a FCTE (ID 673) não há resultados;
+  - o seletor não tem opção com o nome antigo da Faculdade do Gama.
+- Carga do lote no modelo novo (V003), num Postgres 16 local:
+  - 733 turmas e 1.776 reservas; 10 reservas rejeitadas (2 turmas com
+    horário ou docente divergente entre cursos);
+  - todos os testes de dados passaram;
+  - consultas de referência abaixo de 10 ms ([carga medida](../carga-medida.md)).
 
 ## O que surpreendeu
-- A revisão da E1 contra o checklist de aceite encontrou problemas que a
-  Squad não tinha visto:
-  - `scrape_cursos.py` inventava a matriz curricular quando a raspagem falhava;
-  - `scrape_turmas.py` escondia turmas superlotadas trocando as vagas;
-  - `psql` sem `ON_ERROR_STOP` terminava com código 0 mesmo com erro de SQL.
-- A E1 carregava só 2026.2, um semestre ainda em andamento. Essa era a
-  maior lacuna frente ao checklist de volume.
-- ⟨PREENCHER⟩
+- Não conseguimos obter a série de vagas ocupadas da FCTE nas fontes e
+  consultas testadas: a página do curso só mostra vagas reservadas, e a
+  consulta geral não devolveu o histórico.
+- Os scrapers Playwright falharam em quatro pontos do site real.
+- As reservas cobrem só parte da oferta: 85 de 254 pares curso x
+  obrigatória têm alguma reserva no recorte.
+- A partir de 2023.2, as reservas de 50 vagas ou mais saltam de 4 para 17
+  a 41 por semestre, sobretudo em Software.
+- 38% das turmas reservam vagas para mais de um curso.
+- Revisão externa do zip apontou cinco problemas, todos procedentes, entre
+  eles a contagem errada de diferenças curriculares no ADR-0003 (75, o
+  certo é 71) e a regra de semestre encerrado aproximada pelo mês.
 
 ## O que foi decidido
-- Recorte de 2022.1 a 2026.1, só semestres encerrados; o loader recusa
-  semestre em andamento (decidido em 28/09;
-  [ADR-0001](../adr/0001-modelagem-fonte-origem.md)).
-- Recorte bruto versionado em `data/raw/`
-  ([ADR-0002](../adr/0002-extracao-via-navegador-real.md)).
-- Pergunta de gestão reescrita em uma frase, com sujeito e recorte (README).
-- ⟨PREENCHER: quem decidiu⟩
+- Recorte de 2022.1 a 2026.1, só semestres encerrados.
+- Pergunta de gestão passou de lotação para vagas reservadas nas
+  obrigatórias do currículo de referência de 2026.1, sem turno
+  ([ADR-0003](../adr/0003-reservas-por-curso-e-curriculo-versionado.md)).
+- Semestre encerrado pelo calendário oficial da UnB (V004); lote que
+  diverge do banco é recusado.
+- Currículo de referência fixado em 2026.1 (V005).
+- Premissa de leitura: 5 coordenadores × 10 consultas por semana, nas 4
+  semanas de planejamento (estimativa, a validar).
+- Modelo novo pela migração V003, substituindo o do ADR-0001.
+- A carga lê o lote versionado e conferido por checksum; scrapers
+  Playwright removidos ([ADR-0004](../adr/0004-coleta-publica-versionada.md)).
+- Decisões acima tomadas por Davi Araújo em 28/09, na revisão da E1 com
+  apoio de IA; ⟨PREENCHER: confirmação da Squad⟩
 
 ## Próxima semana
-- [ ] Rodar a carga real e commitar `data/raw/` (⟨responsável⟩)
-- [ ] Gerar `docs/carga-medida.md` e preencher o ADR-0001 (⟨responsável⟩)
-- [ ] Definir a taxa de leitura em `docs/carga-de-trabalho.md` (⟨responsável⟩)
-- [ ] Combinar com a professora a nova tag da E1 (⟨responsável⟩)
+- [ ] Subir tudo com `docker compose` numa máquina limpa e rodar os testes (⟨PREENCHER: responsável⟩)
+- [ ] Validar com um coordenador a premissa de leitura (5 × 10 consultas por semana) (⟨PREENCHER: responsável⟩)
+- [ ] Investigar a quebra de 2023.2 nas reservas grandes de Software (⟨PREENCHER: responsável⟩)
+- [ ] Combinar com a professora a nova tag da E1 (⟨PREENCHER: responsável⟩)

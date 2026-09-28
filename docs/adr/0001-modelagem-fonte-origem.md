@@ -1,8 +1,12 @@
 # ADR-0001: A oferta de turmas é registrada insert-only, uma linha por turma e semestre encerrado, num esquema em 3FN
 
-- **Status:** aceito
+- **Status:** substituído pelo [ADR-0003](0003-reservas-por-curso-e-curriculo-versionado.md) em 2026-09-28
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — ⟨PREENCHER: nomes dos integrantes⟩
+- **Decisores:** Squad G2 — Ana Joyce, Gustavo Alves, Gabriel Lima da Silva, Nathan Abreu, Guilherme Evangelista, Angélica Campos e Davi Araújo
+
+> **Substituído antes da carga real.** A coleta de 28/09/2026 mostrou que a série de
+> vagas ocupadas não é pública (ver ADR-0003). Os campos de medição ficaram sem
+> valor porque este modelo nunca recebeu dados reais; o texto é mantido como registro.
 
 ## Contexto
 
@@ -16,15 +20,9 @@ semestres, então o sistema de origem precisa guardar a série histórica.
 [`docs/carga-medida.md`](../carga-medida.md); detalhamento em
 [`docs/carga-de-trabalho.md`](../carga-de-trabalho.md)):
 
-- Volume: `oferta_turma` com ⟨PREENCHER⟩ linhas em ⟨PREENCHER⟩ semestres
-  (2022.1 a 2026.1); ⟨PREENCHER⟩ kB em disco com índices. As demais
-  tabelas são quase estáticas.
-- Escrita: uma carga em lote por semestre encerrado, de ⟨PREENCHER⟩ a
-  ⟨PREENCHER⟩ linhas (média ⟨PREENCHER⟩); nenhuma escrita entre cargas.
-- Leitura: ⟨PREENCHER: mesma taxa de docs/carga-de-trabalho.md⟩ consultas
-  por semana no planejamento da oferta, todas agregações sobre a série
-  inteira (ocupação por disciplina, semestre e turno), nunca busca de
-  registro único.
+- Volume e escrita: não medidos (o modelo foi substituído antes da carga real).
+- Leitura: agregações sobre a série inteira (ocupação por disciplina,
+  semestre e turno), nunca busca de registro único.
 - Latência tolerada: 2 000 ms por consulta (apoio à decisão, não tempo real).
 
 **Restrições:** a fonte é raspada do SIGAA, sem API (ver ADR-0002); a
@@ -51,16 +49,13 @@ com histórico, para medir se a desnormalização se paga.
 
 | Alternativa | Linhas de oferta | Tamanho total | `q0` (ms) | Dentro de 2 s | Semestres comparáveis |
 |---|---:|---:|---:|:---:|---:|
-| A: opção nula, tabela única sobrescrita | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não responde | - | 1 |
-| B: 3FN com UPDATE (CRUD) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não responde | - | 1 |
-| **C: 3FN insert-only (escolhida)** | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ |
-| C': tabela única com histórico (desnormalizada) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ |
-| D: insert-only por coleta (4 coletas/semestre, projeção) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não medido | - | ⟨PREENCHER⟩ |
+| A: opção nula, tabela única sobrescrita | — | — | não responde | - | 1 |
+| B: 3FN com UPDATE (CRUD) | — | — | não responde | - | 1 |
+| **C: 3FN insert-only (escolhida)** | — | — | — | — | — |
+| C': tabela única com histórico (desnormalizada) | — | — | — | — | — |
+| D: insert-only por coleta (4 coletas/semestre, projeção) | — | — | — | - | — |
 
 A e B não respondem à pergunta de gestão porque guardam um único semestre.
-⟨PREENCHER: uma frase comparando C e C' com os números acima, por exemplo
-"C' responde X ms mais rápido, mas ocupa Y vezes mais linhas; os dois ficam
-abaixo de 2 s"⟩.
 
 ## Decisão
 
@@ -73,10 +68,7 @@ abaixo de 2 s"⟩.
 2. **Normalização em 3FN.** A tabela única repete nome e carga horária da
    disciplina, docente e curso em cada turma, e multiplica cada turma pelo
    número de cursos em que a disciplina aparece, o que conta a mesma turma
-   duas vezes em agregações sem cuidado. Na Medição, C responde `q0` em
-   ⟨PREENCHER⟩ ms, abaixo dos 2 s tolerados, então o ganho de C' não
-   compensa a duplicação. ⟨CONFERIR: se C passar de 2 s, esta decisão
-   precisa ser revista antes da entrega⟩. Se a desnormalização passar a
+   duas vezes em agregações sem cuidado. A medição de C x C' não chegou a ser feita. Se a desnormalização passar a
    se pagar, entra como view materializada derivada (ver gatilho).
 3. **Carimbos de tempo por papel:** `ano`/`periodo` = quando a oferta
    aconteceu (tempo do evento); `coletado_em` = quando o SIGAA foi raspado;

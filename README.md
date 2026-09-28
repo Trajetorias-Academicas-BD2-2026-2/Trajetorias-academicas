@@ -1,30 +1,44 @@
 # G2 — Oferta de Disciplinas UnB (Projeto Integrado BD2, E1)
 
-Fonte transacional (OLTP) que apoia o coordenador de curso a decidir
-quais disciplinas ofertar, a partir de três fontes públicas do SIGAA:
-**Consulta de Turmas**, **Busca de Componentes Curriculares** e a
-**listagem pública de cursos de graduação**.
+Fonte transacional (OLTP) com o histórico de **vagas reservadas** pelas
+turmas a cada curso de engenharia da FCTE (Campus Gama) e as **versões
+curriculares** desses cursos, a partir de páginas públicas do SIGAA.
+
+## Squad G2
+
+Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu ·
+Guilherme Evangelista · Angélica Campos · Davi Araújo
 
 ## Pergunta de gestão
 
-> Entre 2022.1 e 2026.1, quais disciplinas obrigatórias dos cinco cursos
-> de graduação da FCTE ficaram lotadas com mais frequência, por turno?
+> Como evoluíram, entre 2022.1 e 2026.1, as vagas reservadas publicadas
+> para cada curso da FCTE nas disciplinas obrigatórias do currículo de
+> referência selecionado para 2026.1?
 
-*Lotada* = vagas ocupadas maiores ou iguais às vagas ofertadas. Os dados
-públicos não mostram quem tentou se matricular e não conseguiu, então a
-lotação é o indicador observável de demanda reprimida. Consulta:
-[`db/consultas/q0_pergunta_de_gestao.sql`](db/consultas/q0_pergunta_de_gestao.sql).
+- *Vagas reservadas* = campo "Vgs Reservadas" da página de turmas do curso
+  no SIGAA. **Não** é a oferta total da turma nem a ocupação.
+- *Currículo de referência* = versão curricular em vigor em 2026.1 (view
+  `curriculo_referencia`, fixada em 2026.1 pela migração V005). É um conjunto **fixo**, aplicado a toda a série:
+  a pergunta é sobre as disciplinas que hoje são obrigatórias, não sobre o
+  que era obrigatório em cada semestre.
+- Consulta: [`db/consultas/q0_pergunta_de_gestao.sql`](db/consultas/q0_pergunta_de_gestao.sql).
 
-Perguntas derivadas que o esquema também responde (em [`db/consultas/`](db/consultas/)):
-- Quais dessas disciplinas mais travam a grade por serem pré-requisito de outras?
-- Quantas turmas de cada disciplina abrem por semestre, e isso está crescendo ou diminuindo?
-- O aluno do noturno tem o mesmo acesso às obrigatórias que o do diurno?
+A primeira pergunta do projeto era sobre **lotação**. Na coleta de
+28/09/2026 não conseguimos obter a ocupação por turma nas fontes e
+consultas testadas ([relatório da coleta](docs/COLETA_SIGAA_2026-09-28.md),
+[ADR-0003](docs/adr/0003-reservas-por-curso-e-curriculo-versionado.md)).
+
+Perguntas derivadas, em [`db/consultas/`](db/consultas/):
+- Quais obrigatórias nunca tiveram reserva para o curso no recorte?
+- Quanto das reservas vem de disciplinas da FCTE e quanto de outras unidades (MAT, IFD...)?
+- Quantas turmas atendem mais de um curso?
+- Quais obrigatórias mais perderam reservas entre 2022 e 2025?
 
 ## Domínio e persona
 
-Coordenador de curso de graduação da FCTE (Campus Gama), que hoje decide
-quais turmas abrir sem visibilidade histórica de lotação, o que gera
-turmas lotadas e atraso na formatura.
+Coordenador de curso de graduação da FCTE, que negocia a cada semestre as
+vagas reservadas ao seu curso nas turmas (as da FCTE e as de outros
+institutos, como Cálculo e Física) sem ver como essas reservas evoluíram.
 
 ## Tecnologias
 
@@ -32,13 +46,14 @@ turmas lotadas e atraso na formatura.
 |---|---|
 | Banco de dados | PostgreSQL 16 |
 | Migração | SQL versionado em `db/migrations/`, aplicado em ordem por `db/migrate.sh` com controle em `schema_migrations` |
-| Extração | Python + Playwright, navegador real ([ADR-0002](docs/adr/0002-extracao-via-navegador-real.md)) |
-| Recorte | CSVs brutos versionados em [`data/raw/`](data/raw/) |
+| Dados | Lote de coleta versionado em [`data/coleta_publica_2026-09-28/`](data/coleta_publica_2026-09-28/), conferido por SHA-256 ([ADR-0004](docs/adr/0004-coleta-publica-versionada.md)) |
+| Carga | Python (`loader/load_to_db.py`) |
+| Coleta nova de reservas | `loader/coletar_ofertas_por_curso.py` (requests + BeautifulSoup) |
 | Orquestração | Docker Compose |
 
 ## Como rodar
 
-Pré-requisito: Docker e Docker Compose.
+Pré-requisito: Docker e Docker Compose. Não precisa de acesso ao SIGAA.
 
 ```bash
 docker compose up --build
@@ -47,51 +62,40 @@ docker compose up --build
 Em ordem, isso:
 
 1. sobe o Postgres;
-2. aplica as migrações ainda não aplicadas (`db/migrate.sh`; qualquer erro de SQL interrompe tudo);
+2. aplica as migrações pendentes (`db/migrate.sh`; qualquer erro de SQL interrompe tudo);
 3. roda o loader (`loader/run.sh`):
-   1. `scrape_componentes.py`: disciplinas, carga horária e pré-requisitos;
-   2. `scrape_cursos.py`: os 5 cursos do Gama e suas matrizes curriculares;
-   3. `scrape_turmas.py`: oferta de turmas de cada semestre de 2022.1 a 2026.1;
-   4. `load_to_db.py`: carrega `data/raw/` no banco numa única transação.
+   1. testes unitários do parsing e do coletor;
+   2. `load_to_db.py`: confere os checksums do lote, valida o recorte
+      (5 cursos x 9 semestres, cada um encerrado segundo o calendário
+      acadêmico antes de ser coletado) e carrega tudo numa única transação.
 
-Os scrapers só acessam o SIGAA para o que ainda **não** está em
-`data/raw/`. Com o recorte versionado no repositório, a carga roda
-offline e produz sempre o mesmo banco. Ao final, o loader imprime um
-resumo (linhas inseridas, já existentes e rejeitadas por motivo); as
-rejeitadas ficam detalhadas em `debug/rejeitados.csv`.
+Ao final, o loader imprime um resumo (linhas inseridas, já existentes e
+rejeitadas por motivo); as rejeitadas ficam em `debug/rejeitados.csv`.
+No lote atual: 733 turmas e 1.776 reservas inseridas, e 10 reservas
+rejeitadas (2 turmas com horário ou docente divergente entre cursos).
 
-Recomeçar do zero (banco limpo):
+Recomeçar do zero:
 
 ```bash
 docker compose down -v
 docker compose up --build
 ```
 
-Raspar tudo de novo no SIGAA (ex.: para ampliar o recorte), revisar o
-diff de `data/raw/` e commitar:
-
-```bash
-RASPAR=1 docker compose up --build
-```
-
-O recorte (unidade e semestres) fica nas variáveis do serviço `loader`
-em `docker-compose.yml`. O loader recusa semestres ainda em andamento
-(ver [`docs/historico.md`](docs/historico.md)).
-
 ## Testes
 
 ```bash
-# Testes de dados pós-carga: esquema, volume, distribuição, dado faltante, histórico.
+# Testes de dados pós-carga: esquema, volume, currículo, distribuição, dado faltante, histórico.
 # Termina com erro se algum teste falhar.
 docker compose run --rm tests
 
-# Testes unitários do parsing do SIGAA e das regras de semestre
+# Testes unitários (também rodam em toda carga)
 docker compose run --rm loader python -m unittest discover -s tests -v
 ```
 
-Reprocessamento: rodar `docker compose up` de novo não duplica nem altera
-linhas. O resumo do loader mostra `oferta_turma: já existia
-(reprocessamento)` para cada turma já carregada.
+Reprocessamento: rodar `docker compose up` de novo com o mesmo lote não
+duplica nem altera linhas; o resumo mostra `idêntica (reprocessamento)`.
+Se um lote trouxer outro valor para uma turma ou reserva já carregada, a
+carga é desfeita e as diferenças vão para `debug/divergencias.csv`.
 
 ## Carga de trabalho medida
 
@@ -99,40 +103,53 @@ linhas. O resumo do loader mostra `oferta_turma: já existia
 docker compose run --rm -T loader python caracterizar.py > docs/carga-medida.md
 ```
 
-Gera [`docs/carga-medida.md`](docs/carga-medida.md): linhas e bytes por
-tabela, crescimento por semestre, dado faltante, tempo de cada consulta
-de referência e a medição do ADR-0001 (3FN x desnormalizado). A
-interpretação está em [`docs/carga-de-trabalho.md`](docs/carga-de-trabalho.md).
+Gera [`docs/carga-medida.md`](docs/carga-medida.md): volume por tabela,
+escrita por semestre, qualidade, tempo das consultas de referência e a
+medição do ADR-0003. A interpretação está em
+[`docs/carga-de-trabalho.md`](docs/carga-de-trabalho.md).
 
 Para explorar o banco sem escrever SQL, use o [DBeaver](https://dbeaver.io)
 (host `localhost`, porta `5432`, banco `ofertas_unb`, usuário `g2`,
 senha `g2_dev_only`).
 
+## Limites dos dados
+
+- Reserva não é oferta nem ocupação: não dá para dizer se uma turma lotou.
+- Só aparecem turmas que reservam vagas para algum dos cinco cursos: 85
+  de 254 pares curso x obrigatória têm reserva no recorte.
+- A partir de 2023.2 as reservas de 50 vagas ou mais saltam de 4 para 17 a
+  41 por semestre, sobretudo em Software. Isso parece mudança na forma de
+  registrar a reserva e precisa ser considerado ao ler a série.
+- O currículo de referência de 2026.1 é aplicado a toda a série; as
+  versões em vigor em 2022–2024 não foram coletadas para 4 dos 5 cursos.
+- Pré-requisitos coletados para 23 dos 585 componentes da FCTE.
+
 ## Estrutura do repositório
 
 ```
-data/raw/                 recorte bruto raspado do SIGAA (versionado)
+data/coleta_publica_2026-09-28/   lote versionado: CSVs, evidências, SHA256SUMS.txt, VALIDACAO.md
+data/calendario_academico.csv     datas oficiais de encerramento de cada semestre, com fonte
 db/
-  migrations/             V001 (esquema base), V002 (correções pós-E1)
+  migrations/             V001 (esquema base), V002 (correções), V003 (reservas e currículo versionado),
+                          V004 (calendário acadêmico), V005 (currículo de referência fixo em 2026.1)
   migrate.sh              aplica migrações pendentes, em ordem, com ON_ERROR_STOP
   consultas/              consultas de referência (pergunta de gestão e derivadas)
 docs/
-  adr/0001-modelagem-fonte-origem.md    modelagem do sistema de origem
-  adr/0002-extracao-via-navegador-real.md
+  adr/                    ADR-0003 (modelagem) e ADR-0004 (coleta); 0001 e 0002 substituídos
+  COLETA_SIGAA_2026-09-28.md   relatório da coleta real
   carga-de-trabalho.md    caracterização da carga (passo 1)
   carga-medida.md         números medidos, gerado por caracterizar.py
-  historico.md            por que oferta_turma é insert-only
+  historico.md            o que é insert-only e o que isso permite perguntar
   diario/                 diário de bordo semanal da Squad
   AI-USAGE.md             uso de IA e como cada solução foi validada
 loader/
-  config.py               URLs, recorte (unidade e semestres), caminhos
+  config.py               lote, recorte e conexão
   semestres.py            regras de semestre (só semestres encerrados)
-  parsing.py              interpretação do texto do SIGAA (horário, turno, vagas, pré-requisitos)
-  sigaa_utils.py          navegação no SIGAA e gravação atômica dos CSVs
-  scrape_componentes.py, scrape_cursos.py, scrape_turmas.py
-  load_to_db.py           carga idempotente numa única transação
+  parsing.py              horário, turno, docentes, natureza curricular
+  load_to_db.py           validação do lote e carga idempotente
+  coletar_ofertas_por_curso.py   coleta nova de reservas (gera lote)
   caracterizar.py         mede a carga e gera docs/carga-medida.md
-  run.sh                  orquestra as quatro etapas
+  run.sh                  testes unitários + carga
   tests/                  testes unitários
 tests/sanity_checks.sql   testes de dados pós-carga
 docker-compose.yml
@@ -140,17 +157,18 @@ docker-compose.yml
 
 ## Decisões principais
 
-Resumo; o raciocínio completo está nos ADRs.
-
-- **`oferta_turma` é insert-only**, uma linha por turma e semestre
-  encerrado, garantido por trigger no banco. Estrutura curricular usa upsert.
-- **3FN**: neste volume a tabela única desnormalizada não se paga e
-  multiplicaria cada turma pelos cursos em que a disciplina aparece.
-- **Carimbos por papel**: `ano`/`periodo` (evento), `coletado_em`
-  (raspagem), `ingerido_em` (entrada no banco).
-- **Linhagem** em toda oferta: `fonte` e `carga_id`.
-- **Extração com navegador real e recorte versionado**, para que a carga
-  seja reprodutível sem depender do SIGAA ([ADR-0002](docs/adr/0002-extracao-via-navegador-real.md)).
+- **Turma separada da reserva**: 38% das turmas reservam vagas para mais
+  de um curso; numa tabela única, cada turma seria contada 2,42 vezes em
+  média ([ADR-0003](docs/adr/0003-reservas-por-curso-e-curriculo-versionado.md)).
+- **Currículo versionado**: entre as versões 6297/2 e 6297/3 de Automotiva,
+  42 disciplinas saem, 25 entram e 4 mudam de natureza.
+- **Insert-only** em turma e reserva, garantido por trigger; um lote que
+  diverge do banco é recusado inteiro, com as divergências registradas.
+- **Semestre encerrado pelo calendário oficial** da UnB
+  ([`data/calendario_academico.csv`](data/calendario_academico.csv), com a
+  fonte de cada data); o banco recusa turma coletada antes do encerramento.
+- **Lote versionado com checksum**: a carga não depende do SIGAA
+  ([ADR-0004](docs/adr/0004-coleta-publica-versionada.md)).
 
 ## Processo da Squad
 
@@ -163,11 +181,9 @@ Ver [`docs/AI-USAGE.md`](docs/AI-USAGE.md).
 
 ## Antes de marcar a tag de uma entrega
 
-1. `docker compose down -v && docker compose up --build` numa máquina
-   limpa, sem acesso ao SIGAA (o recorte precisa estar em `data/raw/`).
+1. `docker compose down -v && docker compose up --build` numa máquina limpa.
 2. `docker compose run --rm tests` sem falhas.
-3. `docs/carga-medida.md` gerado com os dados da tag, e os números
-   copiados para o ADR.
+3. `docs/carga-medida.md` gerado com os dados da tag.
 4. Nenhum campo pendente na documentação; o comando abaixo não pode
    listar nada:
 

@@ -1,8 +1,11 @@
 # ADR-0002: A extração do SIGAA usa um navegador real e o recorte raspado é versionado no repositório
 
-- **Status:** aceito
+- **Status:** substituído pelo [ADR-0004](0004-coleta-publica-versionada.md) em 2026-09-28
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — ⟨PREENCHER: nomes dos integrantes⟩
+- **Decisores:** Squad G2 — Ana Joyce, Gustavo Alves, Gabriel Lima da Silva, Nathan Abreu, Guilherme Evangelista, Angélica Campos e Davi Araújo
+
+> **Substituído.** Na coleta real, os scrapers Playwright falharam em quatro pontos do
+> site e foram removidos; a carga passou a ler um lote versionado (ADR-0004).
 
 ## Contexto
 

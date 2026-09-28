@@ -95,10 +95,60 @@ não foram executados contra o SIGAA nesta revisão: isso é feito pela
 Squad na primeira carga real, que também gera `data/raw/` e
 `docs/carga-medida.md`.
 
+## Segunda revisão: coleta real e mudança de pergunta (28/09/2026)
+
+A coleta real (relatório em `docs/COLETA_SIGAA_2026-09-28.md`) e um teste
+manual de `listar.jsf` feito pela Squad mostraram que a série de vagas
+ocupadas da FCTE não foi obtida nas fontes e consultas testadas. Com apoio
+da IA (Claude):
+
+| O que mudou | Como foi validado |
+|---|---|
+| Pergunta de gestão passou de lotação para vagas reservadas por curso (decisão da Squad) | ADR-0003 com medição sobre o lote real |
+| Migração V003: `turma`, `reserva_vaga`, `turma_docente`, `curriculo`, `curriculo_componente`; `oferta_turma`, `curso_disciplina` e `pre_requisito` removidas | Aplicada num banco novo e num banco com V001 e V002 |
+| Loader lê o lote versionado, confere SHA-256 e valida o recorte | Lote real carregado duas vezes: 733 turmas e 1.776 reservas; a segunda rodada não inseriu nada |
+| Turmas com horário ou docente divergente entre cursos são rejeitadas, não escolhidas | 2 turmas (10 reservas) em `debug/rejeitados.csv` |
+| Scrapers Playwright removidos; coletor HTTP grava no formato do loader | Testes unitários do coletor com HTML mínimo; consolidar os CSVs por curso reproduz as linhas do lote |
+| Testes de dados e `caracterizar.py` refeitos para o novo modelo | Todos os testes de dados passam no lote real; `docs/carga-medida.md` gerado dele |
+
+A IA também apontou, ao conferir o lote, que as reservas cobrem só parte
+da oferta (85 de 254 pares curso x obrigatória) e que há uma quebra na
+série a partir de 2023.2 (reservas de 50 vagas ou mais). Os dois pontos
+foram conferidos nos dados e registrados como limites no README e no ADR-0003.
+
+## Terceira revisão: feedback de revisor (28/09/2026)
+
+Um revisor conferiu o zip corrigido e apontou cinco problemas; todos
+procediam e foram corrigidos:
+
+| Problema apontado | Correção | Validação |
+|---|---|---|
+| ADR-0003 dizia "75 disciplinas" de diferença em Automotiva; a consulta contava duas vezes as mudanças de natureza | `caracterizar.py` separa as que saem (42), entram (25) e mudam de natureza (4): 71 | Conferido direto nos CSVs do lote |
+| Texto dizia que a matriz de 2026 não era aplicada a 2022, mas a pergunta aplica justamente o currículo de 2026.1 a toda a série | Pergunta reescrita com "currículo de referência selecionado para 2026.1" e sem turno; ADR, README e histórico explicam o conjunto fixo | `q0` roda no lote real |
+| `ON CONFLICT DO NOTHING` ignorava em silêncio um lote com valores diferentes, e docentes podiam ser acrescentados a turma existente | Loader compara com o banco: igual conta como repetição; diferente desfaz a carga e grava `debug/divergencias.csv`; docentes só com turma nova | Lote com 1 horário e 1 reserva alterados: 2 divergências, banco inalterado |
+| "Semestre encerrado" era aproximado pelo mês | Calendário oficial da SAA/UnB em `data/calendario_academico.csv` (fonte por semestre), tabela `semestre_letivo` (V004) e trigger que recusa turma coletada antes do encerramento | Lote com 2026.1 coletado em 20/07/2026 recusado pelo loader e pelo banco |
+| Conclusão categórica sobre indisponibilidade pública | Textos dizem "não conseguimos obter nas fontes e consultas testadas" | Revisão dos documentos |
+
+## Quarta revisão: segundo feedback de revisor (28/09/2026)
+
+| Problema apontado | Correção | Validação |
+|---|---|---|
+| `curriculo_referencia` escolhia a versão em vigor no último semestre presente em `turma`: com 2027.1 carregado, Automotiva passaria de 6297/2 para 6297/3 e a `q0` mudaria de pergunta | Migração V005 fixa a view em 2026.1; testes de dados conferem que nenhuma versão posterior aparece e que a view não depende de `turma` | Turma de 2027.1 inserida numa transação de teste: a view nova manteve 6297/2; a definição antiga devolveria 6297/3 |
+| Linha em branco extra no fim de `docs/carga-medida.md` (`git diff --check`) | `caracterizar.py` remove linhas vazias do fim | `git diff --check` sem avisos |
+
+Ao regenerar a medição num banco recém-criado, a `q0` levou 172 ms na
+primeira execução, contra 5 ms depois de um `ANALYZE`: sem estatísticas, o
+planejador escolhe planos ruins. O loader passou a rodar `ANALYZE` ao fim
+de cada carga, e as medições do ADR-0003 foram refeitas nessa condição.
+
 ## Perguntas prováveis na defesa
 
 Qualquer integrante deve conseguir explicar, sem citar a IA como fonte:
-por que `oferta_turma` é insert-only e só aceita semestres encerrados; por
-que 3FN e não uma tabela única; o que significa cada carimbo de tempo;
-por que o loader usa um navegador real e por que a URL de busca precisa
-do parâmetro `?aba=p-ensino`; por que o recorte bruto está versionado.
+por que a pergunta mudou de lotação para reservas; por que reserva não é
+oferta nem ocupação; por que turma e reserva são tabelas separadas; por
+que o currículo tem versão e por que a pergunta usa o currículo de
+referência de 2026.1 para toda a série; por que turma e reserva são
+insert-only, o que acontece quando um lote diverge do banco e de onde vem
+a data de encerramento de cada semestre; o que
+significa cada carimbo de tempo; por que a carga lê um lote versionado em
+vez de raspar o SIGAA.

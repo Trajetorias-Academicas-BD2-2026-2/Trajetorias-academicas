@@ -25,7 +25,7 @@ Regras:
 | 5 | 08/09 | Seleção de tecnologias | | |
 | 6 | 15/09 | Sistemas de origem | | |
 | 7 | 22/09 | Fundamentos de armazenamento | **E1** | [semana-07](semana-07.md) |
-| 8 | 29/09 | Sistemas e abstrações de armazenamento | | [semana-08](semana-08.md) |
+| 8 | 29/09 | Sistemas e abstrações de armazenamento | | |
 | 9 | 06/10 | Ingestão | | |
 | 10 | 13/10 | Consultas | **E2** | |
 | 11 | 20/10 | Modelagem de dados | | |
