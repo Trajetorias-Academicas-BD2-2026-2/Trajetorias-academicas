@@ -1,6 +1,6 @@
 # Semana 07 (22/09 a 28/09)
 
-**Presentes:** ⟨PREENCHER⟩
+**Presentes:** Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo
 
 ## O que foi medido
 - Coleta real do SIGAA em 28/09
