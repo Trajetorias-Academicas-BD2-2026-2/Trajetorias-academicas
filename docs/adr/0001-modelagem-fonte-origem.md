@@ -2,7 +2,7 @@
 
 - **Status:** aceito
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — [Ana Joyce, Gustavo Alves, Gabriel Lima da Silva, Nathan Abreu, Guilherme Evangelista, Angélica, Davi Araújo]
+- **Decisores:** Squad G2 — ⟨PREENCHER: nomes dos integrantes⟩
 
 ## Contexto
 
@@ -12,15 +12,20 @@ disciplinas obrigatórias dos cinco cursos de graduação da FCTE ficaram
 lotadas com mais frequência, por turno?* Responder exige comparar
 semestres, então o sistema de origem precisa guardar a série histórica.
 
-**Carga** (passo 1; números medidos em [`docs/carga-medida.md`](../carga-medida.md),
-detalhamento em [`docs/carga-de-trabalho.md`](../carga-de-trabalho.md)):
+**Carga** (passo 1; os números vêm da seção "Para copiar no ADR-0001" de
+[`docs/carga-medida.md`](../carga-medida.md); detalhamento em
+[`docs/carga-de-trabalho.md`](../carga-de-trabalho.md)):
 
-- Escrita: em lote, uma vez por semestre encerrado; nenhuma escrita
-  transacional de usuário. Apenas `oferta_turma` cresce, uma carga por
-  semestre; as demais tabelas são quase estáticas.
-- Leitura: agregações sobre a série inteira (ocupação por disciplina,
-  semestre e turno), nunca busca de registro único.
-- Latência tolerada: 2 s por consulta (apoio à decisão, não tempo real).
+- Volume: `oferta_turma` com ⟨PREENCHER⟩ linhas em ⟨PREENCHER⟩ semestres
+  (2022.1 a 2026.1); ⟨PREENCHER⟩ kB em disco com índices. As demais
+  tabelas são quase estáticas.
+- Escrita: uma carga em lote por semestre encerrado, de ⟨PREENCHER⟩ a
+  ⟨PREENCHER⟩ linhas (média ⟨PREENCHER⟩); nenhuma escrita entre cargas.
+- Leitura: ⟨PREENCHER: mesma taxa de docs/carga-de-trabalho.md⟩ consultas
+  por semana no planejamento da oferta, todas agregações sobre a série
+  inteira (ocupação por disciplina, semestre e turno), nunca busca de
+  registro único.
+- Latência tolerada: 2 000 ms por consulta (apoio à decisão, não tempo real).
 
 **Restrições:** a fonte é raspada do SIGAA, sem API (ver ADR-0002); a
 ocupação de uma turma muda enquanto o semestre está em andamento; a Squad
@@ -37,11 +42,25 @@ domina PostgreSQL; a E2 vai capturar mudanças deste banco (CDC).
 
 ## Medição
 
-`loader/caracterizar.py` compara, sobre os dados reais carregados, o
-esquema 3FN com a mesma massa de dados numa tabela única desnormalizada
-(alternativa A sem a sobrescrita): número de linhas, espaço em disco e
-tempo da consulta da pergunta de gestão (`db/consultas/q0_pergunta_de_gestao.sql`).
-Resultado na seção "Medição do ADR-0001" de [`docs/carga-medida.md`](../carga-medida.md).
+Medido por `loader/caracterizar.py` sobre o recorte real de `data/raw/`
+(reproduzível: `docker compose run --rm -T loader python caracterizar.py`).
+`q0` é a consulta da pergunta de gestão
+([`db/consultas/q0_pergunta_de_gestao.sql`](../../db/consultas/q0_pergunta_de_gestao.sql)),
+mediana de 5 execuções. C' é a massa de C numa tabela única desnormalizada,
+com histórico, para medir se a desnormalização se paga.
+
+| Alternativa | Linhas de oferta | Tamanho total | `q0` (ms) | Dentro de 2 s | Semestres comparáveis |
+|---|---:|---:|---:|:---:|---:|
+| A: opção nula, tabela única sobrescrita | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não responde | - | 1 |
+| B: 3FN com UPDATE (CRUD) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não responde | - | 1 |
+| **C: 3FN insert-only (escolhida)** | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ |
+| C': tabela única com histórico (desnormalizada) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ |
+| D: insert-only por coleta (4 coletas/semestre, projeção) | ⟨PREENCHER⟩ | ⟨PREENCHER⟩ | não medido | - | ⟨PREENCHER⟩ |
+
+A e B não respondem à pergunta de gestão porque guardam um único semestre.
+⟨PREENCHER: uma frase comparando C e C' com os números acima, por exemplo
+"C' responde X ms mais rápido, mas ocupa Y vezes mais linhas; os dois ficam
+abaixo de 2 s"⟩.
 
 ## Decisão
 
@@ -54,10 +73,11 @@ Resultado na seção "Medição do ADR-0001" de [`docs/carga-medida.md`](../carg
 2. **Normalização em 3FN.** A tabela única repete nome e carga horária da
    disciplina, docente e curso em cada turma, e multiplica cada turma pelo
    número de cursos em que a disciplina aparece, o que conta a mesma turma
-   duas vezes em agregações sem cuidado. Neste volume, as duas
-   alternativas ficam muito abaixo da latência tolerada, então a
-   desnormalização não se paga; se passar a se pagar, entra como view
-   materializada derivada (ver gatilho).
+   duas vezes em agregações sem cuidado. Na Medição, C responde `q0` em
+   ⟨PREENCHER⟩ ms, abaixo dos 2 s tolerados, então o ganho de C' não
+   compensa a duplicação. ⟨CONFERIR: se C passar de 2 s, esta decisão
+   precisa ser revista antes da entrega⟩. Se a desnormalização passar a
+   se pagar, entra como view materializada derivada (ver gatilho).
 3. **Carimbos de tempo por papel:** `ano`/`periodo` = quando a oferta
    aconteceu (tempo do evento); `coletado_em` = quando o SIGAA foi raspado;
    `ingerido_em` = quando a linha entrou no banco. Todos com fuso

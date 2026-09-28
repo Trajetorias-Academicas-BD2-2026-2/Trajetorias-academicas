@@ -122,6 +122,7 @@ docs/
   carga-de-trabalho.md    caracterização da carga (passo 1)
   carga-medida.md         números medidos, gerado por caracterizar.py
   historico.md            por que oferta_turma é insert-only
+  diario/                 diário de bordo semanal da Squad
   AI-USAGE.md             uso de IA e como cada solução foi validada
 loader/
   config.py               URLs, recorte (unidade e semestres), caminhos
@@ -151,6 +152,25 @@ Resumo; o raciocínio completo está nos ADRs.
 - **Extração com navegador real e recorte versionado**, para que a carga
   seja reprodutível sem depender do SIGAA ([ADR-0002](docs/adr/0002-extracao-via-navegador-real.md)).
 
+## Processo da Squad
+
+O registro semanal (o que foi medido, o que surpreendeu, o que foi
+decidido) está em [`docs/diario/`](docs/diario/).
+
 ## Uso de IA
 
 Ver [`docs/AI-USAGE.md`](docs/AI-USAGE.md).
+
+## Antes de marcar a tag de uma entrega
+
+1. `docker compose down -v && docker compose up --build` numa máquina
+   limpa, sem acesso ao SIGAA (o recorte precisa estar em `data/raw/`).
+2. `docker compose run --rm tests` sem falhas.
+3. `docs/carga-medida.md` gerado com os dados da tag, e os números
+   copiados para o ADR.
+4. Nenhum campo pendente na documentação; o comando abaixo não pode
+   listar nada:
+
+   ```bash
+   grep -rn "⟨PREENCHER\|⟨CONFERIR" docs/
+   ```

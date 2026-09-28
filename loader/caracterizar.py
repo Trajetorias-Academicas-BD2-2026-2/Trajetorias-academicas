@@ -21,6 +21,8 @@ import config
 CONSULTAS_DIR = os.getenv("CONSULTAS_DIR", "consultas")
 REPETICOES = 5
 LATENCIA_TOLERADA_MS = 2000
+# Alternativa D do ADR-0001: quantas coletas por semestre um retrato por coleta teria.
+COLETAS_POR_SEMESTRE = int(os.getenv("COLETAS_POR_SEMESTRE", "4"))
 TABELAS = ["unidade", "disciplina", "curso", "curso_disciplina", "pre_requisito", "docente", "oferta_turma"]
 
 
@@ -96,8 +98,8 @@ def main() -> None:
         for ano, periodo, turmas, disciplinas, lotadas in por_semestre:
             p(f"| {ano}.{periodo} | {turmas} | {disciplinas} | {lotadas} |")
         p("")
-        if por_semestre:
-            contagens = [r[2] for r in por_semestre]
+        contagens = [r[2] for r in por_semestre]
+        if contagens:
             p(f"- Semestres carregados: {len(contagens)} "
               f"({por_semestre[0][0]}.{por_semestre[0][1]} a {por_semestre[-1][0]}.{por_semestre[-1][1]}).")
             p(f"- Escrita: uma carga em lote por semestre, de {min(contagens)} a {max(contagens)} linhas "
@@ -165,9 +167,26 @@ def main() -> None:
         cur.execute("SELECT count(*) FROM oferta_desnormalizada")
         linhas_flat = cur.fetchone()[0]
         bytes_flat = tamanho(cur, "oferta_desnormalizada")
+        bytes_ot = tamanho(cur, "oferta_turma")
         bytes_3fn = sum(tamanho(cur, t) for t in TABELAS)
-        cur.execute("SELECT count(*) FROM oferta_turma")
-        linhas_ot = cur.fetchone()[0]
+        bytes_resto = bytes_3fn - bytes_ot
+        cur.execute("SELECT count(*), count(DISTINCT (ano, periodo)) FROM oferta_turma")
+        linhas_ot, n_semestres = cur.fetchone()
+
+        # A (opção nula): tabela única sobrescrita, só o último semestre sobrevive.
+        cur.execute("""
+            SELECT count(*) FROM oferta_desnormalizada
+            WHERE (ano, periodo) = (SELECT ano, periodo FROM oferta_turma ORDER BY ano DESC, periodo DESC LIMIT 1)
+        """)
+        linhas_a = cur.fetchone()[0]
+        bytes_a = bytes_flat * linhas_a // linhas_flat if linhas_flat else 0
+        # B (CRUD): chave sem semestre, cada turma guarda só o último valor.
+        cur.execute("SELECT count(DISTINCT (disciplina_id, codigo_turma)) FROM oferta_turma")
+        linhas_b = cur.fetchone()[0]
+        bytes_b = bytes_resto + (bytes_ot * linhas_b // linhas_ot if linhas_ot else 0)
+        # D (retrato por coleta): projeção, não carregada.
+        linhas_d = linhas_ot * COLETAS_POR_SEMESTRE
+        bytes_d = bytes_resto + bytes_ot * COLETAS_POR_SEMESTRE
 
         with open(os.path.join(CONSULTAS_DIR, "q0_pergunta_de_gestao.sql"), encoding="utf-8") as f:
             ms_3fn, _ = tempo_consulta(cur, f.read())
@@ -185,15 +204,38 @@ def main() -> None:
         """)
         conn.rollback()
 
-        p("## Medição do ADR-0001: esquema 3FN x tabela única desnormalizada")
+        def dentro(ms: float) -> str:
+            return "sim" if ms <= LATENCIA_TOLERADA_MS else "**não**"
+
+        p("## Para copiar no ADR-0001")
         p("")
-        p("Mesma massa de dados; a tabela única repete disciplina, docente e curso em cada linha "
-          "(uma linha por turma x curso em que a disciplina aparece).")
+        p("Os blocos abaixo têm o mesmo formato das seções **Contexto** e **Medição** do "
+          "ADR-0001; substituem os campos `⟨PREENCHER⟩` de lá.")
         p("")
-        p("| Alternativa | Linhas | Tamanho total | Pergunta de gestão (`q0`, ms) |")
-        p("|---|---:|---:|---:|")
-        p(f"| 3FN (escolhida) | {linhas_ot} em `oferta_turma` | {kb(bytes_3fn)} | {ms_3fn:.1f} |")
-        p(f"| Tabela única desnormalizada | {linhas_flat} | {kb(bytes_flat)} | {ms_flat:.1f} |")
+        p("### Contexto: carga")
+        p("")
+        if contagens:
+            p(f"- Volume: `oferta_turma` com {linhas_ot} linhas em {n_semestres} semestres "
+              f"({por_semestre[0][0]}.{por_semestre[0][1]} a {por_semestre[-1][0]}.{por_semestre[-1][1]}); "
+              f"{kb(bytes_3fn)} em disco com índices.")
+            p(f"- Escrita: uma carga em lote por semestre encerrado, de {min(contagens)} a {max(contagens)} "
+              f"linhas (média {statistics.mean(contagens):.0f}); nenhuma escrita entre cargas.")
+        p(f"- Latência tolerada: {LATENCIA_TOLERADA_MS} ms por consulta.")
+        p("")
+        p("### Medição")
+        p("")
+        p("| Alternativa | Linhas de oferta | Tamanho total | `q0` (ms) | Dentro de 2 s | Semestres comparáveis |")
+        p("|---|---:|---:|---:|:---:|---:|")
+        p(f"| A: opção nula, tabela única sobrescrita | {linhas_a} | {kb(bytes_a)} | não responde | - | 1 |")
+        p(f"| B: 3FN com UPDATE (CRUD) | {linhas_b} | {kb(bytes_b)} | não responde | - | 1 |")
+        p(f"| **C: 3FN insert-only (escolhida)** | {linhas_ot} | {kb(bytes_3fn)} | {ms_3fn:.1f} | {dentro(ms_3fn)} | {n_semestres} |")
+        p(f"| C': tabela única com histórico (desnormalizada) | {linhas_flat} | {kb(bytes_flat)} | {ms_flat:.1f} | {dentro(ms_flat)} | {n_semestres} |")
+        p(f"| D: insert-only por coleta ({COLETAS_POR_SEMESTRE} coletas/semestre, projeção) | {linhas_d} | {kb(bytes_d)} | não medido | - | {n_semestres} |")
+        p("")
+        p("A e B não respondem à pergunta de gestão: guardam um único semestre. "
+          "C' tem a mesma massa de C numa tabela só, com disciplina, docente e curso repetidos "
+          "(uma linha por turma x curso em que a disciplina aparece). "
+          "Tamanhos de A, B e D são proporcionais aos medidos em C e C'.")
         p("")
 
     print("\n".join(saida))

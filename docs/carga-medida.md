@@ -1,5 +1,7 @@
 # Carga de trabalho medida
 
+⟨PREENCHER: gerar este arquivo com o comando abaixo⟩
+
 Este arquivo é gerado por `loader/caracterizar.py` a partir do banco
 carregado, e ainda não foi gerado com o recorte real. Depois de
 `docker compose up --build`, rode:

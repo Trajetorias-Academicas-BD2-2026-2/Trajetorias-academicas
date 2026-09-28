@@ -43,9 +43,20 @@ linhas em `oferta_turma`.
 
 ## Taxa e padrão de leitura
 
-Poucos usuários (coordenadores de curso), consultas ocasionais,
-**analíticas e agregadas**; nenhuma busca por registro único. As
-consultas de referência estão em [`db/consultas/`](../db/consultas/):
+| Parâmetro | Valor | Origem |
+|---|---|---|
+| Usuários | 5 coordenadores (um por curso do Gama) | recorte do domínio |
+| Consultas por usuário no planejamento | ⟨PREENCHER⟩ por semana | premissa da Squad |
+| Taxa de leitura no pico | ⟨PREENCHER: usuários × consultas⟩ consultas por semana | cálculo |
+| Semanas de planejamento por semestre | ⟨PREENCHER⟩ | premissa da Squad |
+| Fora do planejamento | ⟨PREENCHER⟩ | premissa da Squad |
+
+⟨PREENCHER: uma frase justificando a premissa, por exemplo de onde veio o
+número de consultas por semana; se possível, perguntem a um coordenador.⟩
+
+Todas as consultas são **analíticas e agregadas**; nenhuma busca por
+registro único. As consultas de referência estão em
+[`db/consultas/`](../db/consultas/):
 
 | Consulta | Pergunta |
 |---|---|
