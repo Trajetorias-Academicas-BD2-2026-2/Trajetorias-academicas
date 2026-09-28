@@ -1,13 +1,12 @@
 """
-Mede a carga de trabalho no banco carregado e imprime Markdown (passo 1 do
-Método de Decisão, com números medidos em vez de estimados), mais a
-medição usada no ADR-0001 (esquema 3FN x tabela única desnormalizada).
+Mede a carga de trabalho no banco carregado e imprime Markdown: o passo 1
+do Método de Decisão com números medidos, mais a medição do ADR-0003
+(esquema normalizado x tabela única espelhando a fonte).
 
 Uso (depois de `docker compose up --build`):
     docker compose run --rm -T loader python caracterizar.py > docs/carga-medida.md
 """
 
-import csv
 import glob
 import json
 import os
@@ -18,17 +17,29 @@ import psycopg
 
 import config
 
-CONSULTAS_DIR = os.getenv("CONSULTAS_DIR", "consultas")
+CONSULTAS_DIR = os.getenv("CONSULTAS_DIR", "../db/consultas")
 REPETICOES = 5
 LATENCIA_TOLERADA_MS = 2000
-# Alternativa D do ADR-0001: quantas coletas por semestre um retrato por coleta teria.
-COLETAS_POR_SEMESTRE = int(os.getenv("COLETAS_POR_SEMESTRE", "4"))
-TABELAS = ["unidade", "disciplina", "curso", "curso_disciplina", "pre_requisito", "docente", "oferta_turma"]
+TABELAS = [
+    "unidade", "disciplina", "curso", "curriculo", "curriculo_componente",
+    "docente", "semestre_letivo", "turma", "turma_docente", "reserva_vaga",
+]
+
+# q0 escrita sobre a tabela única (alternativa A do ADR-0003).
+Q0_TABELA_UNICA = """
+    SELECT curso_codigo, ano || '.' || periodo AS semestre,
+           sum(vagas_reservadas) AS vagas_reservadas, count(*) AS turmas_com_reserva,
+           count(DISTINCT disciplina_codigo) AS obrigatorias_com_reserva
+    FROM reserva_plana
+    WHERE natureza_no_curriculo_referencia = 'OBRIGATORIA'
+      AND (ano, periodo) BETWEEN (2022, 1) AND (2026, 1)
+    GROUP BY curso_codigo, ano, periodo
+    ORDER BY curso_codigo, ano, periodo
+"""
 
 
 def tempo_consulta(cur, sql: str) -> tuple[float, bool]:
-    """Mediana do tempo de execução (ms) em REPETICOES rodadas e se o plano
-    usa algum índice."""
+    """Mediana do tempo de execução (ms) em REPETICOES rodadas e se o plano usa índice."""
     tempos, usa_indice = [], False
     for _ in range(REPETICOES):
         cur.execute("EXPLAIN (ANALYZE, FORMAT JSON) " + sql.strip().rstrip(";"))
@@ -48,6 +59,11 @@ def kb(n: int) -> str:
     return f"{n / 1024:,.0f} kB".replace(",", ".")
 
 
+def um(cur, sql: str, params=()):
+    cur.execute(sql, params)
+    return cur.fetchone()
+
+
 def main() -> None:
     saida: list[str] = []
     p = saida.append
@@ -55,77 +71,98 @@ def main() -> None:
         host=config.DB_HOST, port=config.DB_PORT, dbname=config.DB_NAME,
         user=config.DB_USER, password=config.DB_PASSWORD,
     ) as conn, conn.cursor() as cur:
-        cur.execute("SELECT version()")
-        versao = cur.fetchone()[0].split(",")[0]
+        versao = um(cur, "SELECT version()")[0].split(",")[0]
+        lotes = um(cur, "SELECT string_agg(DISTINCT lote, ', ') FROM turma")[0]
 
         p("# Carga de trabalho medida")
         p("")
         p(f"Gerado por `loader/caracterizar.py` em {datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC, "
-          f"sobre o banco carregado a partir de `data/raw/` ({versao}). "
+          f"sobre o banco carregado com o lote `{lotes}` ({versao}). "
           "Não edite à mão: rode o script de novo.")
         p("")
 
-        # Volume
+        # ---------- Volume ----------
         p("## Volume por tabela")
         p("")
-        p("| Tabela | Linhas | Tamanho (dados + índices) | Bytes por linha |")
-        p("|---|---:|---:|---:|")
+        p("| Tabela | Linhas | Tamanho (dados + índices) |")
+        p("|---|---:|---:|")
+        linhas_tab = {}
         for t in TABELAS:
-            cur.execute(f"SELECT count(*) FROM {t}")
-            linhas = cur.fetchone()[0]
-            bytes_ = tamanho(cur, t)
-            # Abaixo de ~100 linhas o mínimo de uma página (8 kB) domina e a média engana.
-            por_linha = bytes_ // linhas if linhas >= 100 else "-"
-            p(f"| `{t}` | {linhas} | {kb(bytes_)} | {por_linha} |")
+            linhas_tab[t] = um(cur, f"SELECT count(*) FROM {t}")[0]
+            p(f"| `{t}` | {linhas_tab[t]} | {kb(tamanho(cur, t))} |")
+        bytes_total = sum(tamanho(cur, t) for t in TABELAS)
+        p(f"| **total** | {sum(linhas_tab.values())} | {kb(bytes_total)} |")
         p("")
-        arquivos = glob.glob(os.path.join(config.DATA_DIR, "*.csv"))
-        bytes_csv = sum(os.path.getsize(a) for a in arquivos)
-        p(f"Recorte versionado em `data/raw/`: {len(arquivos)} CSVs, {kb(bytes_csv)} "
-          f"(limite para versionar: 5 MB).")
+        arquivos = glob.glob(os.path.join(config.DATA_DIR, "**", "*"), recursive=True)
+        bytes_lote = sum(os.path.getsize(a) for a in arquivos if os.path.isfile(a))
+        p(f"Lote versionado em `data/{config.lote()}/`: {kb(bytes_lote)} com evidências "
+          "(limite para versionar: 5 MB).")
         p("")
 
-        # Crescimento
+        # ---------- Escrita por semestre ----------
         cur.execute("""
-            SELECT ano, periodo, count(*), count(DISTINCT disciplina_id),
-                   count(*) FILTER (WHERE vagas_ofertadas > 0 AND vagas_ocupadas >= vagas_ofertadas)
-            FROM oferta_turma GROUP BY ano, periodo ORDER BY ano, periodo
+            SELECT t.ano, t.periodo, count(DISTINCT t.id), count(*), sum(rv.vagas_reservadas),
+                   count(DISTINCT t.id) FILTER (WHERE d.unidade_id IS NULL)
+            FROM turma t
+            JOIN reserva_vaga rv ON rv.turma_id = t.id
+            JOIN disciplina d ON d.id = t.disciplina_id
+            GROUP BY t.ano, t.periodo ORDER BY t.ano, t.periodo
         """)
         por_semestre = cur.fetchall()
-        p("## `oferta_turma` por semestre (taxa de escrita)")
+        p("## Por semestre (taxa de escrita)")
         p("")
-        p("| Semestre | Turmas | Disciplinas distintas | Turmas lotadas |")
-        p("|---|---:|---:|---:|")
-        for ano, periodo, turmas, disciplinas, lotadas in por_semestre:
-            p(f"| {ano}.{periodo} | {turmas} | {disciplinas} | {lotadas} |")
+        p("| Semestre | Turmas | Reservas (turma x curso) | Vagas reservadas | Turmas de outras unidades |")
+        p("|---|---:|---:|---:|---:|")
+        for ano, periodo, turmas, reservas, vagas, externas in por_semestre:
+            p(f"| {ano}.{periodo} | {turmas} | {reservas} | {vagas} | {externas} |")
         p("")
-        contagens = [r[2] for r in por_semestre]
-        if contagens:
-            p(f"- Semestres carregados: {len(contagens)} "
-              f"({por_semestre[0][0]}.{por_semestre[0][1]} a {por_semestre[-1][0]}.{por_semestre[-1][1]}).")
-            p(f"- Escrita: uma carga em lote por semestre, de {min(contagens)} a {max(contagens)} linhas "
-              f"(média {statistics.mean(contagens):.0f}); nenhuma escrita entre cargas.")
-            p(f"- Projeção: +{statistics.mean(contagens):.0f} linhas em `oferta_turma` a cada semestre, "
-              f"cerca de +{2 * statistics.mean(contagens):.0f} por ano.")
+        turmas_sem = [r[2] for r in por_semestre]
+        reservas_sem = [r[3] for r in por_semestre]
+        if turmas_sem:
+            p(f"- Escrita: uma carga em lote por semestre encerrado: {min(turmas_sem)} a {max(turmas_sem)} turmas "
+              f"(média {statistics.mean(turmas_sem):.0f}) e {min(reservas_sem)} a {max(reservas_sem)} reservas "
+              f"(média {statistics.mean(reservas_sem):.0f}); nenhuma escrita entre cargas.")
+            p(f"- Crescimento: cerca de +{statistics.mean(turmas_sem):.0f} turmas e "
+              f"+{statistics.mean(reservas_sem):.0f} reservas por semestre, "
+              f"+{2 * statistics.mean(reservas_sem):.0f} reservas por ano.")
         p("")
 
-        # Dado faltante
-        cur.execute("""
-            SELECT round(100.0 * count(*) FILTER (WHERE turno = 'SEM_HORARIO') / nullif(count(*), 0), 1),
-                   round(100.0 * count(*) FILTER (WHERE docente_id IS NULL) / nullif(count(*), 0), 1),
-                   round(100.0 * count(*) FILTER (WHERE vagas_ocupadas > vagas_ofertadas) / nullif(count(*), 0), 1)
-            FROM oferta_turma
+        # ---------- Qualidade ----------
+        compartilhadas = um(cur, """
+            SELECT round(100.0 * count(*) FILTER (WHERE n > 1) / count(*), 1), round(avg(n), 2)
+            FROM (SELECT count(*) AS n FROM reserva_vaga GROUP BY turma_id) x
         """)
-        sem_horario, sem_docente, acima = cur.fetchone()
-        cur.execute("SELECT count(*) FROM disciplina WHERE pre_requisito_expressao IS NOT NULL")
-        com_prereq = cur.fetchone()[0]
+        turno = um(cur, "SELECT string_agg(turno || ' ' || n, ', ' ORDER BY n DESC) FROM "
+                        "(SELECT turno, count(*) AS n FROM turma GROUP BY turno) x")[0]
+        prereq = um(cur, "SELECT count(*) FILTER (WHERE pre_requisito_coletado), "
+                         "count(*) FILTER (WHERE unidade_id IS NOT NULL) FROM disciplina")
+        obrig = um(cur, """
+            SELECT count(*), count(*) FILTER (WHERE EXISTS (
+                SELECT 1 FROM reserva_vaga rv JOIN turma t ON t.id = rv.turma_id
+                WHERE rv.curso_id = cr.curso_id AND t.disciplina_id = cc.disciplina_id))
+            FROM curriculo_referencia cr
+            JOIN curriculo_componente cc ON cc.curriculo_id = cr.id AND cc.natureza = 'OBRIGATORIA'
+        """)
         p("## Qualidade e dado faltante")
         p("")
-        p(f"- Turmas sem horário (`turno = 'SEM_HORARIO'`): {sem_horario}%")
-        p(f"- Turmas sem docente identificado: {sem_docente}%")
-        p(f"- Turmas com ocupação acima da oferta: {acima}%")
-        p(f"- Disciplinas com expressão de pré-requisito: {com_prereq}")
+        p(f"- Turmas que reservam vagas para mais de um curso: {compartilhadas[0]}% "
+          f"(média de {compartilhadas[1]} cursos por turma).")
+        p(f"- Turno das turmas: {turno}.")
+        p(f"- Obrigatórias dos currículos de referência com ao menos uma reserva no recorte: "
+          f"{obrig[1]} de {obrig[0]} pares curso x disciplina.")
+        p(f"- Pré-requisitos coletados: {prereq[0]} de {prereq[1]} componentes da FCTE.")
+        cur.execute("""
+            SELECT t.ano || '.' || t.periodo, count(*), sum(rv.vagas_reservadas)
+            FROM reserva_vaga rv JOIN turma t ON t.id = rv.turma_id
+            WHERE rv.vagas_reservadas >= 50
+            GROUP BY t.ano, t.periodo ORDER BY t.ano, t.periodo
+        """)
+        grandes = ", ".join(f"{s}: {n} ({v} vagas)" for s, n, v in cur.fetchall())
+        p(f"- Reservas de 50 vagas ou mais, por semestre: {grandes or 'nenhuma'}. Uma mudança brusca "
+          "aqui indica mudança na forma de registrar a reserva, não necessariamente mais vagas.")
         rejeitados = os.path.join(config.DEBUG_DIR, "rejeitados.csv")
         if os.path.exists(rejeitados):
+            import csv
             with open(rejeitados, newline="", encoding="utf-8") as f:
                 motivos: dict[str, int] = {}
                 for r in csv.DictReader(f):
@@ -135,7 +172,7 @@ def main() -> None:
                 p(f"- Linhas rejeitadas na última carga ({chave}): {n}")
         p("")
 
-        # Consultas de referência
+        # ---------- Consultas de referência ----------
         p(f"## Consultas de referência (mediana de {REPETICOES} execuções, latência tolerada {LATENCIA_TOLERADA_MS} ms)")
         p("")
         p("| Consulta | Tempo (ms) | Usa índice | Dentro da latência |")
@@ -147,97 +184,95 @@ def main() -> None:
               f"{'sim' if ms <= LATENCIA_TOLERADA_MS else '**não**'} |")
         p("")
 
-        # Medição do ADR-0001: 3FN x tabela única desnormalizada
+        # ---------- Medição do ADR-0003 ----------
+        # A: tabela única espelhando a página "Turmas" do curso, uma linha por reserva.
         cur.execute("""
-            CREATE TEMP TABLE oferta_desnormalizada AS
-            SELECT ot.ano, ot.periodo, ot.turno, ot.codigo_turma,
-                   ot.vagas_ofertadas, ot.vagas_ocupadas, ot.horario, ot.local,
-                   d.codigo AS disciplina_codigo, d.nome AS disciplina_nome, d.carga_horaria,
-                   u.nome AS unidade, doc.nome AS docente,
-                   c.codigo AS curso_codigo, c.nome AS curso_nome, cd.obrigatoria,
-                   (SELECT count(*) FROM pre_requisito pr WHERE pr.pre_requisito_id = d.id) AS disciplinas_que_trava
-            FROM oferta_turma ot
-            JOIN disciplina d ON d.id = ot.disciplina_id
-            JOIN unidade u ON u.id = d.unidade_id
-            LEFT JOIN docente doc ON doc.id = ot.docente_id
-            LEFT JOIN curso_disciplina cd ON cd.disciplina_id = d.id
-            LEFT JOIN curso c ON c.id = cd.curso_id
+            CREATE TEMP TABLE reserva_plana AS
+            SELECT c.codigo AS curso_codigo, d.codigo AS disciplina_codigo, d.nome AS disciplina_nome,
+                   t.codigo_turma, t.ano, t.periodo, t.horario, t.turno,
+                   (SELECT string_agg(doc.nome, ' , ' ORDER BY doc.nome)
+                      FROM turma_docente td JOIN docente doc ON doc.id = td.docente_id
+                     WHERE td.turma_id = t.id) AS docentes,
+                   rv.vagas_reservadas,
+                   (SELECT cc.natureza FROM curriculo_referencia cr
+                      JOIN curriculo_componente cc ON cc.curriculo_id = cr.id
+                     WHERE cr.curso_id = c.id AND cc.disciplina_id = d.id) AS natureza_no_curriculo_referencia
+            FROM reserva_vaga rv
+            JOIN turma t ON t.id = rv.turma_id
+            JOIN disciplina d ON d.id = t.disciplina_id
+            JOIN curso c ON c.id = rv.curso_id
         """)
-        cur.execute("ANALYZE oferta_desnormalizada")
-        cur.execute("SELECT count(*) FROM oferta_desnormalizada")
-        linhas_flat = cur.fetchone()[0]
-        bytes_flat = tamanho(cur, "oferta_desnormalizada")
-        bytes_ot = tamanho(cur, "oferta_turma")
-        bytes_3fn = sum(tamanho(cur, t) for t in TABELAS)
-        bytes_resto = bytes_3fn - bytes_ot
-        cur.execute("SELECT count(*), count(DISTINCT (ano, periodo)) FROM oferta_turma")
-        linhas_ot, n_semestres = cur.fetchone()
-
-        # A (opção nula): tabela única sobrescrita, só o último semestre sobrevive.
-        cur.execute("""
-            SELECT count(*) FROM oferta_desnormalizada
-            WHERE (ano, periodo) = (SELECT ano, periodo FROM oferta_turma ORDER BY ano DESC, periodo DESC LIMIT 1)
-        """)
-        linhas_a = cur.fetchone()[0]
-        bytes_a = bytes_flat * linhas_a // linhas_flat if linhas_flat else 0
-        # B (CRUD): chave sem semestre, cada turma guarda só o último valor.
-        cur.execute("SELECT count(DISTINCT (disciplina_id, codigo_turma)) FROM oferta_turma")
-        linhas_b = cur.fetchone()[0]
-        bytes_b = bytes_resto + (bytes_ot * linhas_b // linhas_ot if linhas_ot else 0)
-        # D (retrato por coleta): projeção, não carregada.
-        linhas_d = linhas_ot * COLETAS_POR_SEMESTRE
-        bytes_d = bytes_resto + bytes_ot * COLETAS_POR_SEMESTRE
-
+        cur.execute("ANALYZE reserva_plana")
+        linhas_a = um(cur, "SELECT count(*) FROM reserva_plana")[0]
+        bytes_a = tamanho(cur, "reserva_plana")
+        ms_a, _ = tempo_consulta(cur, Q0_TABELA_UNICA)
         with open(os.path.join(CONSULTAS_DIR, "q0_pergunta_de_gestao.sql"), encoding="utf-8") as f:
-            ms_3fn, _ = tempo_consulta(cur, f.read())
-        ms_flat, _ = tempo_consulta(cur, """
-            SELECT curso_codigo, disciplina_codigo, disciplina_nome, turno, count(*) AS turmas,
-                   count(*) FILTER (WHERE vagas_ofertadas > 0 AND vagas_ocupadas >= vagas_ofertadas) AS turmas_lotadas,
-                   round(sum(vagas_ocupadas)::numeric / nullif(sum(vagas_ofertadas), 0), 2) AS ocupacao_media,
-                   max(disciplinas_que_trava) AS disciplinas_que_trava
-            FROM oferta_desnormalizada
-            WHERE obrigatoria AND (ano, periodo) BETWEEN (2022, 1) AND (2026, 1)
-              AND turno IN ('DIURNO', 'NOTURNO')
-            GROUP BY curso_codigo, disciplina_codigo, disciplina_nome, turno
-            ORDER BY turmas_lotadas DESC, ocupacao_media DESC NULLS LAST
-            LIMIT 30
-        """)
+            ms_c, _ = tempo_consulta(cur, f.read())
         conn.rollback()
+
+        # B: currículo sem versão. Para cada par de versões do mesmo curso,
+        # quantas disciplinas saem, entram ou mudam de natureza (o que uma
+        # matriz única por curso teria de escolher ou misturar).
+        cur.execute("""
+            SELECT cu.codigo, a.codigo, b.codigo,
+                   count(*) FILTER (WHERE cb.disciplina_id IS NULL)                        AS saem,
+                   count(*) FILTER (WHERE ca.disciplina_id IS NULL)                        AS entram,
+                   count(*) FILTER (WHERE ca.natureza IS DISTINCT FROM cb.natureza
+                                      AND ca.disciplina_id IS NOT NULL
+                                      AND cb.disciplina_id IS NOT NULL)                   AS mudam
+            FROM curriculo a
+            JOIN curriculo b ON b.curso_id = a.curso_id
+             AND (b.inicio_vigencia_ano, b.inicio_vigencia_periodo) > (a.inicio_vigencia_ano, a.inicio_vigencia_periodo)
+            JOIN curso cu ON cu.id = a.curso_id
+            CROSS JOIN LATERAL (
+                SELECT disciplina_id FROM curriculo_componente WHERE curriculo_id IN (a.id, b.id)
+                GROUP BY disciplina_id
+            ) u
+            LEFT JOIN curriculo_componente ca ON ca.curriculo_id = a.id AND ca.disciplina_id = u.disciplina_id
+            LEFT JOIN curriculo_componente cb ON cb.curriculo_id = b.id AND cb.disciplina_id = u.disciplina_id
+            GROUP BY cu.codigo, a.codigo, b.codigo
+        """)
+        versoes = cur.fetchall()
+        turmas = linhas_tab["turma"]
 
         def dentro(ms: float) -> str:
             return "sim" if ms <= LATENCIA_TOLERADA_MS else "**não**"
 
-        p("## Para copiar no ADR-0001")
+        p("## Para copiar no ADR-0003")
         p("")
-        p("Os blocos abaixo têm o mesmo formato das seções **Contexto** e **Medição** do "
-          "ADR-0001; substituem os campos `⟨PREENCHER⟩` de lá.")
+        p("Os blocos abaixo têm o mesmo formato das seções **Contexto** e **Medição** do ADR-0003.")
         p("")
         p("### Contexto: carga")
         p("")
-        if contagens:
-            p(f"- Volume: `oferta_turma` com {linhas_ot} linhas em {n_semestres} semestres "
+        if turmas_sem:
+            p(f"- Volume: {turmas} turmas e {linhas_tab['reserva_vaga']} reservas em {len(turmas_sem)} semestres "
               f"({por_semestre[0][0]}.{por_semestre[0][1]} a {por_semestre[-1][0]}.{por_semestre[-1][1]}); "
-              f"{kb(bytes_3fn)} em disco com índices.")
-            p(f"- Escrita: uma carga em lote por semestre encerrado, de {min(contagens)} a {max(contagens)} "
-              f"linhas (média {statistics.mean(contagens):.0f}); nenhuma escrita entre cargas.")
+              f"{linhas_tab['disciplina']} disciplinas, {linhas_tab['curriculo_componente']} vínculos curriculares; "
+              f"{kb(bytes_total)} em disco com índices.")
+            p(f"- Escrita: uma carga em lote por semestre encerrado, de {min(reservas_sem)} a {max(reservas_sem)} "
+              f"reservas (média {statistics.mean(reservas_sem):.0f}); nenhuma escrita entre cargas.")
         p(f"- Latência tolerada: {LATENCIA_TOLERADA_MS} ms por consulta.")
         p("")
         p("### Medição")
         p("")
-        p("| Alternativa | Linhas de oferta | Tamanho total | `q0` (ms) | Dentro de 2 s | Semestres comparáveis |")
-        p("|---|---:|---:|---:|:---:|---:|")
-        p(f"| A: opção nula, tabela única sobrescrita | {linhas_a} | {kb(bytes_a)} | não responde | - | 1 |")
-        p(f"| B: 3FN com UPDATE (CRUD) | {linhas_b} | {kb(bytes_b)} | não responde | - | 1 |")
-        p(f"| **C: 3FN insert-only (escolhida)** | {linhas_ot} | {kb(bytes_3fn)} | {ms_3fn:.1f} | {dentro(ms_3fn)} | {n_semestres} |")
-        p(f"| C': tabela única com histórico (desnormalizada) | {linhas_flat} | {kb(bytes_flat)} | {ms_flat:.1f} | {dentro(ms_flat)} | {n_semestres} |")
-        p(f"| D: insert-only por coleta ({COLETAS_POR_SEMESTRE} coletas/semestre, projeção) | {linhas_d} | {kb(bytes_d)} | não medido | - | {n_semestres} |")
-        p("")
-        p("A e B não respondem à pergunta de gestão: guardam um único semestre. "
-          "C' tem a mesma massa de C numa tabela só, com disciplina, docente e curso repetidos "
-          "(uma linha por turma x curso em que a disciplina aparece). "
-          "Tamanhos de A, B e D são proporcionais aos medidos em C e C'.")
+        p("| Alternativa | Linhas | Tamanho | `q0` (ms) | Dentro de 2 s | Observação medida |")
+        p("|---|---:|---:|---:|:---:|---|")
+        p(f"| A: opção nula, tabela única espelhando a página do curso | {linhas_a} | {kb(bytes_a)} | "
+          f"{ms_a:.1f} | {dentro(ms_a)} | cada turma repetida em média {linhas_a / turmas:.2f} vezes "
+          f"({linhas_a} linhas para {turmas} turmas) |")
+        dif = "; ".join(
+            f"{c} {va} → {vb}: {saem} saem, {entram} entram, {mudam} mudam de natureza "
+            f"({saem + entram + mudam} disciplinas)"
+            for c, va, vb, saem, entram, mudam in versoes
+        ) or "só uma versão por curso"
+        p(f"| B: normalizado, currículo sem versão | - | - | - | - | {dif} |")
+        p(f"| **C: normalizado, turma + reserva + currículo versionado (escolhida)** | "
+          f"{turmas} turmas + {linhas_tab['reserva_vaga']} reservas | {kb(bytes_total)} | {ms_c:.1f} | {dentro(ms_c)} | "
+          f"cada turma guardada uma vez |")
         p("")
 
+    while saida and not saida[-1].strip():
+        saida.pop()
     print("\n".join(saida))
 
 

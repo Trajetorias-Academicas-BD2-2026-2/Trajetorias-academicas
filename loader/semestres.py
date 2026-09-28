@@ -1,12 +1,18 @@
-"""Regras de semestre letivo, sem dependência de browser nem de banco
+"""Regras de semestre letivo, sem dependência de rede nem de banco
 (testadas em tests/test_parsing.py).
 
-Só carregamos semestres ENCERRADOS: a ocupação de um semestre em andamento
-ainda muda (ajuste de matrícula, trancamentos), e oferta_turma guarda uma
-única linha por turma e semestre (ver docs/adr/0001-...). Carregar um
-semestre aberto congelaria um retrato parcial como se fosse o final.
+Só carregamos semestres ENCERRADOS: turmas e reservas de um semestre em
+andamento ainda mudam, e turma/reserva_vaga guardam uma única linha por
+turma e semestre (ver docs/historico.md).
+
+"Encerrado" vem do calendário acadêmico oficial da UnB, versionado em
+data/calendario_academico.csv com a fonte de cada data: o semestre está
+encerrado a partir do dia seguinte à data mais tardia entre último dia de
+aulas, último dia letivo e prazo de consolidação das turmas no SIGAA.
+Semestre fora do calendário é recusado, nunca estimado.
 """
 
+import csv
 from datetime import date
 
 
@@ -32,26 +38,31 @@ def intervalo(inicio: str, fim: str) -> list[tuple[int, int]]:
     return saida
 
 
-def semestre_corrente(hoje: date | None = None) -> tuple[int, int]:
-    """Semestre que ainda pode estar em andamento na data `hoje`.
-
-    Regra conservadora para o calendário da UnB:
-      - janeiro e fevereiro: o 2º semestre do ano anterior ainda pode estar
-        em fechamento de notas e matrícula;
-      - março a julho: 1º semestre do ano;
-      - agosto a dezembro: 2º semestre do ano.
-    """
-    hoje = hoje or date.today()
-    if hoje.month <= 2:
-        return hoje.year - 1, 2
-    if hoje.month <= 7:
-        return hoje.year, 1
-    return hoje.year, 2
-
-
-def encerrado(ano: int, periodo: int, hoje: date | None = None) -> bool:
-    return (ano, periodo) < semestre_corrente(hoje)
-
-
 def rotulo(ano: int, periodo: int) -> str:
     return f"{ano}.{periodo}"
+
+
+def ler_calendario(caminho: str) -> dict[tuple[int, int], dict]:
+    """Lê o calendário e calcula `encerramento` de cada semestre."""
+    calendario = {}
+    with open(caminho, newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            datas = [
+                date.fromisoformat(r[c])
+                for c in ("ultimo_dia_aulas", "ultimo_dia_letivo", "consolidacao_ate")
+                if r[c].strip()
+            ]
+            if not datas:
+                raise ValueError(f"Semestre {r['ano']}.{r['periodo']} sem nenhuma data de fim no calendário")
+            if not r["fonte_url"].strip():
+                raise ValueError(f"Semestre {r['ano']}.{r['periodo']} sem fonte no calendário")
+            calendario[(int(r["ano"]), int(r["periodo"]))] = {**r, "encerramento": max(datas)}
+    return calendario
+
+
+def encerrado_em(calendario: dict, ano: int, periodo: int, dia: date) -> bool:
+    """True se o semestre já tinha encerrado no dia `dia`. Semestre fora do
+    calendário levanta erro: não há data para sustentar a garantia."""
+    if (ano, periodo) not in calendario:
+        raise KeyError(f"Semestre {rotulo(ano, periodo)} ausente do calendário acadêmico")
+    return dia > calendario[(ano, periodo)]["encerramento"]

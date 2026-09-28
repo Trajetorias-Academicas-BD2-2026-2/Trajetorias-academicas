@@ -1,217 +1,390 @@
 """
-Carrega o recorte versionado em DATA_DIR nas tabelas do banco, numa única
-transação (ou tudo entra, ou nada entra).
+Carrega um lote de coleta versionado (config.DATA_DIR) no banco, numa
+única transação: ou tudo entra, ou nada entra.
 
-Reprocessamento: rodar de novo com os mesmos CSVs não duplica nem altera
-nada.
-  - oferta_turma é insert-only: ON CONFLICT DO NOTHING, e um trigger no
-    banco bloqueia UPDATE/DELETE (migração V002).
-  - unidade, disciplina, curso e curso_disciplina: upsert (refletem a
-    versão mais recente da estrutura curricular).
-  - pre_requisito: substituído por disciplina a cada carga, para que um
-    pré-requisito retirado no SIGAA também saia do banco.
+Antes de tocar no banco, valida o lote:
+  - integridade: cada arquivo confere com SHA256SUMS.txt;
+  - recorte: cada curso tem reservas em todos os semestres esperados e
+    nenhum semestre fora do recorte;
+  - calendário: cada semestre está no calendário acadêmico oficial
+    (CALENDARIO) e já tinha encerrado quando foi coletado;
+  - chaves: nenhuma reserva duplicada.
 
-Dado faltante: linhas que não podem entrar (disciplina fora do recorte,
-vagas não lidas, carga horária ausente) são contadas, gravadas em
-DEBUG_DIR/rejeitados.csv e resumidas no final, nunca descartadas em silêncio.
+Reprocessamento: turma, turma_docente e reserva_vaga são insert-only
+(triggers no banco bloqueiam UPDATE e DELETE). Ao encontrar uma turma ou
+reserva que já está no banco, o loader compara os dados:
+  - iguais: conta como "idêntica (reprocessamento)" e segue;
+  - diferentes (horário, turno, docentes ou vagas): é uma DIVERGÊNCIA. A
+    carga inteira é desfeita, as divergências vão para
+    DEBUG_DIR/divergencias.csv e o loader termina com erro. Aceitar um
+    valor novo exige decisão explícita da Squad (ver docs/historico.md).
+unidade, disciplina, curso, curriculo, curriculo_componente e
+semestre_letivo recebem upsert (valem os dados mais recentes).
+
+Dado faltante e inconsistente: nada é descartado em silêncio. Linhas que
+não entram vão para DEBUG_DIR/rejeitados.csv, com o motivo, e são somadas
+no resumo final.
 """
 
 import csv
-import glob
 import hashlib
 import os
-import re
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
+from datetime import date
 
 import psycopg
 
 import config
-from semestres import encerrado, rotulo
+from parsing import extrair_horario, inferir_turno, normalizar_natureza, parse_docentes
+from semestres import encerrado_em, ler_calendario, parse_semestre, rotulo
+
+ARQUIVOS = [
+    config.ARQ_CURSOS, config.ARQ_COMPONENTES, config.ARQ_PRE_REQUISITOS,
+    config.ARQ_CURRICULOS, config.ARQ_CURRICULO_COMPONENTES, config.ARQ_OFERTAS,
+]
+
+
+def _caminho(nome: str) -> str:
+    return os.path.join(config.DATA_DIR, nome)
 
 
 def _ler(nome: str) -> list[dict]:
-    caminho = os.path.join(config.DATA_DIR, nome)
-    if not os.path.exists(caminho):
-        raise SystemExit(f"Arquivo ausente: {caminho}. Rode os scrapers (RASPAR=auto).")
-    with open(caminho, newline="", encoding="utf-8") as f:
+    with open(_caminho(nome), newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
-def _arquivos_turmas() -> dict[tuple[int, int], str]:
-    arquivos = {}
-    for caminho in glob.glob(os.path.join(config.DATA_DIR, "turmas_*_*.csv")):
-        m = re.search(r"turmas_(\d{4})_([12])\.csv$", caminho)
-        if m:
-            arquivos[(int(m.group(1)), int(m.group(2)))] = caminho
-    return arquivos
+def _ts(valor: str) -> str | None:
+    return valor.strip() or None
 
 
-def validar_recorte() -> dict[tuple[int, int], str]:
-    """Confere o recorte antes de tocar no banco."""
-    arquivos = _arquivos_turmas()
-    esperados = config.semestres_da_carga()
-
-    faltando = [rotulo(*s) for s in esperados if s not in arquivos]
+def verificar_checksums() -> None:
+    """Confere cada arquivo listado em SHA256SUMS.txt e exige que os
+    arquivos que o loader lê estejam na lista."""
+    lista = _caminho(config.ARQ_CHECKSUMS)
+    if not os.path.exists(lista):
+        raise SystemExit(f"{lista} ausente: o lote precisa de checksums para ser reprodutível")
+    esperados: dict[str, str] = {}
+    with open(lista, encoding="utf-8") as f:
+        for linha in f:
+            if linha.strip():
+                soma, nome = linha.split(maxsplit=1)
+                esperados[nome.strip().lstrip("*")] = soma
+    faltando = [a for a in ARQUIVOS if a not in esperados]
     if faltando:
-        raise SystemExit(f"Faltam semestres em {config.DATA_DIR}: {', '.join(faltando)}")
+        raise SystemExit(f"Arquivos fora de {config.ARQ_CHECKSUMS}: {faltando}")
+    divergentes = []
+    for nome, soma in esperados.items():
+        with open(_caminho(nome), "rb") as f:
+            if hashlib.sha256(f.read()).hexdigest() != soma:
+                divergentes.append(nome)
+    if divergentes:
+        raise SystemExit(f"Checksum divergente (arquivo alterado depois da coleta): {divergentes}")
 
-    abertos = [rotulo(*s) for s in arquivos if not encerrado(*s)]
-    if abertos:
-        raise SystemExit(f"Recusando semestre(s) em andamento: {', '.join(abertos)}")
 
-    # Se o filtro de semestre do formulário for ignorado, o SIGAA devolve o
-    # semestre padrão para todos: arquivos com o mesmo conteúdo denunciam isso.
-    por_conteudo: dict[str, list[str]] = {}
-    for semestre, caminho in arquivos.items():
-        with open(caminho, newline="", encoding="utf-8") as f:
-            corpo = sorted(
-                (r["disciplina_codigo"], r["turma_codigo"], r["vagas_ofertadas"], r["vagas_ocupadas"], r["docente"])
-                for r in csv.DictReader(f)
-            )
-        chave = hashlib.sha256(repr(corpo).encode()).hexdigest()
-        por_conteudo.setdefault(chave, []).append(rotulo(*semestre))
-    repetidos = [grupo for grupo in por_conteudo.values() if len(grupo) > 1]
-    if repetidos:
-        raise SystemExit(
-            f"Semestres com turmas idênticas: {repetidos}. O filtro de ano/período "
-            "provavelmente não foi aplicado na raspagem."
-        )
-    return dict(sorted(arquivos.items()))
+def validar_recorte(cursos: list[dict], ofertas: list[dict]) -> None:
+    esperados = set(config.semestres_da_carga())
+    presentes: dict[str, set] = defaultdict(set)
+    for r in ofertas:
+        presentes[r["curso_codigo"]].add((int(r["ano"]), int(r["periodo"])))
+
+    todos = set().union(*presentes.values()) if presentes else set()
+    fora = sorted(rotulo(*s) for s in todos - esperados)
+    if fora:
+        raise SystemExit(f"Semestres fora do recorte {config.SEMESTRE_INICIO}–{config.SEMESTRE_FIM}: {fora}")
+
+    # Cada semestre precisa ter encerrado ANTES de ser coletado; senão o lote
+    # guarda um retrato parcial (ver docs/historico.md).
+    calendario = ler_calendario(config.CALENDARIO)
+    primeira_coleta: dict[tuple, date] = {}
+    for r in ofertas:
+        sem = (int(r["ano"]), int(r["periodo"]))
+        dia = date.fromisoformat(r["coletado_em"][:10])
+        primeira_coleta[sem] = min(dia, primeira_coleta.get(sem, dia))
+    cedo = sorted(
+        f"{rotulo(*sem)} (coletado em {dia:%d/%m/%Y}, encerrou em {calendario[sem]['encerramento']:%d/%m/%Y})"
+        for sem, dia in primeira_coleta.items() if not encerrado_em(calendario, *sem, dia)
+    )
+    if cedo:
+        raise SystemExit(f"Semestre(s) coletados antes do encerramento: {cedo}")
+
+    lacunas = []
+    for c in cursos:
+        faltam = sorted(rotulo(*s) for s in esperados - presentes.get(c["codigo"], set()))
+        if faltam:
+            lacunas.append(f"{c['codigo']}: {', '.join(faltam)}")
+    if lacunas:
+        raise SystemExit("Curso sem reservas em algum semestre do recorte: " + "; ".join(lacunas))
+
+    chaves = Counter(
+        (r["curso_codigo"], r["disciplina_codigo"], r["turma_codigo"], r["ano"], r["periodo"]) for r in ofertas
+    )
+    duplicadas = [k for k, n in chaves.items() if n > 1]
+    if duplicadas:
+        raise SystemExit(f"Reservas duplicadas no lote: {duplicadas[:5]}")
 
 
 def load(conn: psycopg.Connection) -> Counter:
-    arquivos_turmas = validar_recorte()
+    verificar_checksums()
+    cursos = _ler(config.ARQ_CURSOS)
     componentes = _ler(config.ARQ_COMPONENTES)
     prereqs = _ler(config.ARQ_PRE_REQUISITOS)
-    cursos = _ler(config.ARQ_CURSOS)
-    curriculo = _ler(config.ARQ_CURSO_DISCIPLINA)
+    curriculos = _ler(config.ARQ_CURRICULOS)
+    curriculo_comp = _ler(config.ARQ_CURRICULO_COMPONENTES)
+    ofertas = _ler(config.ARQ_OFERTAS)
+    validar_recorte(cursos, ofertas)
+    lote = config.lote()
 
     stats: Counter = Counter()
     rejeitados: list[dict] = []
+    divergencias: list[dict] = []
+
+    def divergir(tabela: str, chave: str, campo: str, no_banco, no_lote) -> None:
+        divergencias.append({"tabela": tabela, "chave": chave, "campo": campo,
+                             "no_banco": no_banco, "no_lote": no_lote})
 
     def rejeitar(tabela: str, motivo: str, linha: dict) -> None:
         stats[f"{tabela}: rejeitada ({motivo})"] += 1
         rejeitados.append({"tabela": tabela, "motivo": motivo, "linha": repr(linha)})
 
     with conn.cursor() as cur:
-        for nome in sorted({r["unidade"] for r in componentes + cursos}):
-            cur.execute("INSERT INTO unidade (nome) VALUES (%s) ON CONFLICT (nome) DO NOTHING", (nome,))
+        cur.execute(
+            "INSERT INTO unidade (nome) VALUES (%s) ON CONFLICT (nome) DO NOTHING",
+            (config.UNIDADE_FCTE,),
+        )
 
-        # disciplina (upsert)
-        codigos_carregados = []
+        # disciplina: catálogo da FCTE (upsert)
         for r in componentes:
-            if not r["carga_horaria"]:
-                rejeitar("disciplina", "carga horária não lida", r)
-                continue
             cur.execute(
                 """
-                INSERT INTO disciplina (codigo, nome, unidade_id, carga_horaria, pre_requisito_expressao)
-                SELECT %s, %s, u.id, %s, NULLIF(%s, '') FROM unidade u WHERE u.nome = %s
+                INSERT INTO disciplina (codigo, nome, unidade_id, carga_horaria, tipo)
+                SELECT %s, %s, u.id, %s, %s FROM unidade u WHERE u.nome = %s
                 ON CONFLICT (codigo) DO UPDATE
-                  SET nome = EXCLUDED.nome,
-                      carga_horaria = EXCLUDED.carga_horaria,
-                      pre_requisito_expressao = EXCLUDED.pre_requisito_expressao
+                  SET nome = EXCLUDED.nome, unidade_id = EXCLUDED.unidade_id,
+                      carga_horaria = EXCLUDED.carga_horaria, tipo = EXCLUDED.tipo
                 """,
-                (r["codigo"], r["nome"], int(r["carga_horaria"]), r["pre_requisito_expressao"], r["unidade"]),
+                (r["codigo"], r["nome"], int(r["carga_horaria"]) if r["carga_horaria"] else None,
+                 r["tipo"] or None, r["unidade"]),
             )
-            codigos_carregados.append(r["codigo"])
-            stats["disciplina: carregada"] += 1
+            stats["disciplina: do catálogo FCTE"] += 1
 
-        # pre_requisito (substitui o conjunto de cada disciplina carregada)
-        cur.execute(
-            "DELETE FROM pre_requisito WHERE disciplina_id IN (SELECT id FROM disciplina WHERE codigo = ANY(%s))",
-            (codigos_carregados,),
-        )
+        # disciplina: de outras unidades, citadas em currículos ou reservas.
+        # Sem unidade (NULL) e sem sobrescrever o que o catálogo trouxe.
+        externas: dict[str, tuple[str, int | None]] = {}
+        for r in curriculo_comp:
+            externas.setdefault(r["disciplina_codigo"], (r["disciplina_nome"], int(r["carga_horaria"]) if r["carga_horaria"] else None))
+        for r in ofertas:
+            externas.setdefault(r["disciplina_codigo"], (r["disciplina_nome"], None))
+        for codigo, (nome, ch) in sorted(externas.items()):
+            cur.execute(
+                "INSERT INTO disciplina (codigo, nome, carga_horaria) VALUES (%s, %s, %s) "
+                "ON CONFLICT (codigo) DO NOTHING RETURNING id",
+                (codigo, nome, ch),
+            )
+            if cur.fetchone():
+                stats["disciplina: de outra unidade (sem catálogo)"] += 1
+
+        # pré-requisitos: só os componentes cujo detalhe foi coletado
         for r in prereqs:
             cur.execute(
                 """
-                INSERT INTO pre_requisito (disciplina_id, pre_requisito_id)
-                SELECT d1.id, d2.id FROM disciplina d1, disciplina d2
-                WHERE d1.codigo = %s AND d2.codigo = %s
-                ON CONFLICT DO NOTHING
+                UPDATE disciplina
+                   SET pre_requisito_coletado = TRUE,
+                       pre_requisito_expressao = %s,
+                       co_requisito_expressao = %s,
+                       pre_requisito_coletado_em = %s
+                 WHERE codigo = %s
                 """,
-                (r["disciplina_codigo"], r["pre_requisito_codigo"]),
+                (r["pre_requisito_expressao"], r["co_requisito_expressao"], _ts(r["coletado_em"]),
+                 r["disciplina_codigo"]),
             )
             if cur.rowcount:
-                stats["pre_requisito: carregado"] += 1
+                stats["disciplina: com detalhe de pré-requisito"] += 1
             else:
-                # Ex.: pré-requisito de outra unidade (MAT, IFD...). A relação
-                # continua registrada em disciplina.pre_requisito_expressao.
-                rejeitar("pre_requisito", "disciplina ausente do banco", r)
+                rejeitar("disciplina", "pré-requisito de componente ausente", r)
 
         # curso (upsert)
         for r in cursos:
             cur.execute(
                 """
-                INSERT INTO curso (codigo, nome, unidade_id)
-                SELECT %s, %s, u.id FROM unidade u WHERE u.nome = %s
-                ON CONFLICT (codigo) DO UPDATE SET nome = EXCLUDED.nome
+                INSERT INTO curso (codigo, nome, unidade_id, turno, url_fonte)
+                SELECT %s, %s, u.id, %s, %s FROM unidade u WHERE u.nome = %s
+                ON CONFLICT (codigo) DO UPDATE
+                  SET nome = EXCLUDED.nome, turno = EXCLUDED.turno, url_fonte = EXCLUDED.url_fonte
                 """,
-                (r["codigo"], r["nome"], r["unidade"]),
+                (r["codigo"], r["nome"], r["turno"], r["url_fonte"], r["unidade"]),
             )
-            stats["curso: carregado"] += 1
+            stats["curso"] += 1
 
-        # curso_disciplina (upsert: a matriz mais recente vale)
-        for r in curriculo:
-            obrigatoria = r["obrigatoria"].strip().lower() in ("true", "1")
+        # currículo (upsert)
+        for r in curriculos:
+            ano, periodo = parse_semestre(r["inicio_vigencia"])
             cur.execute(
                 """
-                INSERT INTO curso_disciplina (curso_id, disciplina_id, obrigatoria)
-                SELECT c.id, d.id, %s FROM curso c, disciplina d
-                WHERE c.codigo = %s AND d.codigo = %s
-                ON CONFLICT (curso_id, disciplina_id) DO UPDATE SET obrigatoria = EXCLUDED.obrigatoria
+                INSERT INTO curriculo (curso_id, codigo, inicio_vigencia_ano, inicio_vigencia_periodo,
+                                       fonte, lote, coletado_em)
+                SELECT c.id, %s, %s, %s, 'sigaa_curriculos', %s, %s FROM curso c WHERE c.codigo = %s
+                ON CONFLICT (codigo) DO UPDATE
+                  SET inicio_vigencia_ano = EXCLUDED.inicio_vigencia_ano,
+                      inicio_vigencia_periodo = EXCLUDED.inicio_vigencia_periodo,
+                      lote = EXCLUDED.lote, coletado_em = EXCLUDED.coletado_em
                 """,
-                (obrigatoria, r["curso_codigo"], r["disciplina_codigo"]),
+                (r["curriculo_codigo"], ano, periodo, lote, r["coletado_em"], r["curso_codigo"]),
             )
-            if cur.rowcount:
-                stats["curso_disciplina: carregada"] += 1
-            else:
-                rejeitar("curso_disciplina", "disciplina ausente do banco", r)
+            stats["curriculo"] += 1
 
-        # oferta_turma (insert-only)
-        for semestre, caminho in arquivos_turmas.items():
-            with open(caminho, newline="", encoding="utf-8") as f:
-                turmas = list(csv.DictReader(f))
-            for r in turmas:
-                if r["vagas_ofertadas"] == "" or r["vagas_ocupadas"] == "":
-                    rejeitar("oferta_turma", "vagas não lidas", r)
-                    continue
-                if r["docente"]:
-                    cur.execute(
-                        "INSERT INTO docente (nome) VALUES (%s) ON CONFLICT (nome) DO NOTHING",
-                        (r["docente"],),
-                    )
+        # componentes de cada versão curricular (upsert)
+        for r in curriculo_comp:
+            cur.execute(
+                """
+                INSERT INTO curriculo_componente (curriculo_id, disciplina_id, natureza, grupo)
+                SELECT cu.id, d.id, %s, %s FROM curriculo cu, disciplina d
+                WHERE cu.codigo = %s AND d.codigo = %s
+                ON CONFLICT (curriculo_id, disciplina_id) DO UPDATE
+                  SET natureza = EXCLUDED.natureza, grupo = EXCLUDED.grupo
+                """,
+                (normalizar_natureza(r["natureza"]), r["grupo"], r["curriculo_codigo"], r["disciplina_codigo"]),
+            )
+            stats["curriculo_componente"] += 1
+
+        # calendário acadêmico (upsert): as turmas referenciam semestre_letivo
+        with open(config.CALENDARIO, newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
                 cur.execute(
                     """
-                    INSERT INTO oferta_turma (
-                        disciplina_id, codigo_turma, ano, periodo, turno, docente_id,
-                        vagas_ofertadas, vagas_ocupadas, horario, local,
-                        fonte, carga_id, coletado_em
-                    )
-                    SELECT d.id, %s, %s, %s, %s, doc.id, %s, %s, NULLIF(%s, ''), %s, %s, %s, %s
-                    FROM disciplina d
-                    LEFT JOIN docente doc ON doc.nome = NULLIF(%s, '')
-                    WHERE d.codigo = %s
-                    ON CONFLICT (disciplina_id, codigo_turma, ano, periodo) DO NOTHING
-                    RETURNING id
+                    INSERT INTO semestre_letivo (ano, periodo, primeiro_dia_aulas, ultimo_dia_aulas,
+                                                 ultimo_dia_letivo, consolidacao_ate, fonte_url, observacao)
+                    VALUES (%s, %s, NULLIF(%s, '')::date, NULLIF(%s, '')::date, NULLIF(%s, '')::date,
+                            NULLIF(%s, '')::date, %s, NULLIF(%s, ''))
+                    ON CONFLICT (ano, periodo) DO UPDATE
+                      SET primeiro_dia_aulas = EXCLUDED.primeiro_dia_aulas,
+                          ultimo_dia_aulas = EXCLUDED.ultimo_dia_aulas,
+                          ultimo_dia_letivo = EXCLUDED.ultimo_dia_letivo,
+                          consolidacao_ate = EXCLUDED.consolidacao_ate,
+                          fonte_url = EXCLUDED.fonte_url, observacao = EXCLUDED.observacao
                     """,
-                    (
-                        r["turma_codigo"], int(r["ano"]), int(r["periodo"]), r["turno"],
-                        int(r["vagas_ofertadas"]), int(r["vagas_ocupadas"]),
-                        r["horario"], r["local"], r["fonte"], r["carga_id"], r["coletado_em"],
-                        r["docente"], r["disciplina_codigo"],
-                    ),
+                    (r["ano"], r["periodo"], r["primeiro_dia_aulas"], r["ultimo_dia_aulas"],
+                     r["ultimo_dia_letivo"], r["consolidacao_ate"], r["fonte_url"], r["observacao"]),
+                )
+                stats["semestre_letivo"] += 1
+
+        # turmas: a mesma turma aparece uma vez por curso que reserva vagas nela.
+        por_turma: dict[tuple, list[dict]] = defaultdict(list)
+        for r in ofertas:
+            por_turma[(r["disciplina_codigo"], r["turma_codigo"], int(r["ano"]), int(r["periodo"]))].append(r)
+
+        for (disc, cod, ano, periodo), linhas in sorted(por_turma.items()):
+            # Se os cursos discordam sobre horário ou docentes da mesma turma, não
+            # há como saber qual está certo: rejeita a turma e as reservas dela.
+            atributos = {(r["horario"], r["docentes"]) for r in linhas}
+            if len(atributos) > 1:
+                for r in linhas:
+                    rejeitar("reserva_vaga", "turma com horário/docente divergente entre cursos", r)
+                continue
+
+            horario = extrair_horario([linhas[0]["horario"]])
+            turno = inferir_turno(horario)
+            docentes = parse_docentes(linhas[0]["docentes"])
+            chave_turma = f"{disc} turma {cod} {rotulo(ano, periodo)}"
+            cur.execute(
+                """
+                INSERT INTO turma (disciplina_id, codigo_turma, ano, periodo, horario, turno,
+                                   fonte, lote, coletado_em)
+                SELECT d.id, %s, %s, %s, NULLIF(%s, ''), %s, %s, %s, %s FROM disciplina d WHERE d.codigo = %s
+                ON CONFLICT (disciplina_id, codigo_turma, ano, periodo) DO NOTHING
+                RETURNING id
+                """,
+                (cod, ano, periodo, horario, turno, linhas[0]["fonte"], lote,
+                 min(r["coletado_em"] for r in linhas), disc),
+            )
+            nova = cur.fetchone()
+            if nova:
+                turma_id = nova[0]
+                stats[f"turma {rotulo(ano, periodo)}: inserida"] += 1
+                # Docentes só entram junto com a turma: depois disso a
+                # composição da turma não muda (insert-only).
+                for nome in docentes:
+                    cur.execute("INSERT INTO docente (nome) VALUES (%s) ON CONFLICT (nome) DO NOTHING", (nome,))
+                    cur.execute(
+                        """INSERT INTO turma_docente (turma_id, docente_id)
+                           SELECT %s, id FROM docente WHERE nome = %s""",
+                        (turma_id, nome),
+                    )
+                if not docentes:
+                    stats["turma: sem docente informado"] += 1
+            else:
+                cur.execute(
+                    """SELECT t.id, coalesce(t.horario, ''), t.turno,
+                              coalesce(array_agg(doc.nome ORDER BY doc.nome) FILTER (WHERE doc.nome IS NOT NULL), '{}')
+                       FROM turma t
+                       JOIN disciplina d ON d.id = t.disciplina_id
+                       LEFT JOIN turma_docente td ON td.turma_id = t.id
+                       LEFT JOIN docente doc ON doc.id = td.docente_id
+                       WHERE d.codigo = %s AND t.codigo_turma = %s AND t.ano = %s AND t.periodo = %s
+                       GROUP BY t.id, t.horario, t.turno""",
+                    (disc, cod, ano, periodo),
+                )
+                turma_id, horario_banco, turno_banco, docentes_banco = cur.fetchone()
+                iguais = True
+                if horario_banco != horario:
+                    divergir("turma", chave_turma, "horario", horario_banco, horario)
+                    iguais = False
+                if turno_banco != turno:
+                    divergir("turma", chave_turma, "turno", turno_banco, turno)
+                    iguais = False
+                if sorted(docentes_banco) != sorted(docentes):
+                    divergir("turma", chave_turma, "docentes", " , ".join(docentes_banco), " , ".join(sorted(docentes)))
+                    iguais = False
+                if iguais:
+                    stats["turma: idêntica (reprocessamento)"] += 1
+
+            for r in linhas:
+                vagas = int(r["vagas_reservadas"])
+                cur.execute(
+                    """
+                    INSERT INTO reserva_vaga (turma_id, curso_id, vagas_reservadas, fonte, lote, coletado_em)
+                    SELECT %s, c.id, %s, %s, %s, %s FROM curso c WHERE c.codigo = %s
+                    ON CONFLICT (turma_id, curso_id) DO NOTHING
+                    RETURNING turma_id
+                    """,
+                    (turma_id, vagas, r["fonte"], lote, r["coletado_em"], r["curso_codigo"]),
                 )
                 if cur.fetchone():
-                    stats[f"oferta_turma {rotulo(*semestre)}: inserida"] += 1
+                    stats["reserva_vaga: inserida"] += 1
+                    continue
+                cur.execute(
+                    """SELECT rv.vagas_reservadas FROM reserva_vaga rv JOIN curso c ON c.id = rv.curso_id
+                       WHERE rv.turma_id = %s AND c.codigo = %s""",
+                    (turma_id, r["curso_codigo"]),
+                )
+                vagas_banco = cur.fetchone()[0]
+                if vagas_banco == vagas:
+                    stats["reserva_vaga: idêntica (reprocessamento)"] += 1
                 else:
-                    cur.execute("SELECT 1 FROM disciplina WHERE codigo = %s", (r["disciplina_codigo"],))
-                    if cur.fetchone():
-                        stats["oferta_turma: já existia (reprocessamento)"] += 1
-                    else:
-                        rejeitar("oferta_turma", "disciplina ausente do banco", r)
+                    divergir("reserva_vaga", f"{chave_turma} curso {r['curso_codigo']}", "vagas_reservadas",
+                             vagas_banco, vagas)
 
+        if divergencias:
+            conn.rollback()
+            os.makedirs(config.DEBUG_DIR, exist_ok=True)
+            caminho = os.path.join(config.DEBUG_DIR, "divergencias.csv")
+            with open(caminho, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=["tabela", "chave", "campo", "no_banco", "no_lote"])
+                writer.writeheader()
+                writer.writerows(divergencias)
+            raise SystemExit(
+                f"{len(divergencias)} divergência(s) entre o lote e o banco; nada foi carregado. "
+                f"Detalhes em {caminho}. Turmas e reservas são insert-only: aceitar valores novos "
+                "exige decisão da Squad (ver docs/historico.md)."
+            )
+
+    conn.commit()
+
+    # Estatísticas atualizadas logo após a carga: sem elas, o planejador do
+    # Postgres escolhe planos ruins até o autovacuum rodar, e as medições de
+    # caracterizar.py variam conforme o momento em que são feitas.
+    with conn.cursor() as cur:
+        cur.execute("ANALYZE")
     conn.commit()
 
     os.makedirs(config.DEBUG_DIR, exist_ok=True)
@@ -223,6 +396,7 @@ def load(conn: psycopg.Connection) -> Counter:
 
 
 if __name__ == "__main__":
+    print(f"Lote: {config.DATA_DIR}")
     with psycopg.connect(
         host=config.DB_HOST, port=config.DB_PORT, dbname=config.DB_NAME,
         user=config.DB_USER, password=config.DB_PASSWORD,

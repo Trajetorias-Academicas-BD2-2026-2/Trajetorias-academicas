@@ -1,7 +1,7 @@
-# Imagem oficial do Playwright já traz o Chromium e as dependências do SO,
-# necessárias porque o SIGAA é um app JSF (postback com ViewState) e não
-# expõe os dados por um GET simples — precisamos de um browser de verdade.
-FROM mcr.microsoft.com/playwright/python:v1.47.0-jammy
+# O loader lê o lote versionado em data/ e, se for preciso coletar de novo,
+# usa requests + BeautifulSoup (coletar_ofertas_por_curso.py). Não precisa
+# de navegador: ver docs/adr/0004-coleta-publica-versionada.md.
+FROM python:3.12-slim
 
 WORKDIR /app
 

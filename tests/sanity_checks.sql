@@ -4,8 +4,9 @@
 --
 -- Cada teste grava uma linha em `resultado`; no fim a tabela é impressa e,
 -- se algum teste falhou, o script termina com erro (exit != 0).
--- Os limiares de volume e distribuição estão comentados; ajuste-os aos
--- números de docs/carga-medida.md, nunca para "fazer passar".
+-- Os limiares vêm do lote coleta_publica_2026-09-28 (docs/carga-medida.md):
+-- 733 turmas, 1.776 reservas, 71 a 92 turmas por semestre. Ajuste-os quando
+-- o lote mudar, com o motivo no diário, nunca para "fazer passar".
 
 \set ON_ERROR_STOP on
 \set QUIET on
@@ -15,124 +16,155 @@ CREATE TEMP TABLE resultado (grupo TEXT, teste TEXT, ok BOOLEAN, detalhe TEXT);
 
 -- ============ Esquema e linhagem ============
 INSERT INTO resultado
-SELECT 'esquema', 'migrações V001 e V002 aplicadas', count(*) = 2, count(*) || ' registradas'
-FROM schema_migrations WHERE versao IN ('V001__schema_base', 'V002__correcoes_pos_e1');
+SELECT 'esquema', 'migrações V001 a V005 aplicadas', count(*) = 5, count(*) || ' registradas'
+FROM schema_migrations
+WHERE versao IN ('V001__schema_base', 'V002__correcoes_pos_e1', 'V003__reservas_por_curso',
+                 'V004__calendario_academico', 'V005__curriculo_referencia_fixo');
 
 INSERT INTO resultado
-SELECT 'esquema', 'toda oferta tem linhagem (fonte, carga_id, coletado_em)', count(*) = 0, count(*) || ' sem linhagem'
-FROM oferta_turma WHERE fonte IS NULL OR carga_id IS NULL OR coletado_em IS NULL;
-
-INSERT INTO resultado
-SELECT 'esquema', 'fonte com valor conhecido', count(*) = 0, count(*) || ' com fonte desconhecida'
-FROM oferta_turma WHERE fonte <> 'sigaa_turmas';
+SELECT 'esquema', 'turmas e reservas de um único lote', count(DISTINCT lote) = 1,
+       coalesce(string_agg(DISTINCT lote, ', '), 'nenhum')
+FROM (SELECT lote FROM turma UNION ALL SELECT lote FROM reserva_vaga) l;
 
 INSERT INTO resultado
 SELECT 'esquema', 'coletado_em não é posterior a ingerido_em', count(*) = 0, count(*) || ' linhas'
-FROM oferta_turma WHERE coletado_em > ingerido_em + interval '1 minute';
+FROM reserva_vaga WHERE coletado_em > ingerido_em + interval '1 minute';
+
+INSERT INTO resultado
+SELECT 'esquema', 'triggers insert-only ativos (turma, turma_docente, reserva_vaga)', count(*) = 6,
+       count(*) || ' triggers'
+FROM pg_trigger tg
+JOIN pg_proc pr ON pr.oid = tg.tgfoid AND pr.proname = 'bloqueia_alteracao'
+WHERE tg.tgrelid IN ('turma'::regclass, 'turma_docente'::regclass, 'reserva_vaga'::regclass)
+  AND tg.tgenabled <> 'D';
 
 -- ============ Volume ============
--- Limiar: 4 anos da FCTE; ajuste ao volume medido.
 INSERT INTO resultado
-SELECT 'volume', 'oferta_turma com ao menos 1000 linhas', count(*) >= 1000, count(*) || ' linhas'
-FROM oferta_turma;
+SELECT 'volume', 'ao menos 600 turmas', count(*) >= 600, count(*) || ' turmas' FROM turma;
 
 INSERT INTO resultado
-SELECT 'volume', 'ao menos 8 semestres (4 anos completos)', count(*) >= 8, count(*) || ' semestres'
-FROM (SELECT DISTINCT ano, periodo FROM oferta_turma) s;
+SELECT 'volume', 'ao menos 1500 reservas', count(*) >= 1500, count(*) || ' reservas' FROM reserva_vaga;
 
 INSERT INTO resultado
-SELECT 'volume', 'sem semestre faltando no meio da série',
-       count(*) = (max(ano * 2 + periodo) - min(ano * 2 + periodo) + 1),
-       count(*) || ' semestres entre ' || min(ano) || ' e ' || max(ano)
-FROM (SELECT DISTINCT ano, periodo FROM oferta_turma) s;
+SELECT 'volume', 'ao menos 8 semestres consecutivos (4 anos completos)',
+       count(*) >= 8 AND count(*) = (max(ano * 2 + periodo) - min(ano * 2 + periodo) + 1),
+       count(*) || ' semestres, ' || min(ano) || ' a ' || max(ano)
+FROM (SELECT DISTINCT ano, periodo FROM turma) s;
 
 INSERT INTO resultado
-SELECT 'volume', 'os 5 cursos do Gama carregados', count(*) = 5, count(*) || ' cursos'
-FROM curso;
+SELECT 'volume', 'os 5 cursos têm reservas em todos os semestres', count(*) = 0,
+       coalesce(string_agg(codigo || ' ' || ano || '.' || periodo, ', '), 'todos ok')
+FROM curso c
+CROSS JOIN (SELECT DISTINCT ano, periodo FROM turma) s
+WHERE NOT EXISTS (
+    SELECT 1 FROM reserva_vaga rv JOIN turma t ON t.id = rv.turma_id
+    WHERE rv.curso_id = c.id AND t.ano = s.ano AND t.periodo = s.periodo
+);
+
+-- ============ Currículo ============
+INSERT INTO resultado
+SELECT 'currículo', 'todo curso tem currículo de referência', count(*) = 0,
+       coalesce(string_agg(c.codigo, ', '), 'todos ok')
+FROM curso c WHERE NOT EXISTS (SELECT 1 FROM curriculo_referencia cr WHERE cr.curso_id = c.id);
+
+-- A referência é fixa em 2026.1 (V005): nenhuma versão com vigência posterior
+-- pode aparecer, mesmo que o banco tenha semestres mais novos.
+INSERT INTO resultado
+SELECT 'currículo', 'currículo de referência fixo em 2026.1', count(*) = 0,
+       coalesce(string_agg(codigo || ' (' || inicio_vigencia_ano || '.' || inicio_vigencia_periodo || ')', ', '), 'todos ok')
+FROM curriculo_referencia
+WHERE (inicio_vigencia_ano, inicio_vigencia_periodo) > (2026, 1);
 
 INSERT INTO resultado
-SELECT 'volume', 'todo curso tem ao menos 20 disciplinas obrigatórias', count(*) = 0,
+SELECT 'currículo', 'view de referência não depende da tabela turma', count(*) = 0,
+       coalesce(string_agg(DISTINCT dep.relname, ', '), 'independente')
+FROM pg_depend d
+JOIN pg_rewrite r   ON r.oid = d.objid
+JOIN pg_class v     ON v.oid = r.ev_class AND v.relname = 'curriculo_referencia'
+JOIN pg_class dep   ON dep.oid = d.refobjid AND dep.relname = 'turma';
+
+INSERT INTO resultado
+SELECT 'currículo', 'currículo de referência com ao menos 30 obrigatórias', count(*) = 0,
        coalesce(string_agg(codigo || '=' || n, ', '), 'todos ok')
 FROM (
-    SELECT c.codigo, count(cd.disciplina_id) FILTER (WHERE cd.obrigatoria) AS n
-    FROM curso c LEFT JOIN curso_disciplina cd ON cd.curso_id = c.id
-    GROUP BY c.codigo
-) x WHERE n < 20;
+    SELECT cr.codigo, count(*) FILTER (WHERE cc.natureza = 'OBRIGATORIA') AS n
+    FROM curriculo_referencia cr JOIN curriculo_componente cc ON cc.curriculo_id = cr.id
+    GROUP BY cr.codigo
+) x WHERE n < 30;
 
 -- ============ Distribuição ============
--- Semestre com menos da metade da mediana indica raspagem parcial.
 INSERT INTO resultado
 SELECT 'distribuição', 'nenhum semestre com menos de 50% da mediana de turmas', count(*) = 0,
        coalesce(string_agg(ano || '.' || periodo || '=' || n, ', '), 'todos ok')
-FROM (SELECT ano, periodo, count(*) AS n FROM oferta_turma GROUP BY ano, periodo) s
+FROM (SELECT ano, periodo, count(*) AS n FROM turma GROUP BY ano, periodo) s
 WHERE n < 0.5 * (SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY n)
-                 FROM (SELECT count(*) AS n FROM oferta_turma GROUP BY ano, periodo) t);
+                 FROM (SELECT count(*) AS n FROM turma GROUP BY ano, periodo) t);
 
--- Semestres idênticos = filtro de ano/período ignorado na raspagem.
 INSERT INTO resultado
 SELECT 'distribuição', 'nenhum par de semestres com turmas idênticas', count(*) = 0, count(*) || ' repetições'
 FROM (
     SELECT h FROM (
-        SELECT md5(string_agg(disciplina_id || ':' || codigo_turma || ':' || vagas_ofertadas || ':' || vagas_ocupadas,
+        SELECT md5(string_agg(disciplina_id || ':' || codigo_turma || ':' || coalesce(horario, ''),
                               ',' ORDER BY disciplina_id, codigo_turma)) AS h
-        FROM oferta_turma GROUP BY ano, periodo
+        FROM turma GROUP BY ano, periodo
     ) s GROUP BY h HAVING count(*) > 1
 ) repetidos;
 
+-- Uma reserva maior que 200 vagas (o máximo observado no lote) indica erro de leitura.
 INSERT INTO resultado
-SELECT 'distribuição', 'turmas com 0 vagas ofertadas < 10%',
-       coalesce(avg((vagas_ofertadas = 0)::int), 0) < 0.10,
-       round(100 * coalesce(avg((vagas_ofertadas = 0)::int), 0), 1) || '%'
-FROM oferta_turma;
-
--- Ocupação acima de 1,5x a oferta sugere colunas de vagas lidas trocadas.
-INSERT INTO resultado
-SELECT 'distribuição', 'ocupação > 1,5x a oferta em menos de 2% das turmas',
-       coalesce(avg((vagas_ocupadas > 1.5 * vagas_ofertadas AND vagas_ofertadas > 0)::int), 0) < 0.02,
-       round(100 * coalesce(avg((vagas_ocupadas > 1.5 * vagas_ofertadas AND vagas_ofertadas > 0)::int), 0), 1) || '%'
-FROM oferta_turma;
-
-INSERT INTO resultado
-SELECT 'distribuição', 'há turnos DIURNO e NOTURNO na série', count(DISTINCT turno) FILTER (WHERE turno IN ('DIURNO', 'NOTURNO')) = 2,
-       string_agg(DISTINCT turno, ', ')
-FROM oferta_turma;
+SELECT 'distribuição', 'nenhuma reserva acima de 200 vagas', count(*) FILTER (WHERE vagas_reservadas > 200) = 0,
+       'máximo ' || coalesce(max(vagas_reservadas), 0)
+FROM reserva_vaga;
 
 -- ============ Dado faltante ============
 INSERT INTO resultado
-SELECT 'faltante', 'turmas SEM_HORARIO < 20%',
-       coalesce(avg((turno = 'SEM_HORARIO')::int), 0) < 0.20,
+SELECT 'faltante', 'turmas SEM_HORARIO < 5%',
+       coalesce(avg((turno = 'SEM_HORARIO')::int), 0) < 0.05,
        round(100 * coalesce(avg((turno = 'SEM_HORARIO')::int), 0), 1) || '%'
-FROM oferta_turma;
+FROM turma;
 
 INSERT INTO resultado
-SELECT 'faltante', 'turmas sem docente < 20%',
-       coalesce(avg((docente_id IS NULL)::int), 0) < 0.20,
-       round(100 * coalesce(avg((docente_id IS NULL)::int), 0), 1) || '%'
-FROM oferta_turma;
+SELECT 'faltante', 'turmas sem docente < 5%',
+       coalesce(avg((NOT EXISTS (SELECT 1 FROM turma_docente td WHERE td.turma_id = t.id))::int), 0) < 0.05,
+       round(100 * coalesce(avg((NOT EXISTS (SELECT 1 FROM turma_docente td WHERE td.turma_id = t.id))::int), 0), 1) || '%'
+FROM turma t;
+
+-- Informativo (sempre ok): a cobertura precisa aparecer, não ser escondida.
+INSERT INTO resultado
+SELECT 'faltante', 'cobertura de pré-requisitos (informativo)', TRUE,
+       count(*) FILTER (WHERE pre_requisito_coletado) || ' de ' || count(*) FILTER (WHERE unidade_id IS NOT NULL)
+       || ' componentes da FCTE'
+FROM disciplina;
 
 INSERT INTO resultado
-SELECT 'faltante', 'obrigatórias sem nenhuma turma em toda a série < 20%',
-       coalesce(avg(sem_oferta::int), 0) < 0.20,
-       round(100 * coalesce(avg(sem_oferta::int), 0), 1) || '%'
-FROM (
-    SELECT NOT EXISTS (SELECT 1 FROM oferta_turma ot WHERE ot.disciplina_id = cd.disciplina_id) AS sem_oferta
-    FROM curso_disciplina cd WHERE cd.obrigatoria
-) x;
+SELECT 'faltante', 'disciplinas de outras unidades sem carga horária (informativo)', TRUE,
+       count(*) FILTER (WHERE carga_horaria IS NULL) || ' de ' || count(*)
+FROM disciplina WHERE unidade_id IS NULL;
 
--- ============ Histórico e reprocessamento ============
--- Mesma regra de loader/semestres.py: jan-fev -> (ano-1).2 aberto; mar-jul -> ano.1; ago-dez -> ano.2.
+-- ============ Histórico ============
 INSERT INTO resultado
-SELECT 'histórico', 'nenhum semestre em andamento carregado', count(*) = 0,
-       coalesce(string_agg(DISTINCT ano || '.' || periodo, ', '), 'nenhum')
-FROM oferta_turma,
-     LATERAL (SELECT CASE WHEN extract(month FROM now()) <= 2 THEN (extract(year FROM now())::int - 1) * 2 + 2
-                          WHEN extract(month FROM now()) <= 7 THEN extract(year FROM now())::int * 2 + 1
-                          ELSE extract(year FROM now())::int * 2 + 2 END AS corrente) c
-WHERE ano * 2 + periodo >= c.corrente;
+SELECT 'histórico', 'toda turma tem semestre no calendário acadêmico', count(*) = 0,
+       coalesce(string_agg(DISTINCT t.ano || '.' || t.periodo, ', '), 'todas ok')
+FROM turma t
+LEFT JOIN semestre_letivo s ON s.ano = t.ano AND s.periodo = t.periodo
+WHERE s.ano IS NULL;
 
 INSERT INTO resultado
-SELECT 'histórico', 'trigger insert-only ativo em oferta_turma', count(*) = 2, count(*) || ' triggers'
-FROM pg_trigger WHERE tgrelid = 'oferta_turma'::regclass AND NOT tgisinternal AND tgenabled <> 'D';
+SELECT 'histórico', 'toda turma coletada depois do encerramento oficial do semestre', count(*) = 0,
+       coalesce(string_agg(DISTINCT t.ano || '.' || t.periodo, ', '), 'todas ok')
+FROM turma t
+JOIN semestre_letivo s ON s.ano = t.ano AND s.periodo = t.periodo
+WHERE t.coletado_em::date <= s.encerramento;
+
+INSERT INTO resultado
+SELECT 'histórico', 'semestres do calendário com fonte', count(*) FILTER (WHERE fonte_url NOT LIKE 'https://%') = 0,
+       count(*) || ' semestres'
+FROM semestre_letivo;
+
+INSERT INTO resultado
+SELECT 'histórico', 'trigger de semestre encerrado ativo em turma', count(*) = 1, count(*) || ' trigger'
+FROM pg_trigger
+WHERE tgrelid = 'turma'::regclass AND tgname = 'turma_exige_semestre_encerrado' AND tgenabled <> 'D';
 
 -- ============ Resultado ============
 SELECT grupo, teste, CASE WHEN ok THEN 'ok' ELSE 'FALHOU' END AS status, detalhe

@@ -42,14 +42,15 @@ services:
       DB_NAME: ofertas_unb
       DB_USER: g2
       DB_PASSWORD: g2_dev_only
-      SIGAA_UNIDADE: "CAMPUS UNB GAMA: FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA"
-      # Recorte: semestres encerrados, inclusive (o loader recusa semestre em andamento)
-      SIGAA_SEMESTRE_INICIO: "2022.1"
-      SIGAA_SEMESTRE_FIM: "2026.1"
-      # auto: raspa só o que falta em data/raw | 1: raspa tudo de novo | 0: nunca raspa
-      RASPAR: ${RASPAR:-auto}
-      DATA_DIR: /app/data/raw
+      # Lote versionado a carregar (pasta com SHA256SUMS.txt)
+      DATA_DIR: /app/data/coleta_publica_2026-09-28
+      # Datas oficiais de encerramento de cada semestre (SAA/UnB)
+      CALENDARIO: /app/data/calendario_academico.csv
+      # Recorte esperado no lote: semestres encerrados, inclusive
+      SEMESTRE_INICIO: "2022.1"
+      SEMESTRE_FIM: "2026.1"
       DEBUG_DIR: /app/debug
+      CONSULTAS_DIR: /app/consultas
     volumes:
       - ./data:/app/data
       - ./debug:/app/debug
