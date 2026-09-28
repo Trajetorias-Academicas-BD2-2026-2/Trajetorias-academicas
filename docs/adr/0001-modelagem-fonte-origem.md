@@ -2,7 +2,7 @@
 
 - **Status:** substituído pelo [ADR-0003](0003-reservas-por-curso-e-curriculo-versionado.md) em 2026-09-28
 - **Data:** 2026-09-28
-- **Decisores:** Squad G2 — Ana Joyce, Gustavo Alves, Gabriel Lima da Silva, Nathan Abreu, Guilherme Evangelista, Angélica Campos e Davi Araújo
+- **Decisores:** Squad G2 — ⟨Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo⟩
 
 > **Substituído antes da carga real.** A coleta de 28/09/2026 mostrou que a série de
 > vagas ocupadas não é pública (ver ADR-0003). Os campos de medição ficaram sem
