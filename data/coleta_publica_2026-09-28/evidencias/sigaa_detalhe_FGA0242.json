@@ -1,0 +1,336 @@
+[
+  {
+    "caption": "Dados Gerais do Componente Curricular",
+    "rows": [
+      [
+        "Tipo do Componente Curricular:",
+        "DISCIPLINA"
+      ],
+      [
+        "Modalidade de Educação:",
+        "Presencial"
+      ],
+      [
+        "Unidade Responsável:",
+        "CAMPUS UNB GAMA: FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIA - BRASÍLIA - 11.01.32"
+      ],
+      [
+        "Código:",
+        "FGA0242"
+      ],
+      [
+        "Nome:",
+        "TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES"
+      ],
+      [
+        "Pré-Requisitos:",
+        "( ( FGA0208 ) E ( FGA0238 OU FGA0314 ) )"
+      ],
+      [
+        "Co-Requisitos:",
+        "-"
+      ],
+      [
+        "Equivalências:",
+        "-"
+      ],
+      [
+        "Excluir da Avaliação Institucional:",
+        "Não"
+      ],
+      [
+        "Matriculável On-Line:",
+        "Sim"
+      ],
+      [
+        "Horário Flexível da Turma:",
+        "Não"
+      ],
+      [
+        "Horário Flexível do(a) Docente(s):",
+        "Sim"
+      ],
+      [
+        "Obrigatoriedade de Nota Final:",
+        "Sim"
+      ],
+      [
+        "Pode Criar Turma Sem Solicitação:",
+        "Sim"
+      ],
+      [
+        "Necessita de Orientador(a):",
+        "Não"
+      ],
+      [
+        "Possui Subturmas:",
+        "Não"
+      ],
+      [
+        "Exige Horário:",
+        "Sim"
+      ],
+      [
+        "Permite Múltiplas Aprovações:",
+        "Não"
+      ],
+      [
+        "Quantidade de Avaliações:",
+        "1"
+      ],
+      [
+        "Ementa/Descrição:",
+        "- Programação Defensiva.- Assertivas e Programação por Contrato.- Documentação de Código.- Tratamento de Erros e Depuração de Código.- Boas Práticas de Programação e Projeto.- Refatoração.- Frameworks.- Desenvolvimento Avançado de Software."
+      ],
+      [
+        "Cargas Horárias\nAula\n\nCarga Horária de Aula Teórica - Presencial \n30h\n\nCarga Horária de Aula Prática - Presencial \n30h\n\nCarga Horária de Aula Extensionista - Presencial \n0h\n\nSubtotal de Carga Horária de Aula - Presencial\n \n60h\n\nCarga Horária de Aula Teórica - a Distância \n0h\n\nCarga Horária de Aula Prática - a Distância \n0h\n\nCarga Horária de Aula Extensionista - a Distância \n0h\n\nSubtotal de Carga Horária de Aula - a Distância\n \n0h\n\nTotal de Carga Horária de Aula do Componente\n \n60h\n\nTotal de Carga Horária do Componente\n \n60h"
+      ],
+      [
+        "Outros componentes que têm esse componente como equivalente\nFGA0241 - DESENVOLVIMENTO AVANÇADO DE SOFTWARE"
+      ],
+      [
+        "Outros componentes que têm esse componente como pré-requisito\nFGA0206 - ENGENHARIA DE PRODUTO DE SOFTWARE\nFGA0519 - MONITORIA EM TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES\nFGA0316 - ENGENHARIA DE PRODUTO DE SOFTWARE"
+      ],
+      [
+        "Histórico de Pré-Requisitos\nExpressão de Pré-Requisito\tStatus\tInício da Vigência\tFim da Vigência\n( ( FGA0208 ) E ( FGA0238 OU FGA0314 ) )\tATIVO\t22/09/2024\t\n( ( FGA0208 E FGA0238 ) )\tINATIVO\t01/08/2019\t21/09/2024"
+      ],
+      [
+        "Currículos\nCódigo\tAno.Período de Implementação\tMatriz Curricular\tObrigatória\tPeríodo\tAtivo\n6360/2\t2024.2\tENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D\tSim\t7\tSim\n6360/1\t2017.1\tENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D\tNão\t7\tNão\n6297/-3\t2014.2\tENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6297/-4\t2013.2\tENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6360/-2\t2008.2\tENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6131/-3\t2013.2\tENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6131/-4\t2008.2\tENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6009/1\t2018.2\tENGENHARIA/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n6009/-2\t2008.2\tENGENHARIA/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n6297/-5\t2008.2\tENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6289/-4\t2008.2\tENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n6289/-2\t2016.2\tENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n6131/-2\t2016.1\tENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão\n6289/-3\t2013.2\tENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n60836/-2\t2012.1\tENGENHARIA AEROESPACIAL/FCTE - Bacharelado - Presencial - D\tNão\t0\tSim\n6297/-2\t2015.2\tENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D\tNão\t0\tNão"
+      ]
+    ]
+  },
+  {
+    "caption": "Cargas Horárias",
+    "rows": [
+      [
+        "Aula"
+      ],
+      [
+        "Carga Horária de Aula Teórica - Presencial",
+        "30h"
+      ],
+      [
+        "Carga Horária de Aula Prática - Presencial",
+        "30h"
+      ],
+      [
+        "Carga Horária de Aula Extensionista - Presencial",
+        "0h"
+      ],
+      [
+        "Subtotal de Carga Horária de Aula - Presencial",
+        "60h"
+      ],
+      [
+        "Carga Horária de Aula Teórica - a Distância",
+        "0h"
+      ],
+      [
+        "Carga Horária de Aula Prática - a Distância",
+        "0h"
+      ],
+      [
+        "Carga Horária de Aula Extensionista - a Distância",
+        "0h"
+      ],
+      [
+        "Subtotal de Carga Horária de Aula - a Distância",
+        "0h"
+      ],
+      [
+        "Total de Carga Horária de Aula do Componente",
+        "60h"
+      ],
+      [
+        "Total de Carga Horária do Componente",
+        "60h"
+      ]
+    ]
+  },
+  {
+    "caption": "Outros componentes que têm esse componente como equivalente",
+    "rows": [
+      [
+        "FGA0241 - DESENVOLVIMENTO AVANÇADO DE SOFTWARE"
+      ]
+    ]
+  },
+  {
+    "caption": "Outros componentes que têm esse componente como pré-requisito",
+    "rows": [
+      [
+        "FGA0206 - ENGENHARIA DE PRODUTO DE SOFTWARE"
+      ],
+      [
+        "FGA0519 - MONITORIA EM TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES"
+      ],
+      [
+        "FGA0316 - ENGENHARIA DE PRODUTO DE SOFTWARE"
+      ]
+    ]
+  },
+  {
+    "caption": "Histórico de Pré-Requisitos",
+    "rows": [
+      [
+        "Expressão de Pré-Requisito",
+        "Status",
+        "Início da Vigência",
+        "Fim da Vigência"
+      ],
+      [
+        "( ( FGA0208 ) E ( FGA0238 OU FGA0314 ) )",
+        "ATIVO",
+        "22/09/2024",
+        ""
+      ],
+      [
+        "( ( FGA0208 E FGA0238 ) )",
+        "INATIVO",
+        "01/08/2019",
+        "21/09/2024"
+      ]
+    ]
+  },
+  {
+    "caption": "Currículos",
+    "rows": [
+      [
+        "Código",
+        "Ano.Período de Implementação",
+        "Matriz Curricular",
+        "Obrigatória",
+        "Período",
+        "Ativo"
+      ],
+      [
+        "6360/2",
+        "2024.2",
+        "ENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D",
+        "Sim",
+        "7",
+        "Sim"
+      ],
+      [
+        "6360/1",
+        "2017.1",
+        "ENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "7",
+        "Não"
+      ],
+      [
+        "6297/-3",
+        "2014.2",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6297/-4",
+        "2013.2",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6360/-2",
+        "2008.2",
+        "ENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6131/-3",
+        "2013.2",
+        "ENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6131/-4",
+        "2008.2",
+        "ENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6009/1",
+        "2018.2",
+        "ENGENHARIA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "6009/-2",
+        "2008.2",
+        "ENGENHARIA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "6297/-5",
+        "2008.2",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6289/-4",
+        "2008.2",
+        "ENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "6289/-2",
+        "2016.2",
+        "ENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "6131/-2",
+        "2016.1",
+        "ENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ],
+      [
+        "6289/-3",
+        "2013.2",
+        "ENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "60836/-2",
+        "2012.1",
+        "ENGENHARIA AEROESPACIAL/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Sim"
+      ],
+      [
+        "6297/-2",
+        "2015.2",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D",
+        "Não",
+        "0",
+        "Não"
+      ]
+    ]
+  }
+]

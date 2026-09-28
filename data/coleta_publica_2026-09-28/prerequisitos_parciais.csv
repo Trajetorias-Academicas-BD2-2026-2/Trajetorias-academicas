@@ -1,0 +1,24 @@
+disciplina_codigo,pre_requisito_expressao,co_requisito_expressao,coletado_em,cobertura
+DPG1322,-,-,2026-09-28T13:02:58.080Z,PARCIAL - apenas componentes detalhados
+FCTE0001,( ( FGA0146 OU FGA0147 ) E ( FGA0085 ) ),-,2026-09-28T13:03:26.547Z,PARCIAL - apenas componentes detalhados
+FCTE0002,-,-,2026-09-28T13:03:29.033Z,PARCIAL - apenas componentes detalhados
+FCTE0003,-,-,2026-09-28T13:03:54.076Z,PARCIAL - apenas componentes detalhados
+FCTE0004,-,-,2026-09-28T13:03:56.484Z,PARCIAL - apenas componentes detalhados
+FCTE0005,-,-,2026-09-28T13:03:58.815Z,PARCIAL - apenas componentes detalhados
+FCTE0006,-,-,2026-09-28T13:04:01.310Z,PARCIAL - apenas componentes detalhados
+FCTE0007,-,-,2026-09-28T13:04:03.660Z,PARCIAL - apenas componentes detalhados
+FCTE0008,( FGA0146 ),-,2026-09-28T13:04:06.076Z,PARCIAL - apenas componentes detalhados
+FCTE0009,( FGA0045 ),-,2026-09-28T13:04:08.462Z,PARCIAL - apenas componentes detalhados
+FCTE0010,( FGA0179 ),-,2026-09-28T13:04:10.823Z,PARCIAL - apenas componentes detalhados
+FCTE0011,( FGA0119 E FGA0120 ),-,2026-09-28T13:04:13.256Z,PARCIAL - apenas componentes detalhados
+FCTE0012,( FGA0119 E FGA0120 ),-,2026-09-28T13:04:15.732Z,PARCIAL - apenas componentes detalhados
+FCTE0013,-,-,2026-09-28T13:04:18.066Z,PARCIAL - apenas componentes detalhados
+FCTE0014,( FGA0204 ),-,2026-09-28T13:04:20.570Z,PARCIAL - apenas componentes detalhados
+FCTE0015,-,-,2026-09-28T13:04:23.000Z,PARCIAL - apenas componentes detalhados
+FCTE0016,( FGA0191 ),-,2026-09-28T13:04:25.508Z,PARCIAL - apenas componentes detalhados
+FCTE0017,( FGA0078 E FGA0075 ),-,2026-09-28T13:04:27.905Z,PARCIAL - apenas componentes detalhados
+FCTE0018,( FGA0078 E FGA0075 ),-,2026-09-28T13:04:30.302Z,PARCIAL - apenas componentes detalhados
+FGA0001,( ( FGA0206 ) OU ( CIC0140 ) OU ( ADM0092 ) OU ( EPR0072 ) ),-,2026-09-28T13:04:32.681Z,PARCIAL - apenas componentes detalhados
+FGA0003,( ( FGA0147 ) OU ( FGA0146 ) ),-,2026-09-28T13:04:35.016Z,PARCIAL - apenas componentes detalhados
+FGA0004,( ( FGA0172 ) ),-,2026-09-28T13:04:37.358Z,PARCIAL - apenas componentes detalhados
+FGA0242,( ( FGA0208 ) E ( FGA0238 OU FGA0314 ) ),-,,PARCIAL - apenas componentes detalhados

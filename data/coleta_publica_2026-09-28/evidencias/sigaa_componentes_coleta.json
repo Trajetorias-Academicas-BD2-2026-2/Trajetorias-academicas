@@ -1,0 +1,4101 @@
+{
+  "coletado_em": "2026-09-28T13:01:58.801Z",
+  "url": "https://sigaa.unb.br/sigaa/public/componentes/busca_componentes.jsf",
+  "rows": [
+    [
+      "DPG1322",
+      "TÓPICOS ESPECIAIS EM SISTEMAS BIOMÉDICOS ELETRÔNICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0001",
+      "FUNDAMENTOS LÓGICOS DE INTELIGÊNCIA ARTIFICIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0002",
+      "PARADIGMAS DE SOLUÇÃO DE PROBLEMAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0003",
+      "ESTRUTURAS DE DADOS PARA COMPETIÇÕES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0004",
+      "MATEMÁTICA PARA COMPETIÇÕES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0005",
+      "ALGORITMOS EM GRAFOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0006",
+      "GEOMETRIA COMPUTACIONAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0007",
+      "ALGORITMOS EM STRINGS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0008",
+      "MONITORIA EM ESTRUTURAS DE DADOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FCTE0009",
+      "ESTIMAÇÃO ÓTIMA DE SISTEMAS DINÂMICOS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0010",
+      "FADIGA DE ESTRUTURAS AERONÁUTICAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0011",
+      "GEOLOCALIZAÇÃO POR SATELITES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0012",
+      "INTRODUÇÃO À RADIO ASTRONOMIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0013",
+      "FUNDAMENTOS DE DETERMINAÇÃO E CONTROLE DE ATITUDE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0014",
+      "DINÂMICA DOS FLUIDOS COMPUTACIONAL APLICADA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0015",
+      "TUTORIA ELOS - FACULDADE DE CIÊNCIAS E TECNOLOGIAS EM ENGENHARIAS",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0016",
+      "ANÁLISE TÉRMICA DE MATERIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0017",
+      "TECNOLOGIAS DE FABRICAÇÃO 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FCTE0018",
+      "TECNOLOGIAS DE FABRICAÇÃO 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0001",
+      "CONTRATAÇÃO DE SERVIÇOS DE TECNOLOGIA DA INFORMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0003",
+      "COMPILADORES 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0004",
+      "TÉCNICAS DE MEDIÇÃO FUNCIONAL E ESTIMATIVAS DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0005",
+      "MATEMÁTICA APLICADA A SISTEMAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0006",
+      "FUNDAMENTOS DE EQUAÇÕES DIFERENCIAIS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0007",
+      "CONFIABILIDADE DE COMPONENTES E SISTEMAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0008",
+      "SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0009",
+      "TRABALHO DE CONCLUSÃO DE CURSO 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0010",
+      "PRINCÍPIO DE COMUNICAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0011",
+      "TRABALHO DE CONCLUSÃO DE CURSO 2",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0012",
+      "SISTEMAS DE CONTROLE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0013",
+      "ANATOMIA E FISIOLOGIA HUMANA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0014",
+      "PROCESSAMENTO DE SINAIS BIOLÓGICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0015",
+      "PROCESSAMENTO DIGITAL DE IMAGENS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0016",
+      "TÓPICOS ESPECIAL EM INSTRUMENTAÇÃO BIOMÉDICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0017",
+      "PROJETOS DE CIRCUITOS INTEGRADOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0019",
+      "TÓPICOS EM SISTEMAS DE COMPUTAÇÃO DE ALTO DESEMPENHO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0020",
+      "PROJETO E ANÁLISE DE ALGORITMO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0021",
+      "ESTÁGIO SUPERVISIONADO",
+      "DISCIPLINA",
+      "210h",
+      ""
+    ],
+    [
+      "FGA0023",
+      "DINÂMICA DOS MECANISMOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0024",
+      "MODELAGEM E SIMULAÇÃO DE SISTEMAS ENERGÉTICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0025",
+      "SISTEMAS DE ENERGIA SOLAR E EÓLICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0026",
+      "FUNDAMENTOS DE ARQUITETURA DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0027",
+      "PRINCÍPIOS DE ROBÓTICA EDUCACIONAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0028",
+      "PROGRAMAÇÃO PARA COMPETIÇÕES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0030",
+      "ESTRUTURAS DE DADOS 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0031",
+      "SEMINÁRIOS EM ENGENHARIA DE SOFTWARE",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0033",
+      "TÓPICOS ESPECIAIS EM FÍSICA APLICADA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0034",
+      "TÓPICOS ESPECIAIS EM MATEMÁTICA APLICADA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0035",
+      "ANÁLISE DE SISTEMAS DE ENERGIA ELÉTRICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0036",
+      "PRÉ-CÁLCULO PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0037",
+      "TÓPICOS ESPECIAIS EM ENGENHARIA AEROESPACIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0038",
+      "AERODINÂMICA DE SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0039",
+      "MECÂNICA DE ESTRUTURAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0040",
+      "SISTEMAS DE CONTROLE AUTOMOTIVO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0041",
+      "TÓPICOS ESPECIAIS EM JOGOS DIGITAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0042",
+      "TÓPICOS ESPECIAIS EM SISTEMAS CRÍTICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0043",
+      "DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0044",
+      "PROJETO DE SISTEMAS DE CONTROLE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0045",
+      "MECÂNICA DO VÔO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0046",
+      "MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0047",
+      "PROCESSOS PETROQUÍMICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0048",
+      "MECÂNICA DO VOO ESPACIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0049",
+      "PROJETO DE SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0050",
+      "DINÂMICA DE ESTRUTURAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0052",
+      "PROPULSÃO AEROESPACIAL",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0053",
+      "TÓPICOS ESPECIAIS EM PROGRAMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0054",
+      "TÓPICOS ESPECIAIS EM GOVERNANÇA DE TECNOLOGIA DA INFORMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0055",
+      "TECNOLOGIAS DE FABRICAÇÃO 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0056",
+      "TECNOLOGIAS DE FABRICAÇÃO 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0057",
+      "ELETRÔNICA DE POTÊNCIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0058",
+      "CRIPTOGRAFIA E SEGURANÇA DE REDES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0060",
+      "SISTEMAS DE BANCO DE DADOS 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0061",
+      "FÍSICA PARA JOGOS ELETRÔNICOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0062",
+      "PROJETO DE SISTEMAS DE OBSERVAÇÃO DA TERRA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0063",
+      "PROPULSÃO AERONÁUTICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0064",
+      "PROPULSÃO QUÍMICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0065",
+      "PROPULSÃO ELÉTRICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0066",
+      "FUNDAMENTOS DE VARIÁVEL COMPLEXA PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0067",
+      "TEORIA DE CIRCUITOS ELETRÔNICOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0068",
+      "TEORIA DE CIRCUITOS ELETRÔNICOS 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0069",
+      "PRÁTICA DE CIRCUITOS ELETRÔNICOS 1",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0070",
+      "PRÁTICA DE CIRCUITOS ELETRÔNICOS 2",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0071",
+      "PRÁTICA DE ELETRÔNICA DIGITAL 1",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0072",
+      "PRÁTICA DE ELETRÔNICA DIGITAL 2",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0073",
+      "TEORIA DE ELETRÔNICA DIGITAL 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0074",
+      "TEORIA DE ELETRÔNICA DIGITAL 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0075",
+      "LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO",
+      "DISCIPLINA",
+      "15h",
+      ""
+    ],
+    [
+      "FGA0076",
+      "EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0077",
+      "INTRODUÇÃO AO DESGASTE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0078",
+      "TEORIA DE MATERIAIS DE CONSTRUÇÃO",
+      "DISCIPLINA",
+      "45h",
+      ""
+    ],
+    [
+      "FGA0080",
+      "CONTROLE DE SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0082",
+      "ENGENHARIA DE SISTEMAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0083",
+      "APRENDIZADO DE MÁQUINA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0084",
+      "DESENVOLVIMENTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0085",
+      "MATEMÁTICA DISCRETA 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0086",
+      "TEORIA DE ELETRICIDADE APLICADA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0087",
+      "LABORATÓRIO DE ELETRICIDADE APLICADA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0088",
+      "TEORIA DE SISTEMAS DE CONVERSÃO DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0089",
+      "LABORATÓRIO DE SISTEMAS DE CONVERSÃO DE ENERGIA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0090",
+      "ONDULATÓRIA E FÍSICA TÉRMICA PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0091",
+      "MÁQUINAS DE FLUIDO",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0092",
+      "PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0093",
+      "PRINCÍPIOS DE CONTROLE",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0094",
+      "ANTENAS IMPRESSAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0095",
+      "CODIFICAÇÃO E COMPRESSÃO DE SINAIS, IMAGENS E VÍDEO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0096",
+      "ELETRÔNICA EMBARCADA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0097",
+      "ELETRÔNICA DE RÁDIO FREQUÊNCIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0098",
+      "PRÁTICA DE CIRCUITOS ELETRÔNICOS 3",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0099",
+      "TEORIA DE CIRCUITOS ELETRÔNICOS 3",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0100",
+      "PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0101",
+      "TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0102",
+      "SINAIS E SISTEMAS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0103",
+      "SISTEMAS OPERACIONAIS EMBARCADOS",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0104",
+      "QUÍMICA ORGÂNICA APLICADA À ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0105",
+      "TÓPICOS ESPECIAIS 2 EM ENGENHARIA AEROESPACIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0106",
+      "TÓPICOS ESPECIAIS 3 EM ENGENHARIA AEROESPACIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0107",
+      "LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0108",
+      "MATEMÁTICA DISCRETA 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0109",
+      "FUNDAMENTOS DE SISTEMAS EMBARCADOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0110",
+      "COMPILADORES 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0111",
+      "INTRODUÇÃO À WEB SEMÂNTICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0112",
+      "QUALIDADE DE SOFTWARE 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0113",
+      "FÍSICA PARA JOGOS ELETRÔNICOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0114",
+      "FÍSICA PARA JOGOS ELETRÔNICOS 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0115",
+      "INFORMAÇÃO, COMUNICAÇÃO E A SOCIEDADE DO CONHECIMENTO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0116",
+      "ELETRÔNICA DE ALTA FREQUÊNCIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0117",
+      "FUNDAMENTOS DE ENERGIA NUCLEAR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0118",
+      "SISTEMAS DE INFORMAÇÃO GEOGRÁFICA PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0119",
+      "TEORIA DE ELETROMAGNETISMO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0120",
+      "PRÁTICA DE ELETROMAGNETISMO",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0121",
+      "TÓPICOS ESPECIAIS 4 EM ENGENHARIA AEROESPACIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0122",
+      "EFICIÊNCIA ENERGÉTICA EM INSTALAÇÕES ELÉTRICAS INDUSTRIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0123",
+      "CÁLCULO 1 PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0124",
+      "PROJETO DE ALGORITMOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0125",
+      "INTRODUÇÃO À GEOMETRIA ANALÍTICA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0126",
+      "CÁLCULO 2 PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0127",
+      "EQUAÇÕES DIFERENCIAIS ORDINÁRIAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0128",
+      "CÁLCULO 3 PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0129",
+      "PROCESSAMENTO DIGITAL DE SINAIS FINANCEIROS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0130",
+      "REGULAÇÃO AMBIENTAL NO SETOR ENERGÉTICO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0131",
+      "ENGENHARIA DE SOFTWARE AUTOMOTIVO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0132",
+      "INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0133",
+      "ENGENHARIA ECONÔMICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0134",
+      "TÓPICOS ESPECIAIS DE ENGENHARIA DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0135",
+      "SISTEMAS DE BANCOS DE DADOS",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0137",
+      "SISTEMAS DE BANCO DE DADOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0138",
+      "MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0139",
+      "MATERIAIS DE CONSTRUÇÃO DE ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0141",
+      "GESTÃO AMBIENTAL NO SETOR ENERGÉTICO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0142",
+      "FUNDAMENTOS DE ARQUITETURA DE COMPUTADORES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0143",
+      "FUNDAMENTOS DA TEORIA ELETROMAGNÉTICA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0144",
+      "FÍSICA MODERNA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0146",
+      "ESTRUTURAS DE DADOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0147",
+      "ESTRUTURA DE DADOS E ALGORITMOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0148",
+      "ENGENHARIA DE SEGURANÇA DO TRABALHO",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0150",
+      "PROJETO INTEGRADOR DE ENGENHARIA 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0152",
+      "ERGONOMIA DO PRODUTO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0154",
+      "MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0155",
+      "INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0156",
+      "COMBUSTÍVEIS E BIOCOMBUSTÍVEIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0157",
+      "PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0158",
+      "ORIENTAÇÃO A OBJETOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0159",
+      "ESTRUTURAS MATEMÁTICAS PARA COMPUTAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0160",
+      "MÉTODOS NUMÉRICOS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0161",
+      "ENGENHARIA E AMBIENTE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0163",
+      "INTRODUÇÃO À ENGENHARIA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0164",
+      "HUMANIDADES E CIDADANIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0165",
+      "PROCESSO DE DESENVOLVIMENTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0166",
+      "ELEMENTOS E MÉTODOS EM ELETRÔNICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0167",
+      "SISTEMAS AUTOMOTIVOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0168",
+      "DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0169",
+      "FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0170",
+      "FUNDAMENTOS DE SISTEMAS OPERACIONAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0171",
+      "TÉCNICAS DE PROGRAMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0172",
+      "REQUISITOS DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0173",
+      "INTERAÇÃO HUMANO COMPUTADOR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0174",
+      "DESENVOLVIMENTO SUSTENTÁVEL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0175",
+      "ENGENHARIA DE PETRÓLEO E GÁS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0177",
+      "ANÁLISE INSTRUMENTAL DE COMBUSTÍVEIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0179",
+      "MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0180",
+      "PROCESSOS DE FABRICAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0181",
+      "INOVAÇÃO",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0182",
+      "MICROPROCESSADORES E MICROCONTROLADORES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0183",
+      "MATERIAIS ELÉTRICOS E MAGNÉTICOS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0184",
+      "GESTÃO DA PRODUÇÃO E QUALIDADE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0186",
+      "ELETRICIDADE APLICADA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0187",
+      "MÉTODOS MATEMÁTICOS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0188",
+      "MÉTODOS EXPERIMENTAIS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0190",
+      "PROJETO DE ELEMENTOS AUTOMOTIVOS",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0191",
+      "MATERIAIS COMPOSTOS E PLÁSTICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0194",
+      "ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0195",
+      "GESTÃO DA PRODUÇÃO AUTOMOTIVA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0196",
+      "CIRCUITOS ELETRÔNICOS 1",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0197",
+      "SISTEMAS DE CONTROLE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0198",
+      "PROJETO COM CIRCUITOS RECONFIGURAVEIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0199",
+      "PRINCÍPIOS DE COMUNICAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0200",
+      "ENGENHARIA DE PRODUTO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0201",
+      "PROJETO DE CIRCUITOS INTEGRADOS DIGITAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0202",
+      "INFORMÁTICA EM SAÚDE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0203",
+      "PLANEJAMENTO E GESTÃO DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0204",
+      "DINÂMICA DOS FLUÍDOS",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0206",
+      "ENGENHARIA DE PRODUTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0208",
+      "ARQUITETURA E DESENHO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0209",
+      "MEDIÇÃO E ANÁLISE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0210",
+      "PARADIGMAS DE PROGRAMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0211",
+      "FUNDAMENTOS DE REDES DE COMPUTADORES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0212",
+      "MODELAGEM DE PROCESSOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0213",
+      "SISTEMAS CRÍTICOS E TOLERÂNCIA A FALHAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0214",
+      "TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0215",
+      "PROJETO DE CIRCUITOS ELETRÔNICOS INTEGRADOS 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0217",
+      "CIRCUITOS ELETRÔNICOS 2",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0218",
+      "INSTRUMENTAÇÃO ELETRÔNICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0219",
+      "PROCESSAMENTO DE SINAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0220",
+      "SISTEMAS EMBARCADOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0221",
+      "INTELIGÊNCIA ARTIFICIAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0222",
+      "INSTRUMENTAÇÃO BIOMÉDICA 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0223",
+      "GESTÃO DE PROJETOS EM ENGENHARIA BIOMÉDICA",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0224",
+      "COMUNICAÇÕES DIGITAIS PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0226",
+      "ELETRÔNICA VEICULAR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0228",
+      "PROJETO DE SISTEMAS AUTOMOTIVOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0229",
+      "ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0230",
+      "DINÂMICA DE VEÍCULOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0232",
+      "INTEGRAÇÃO E TESTES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0233",
+      "SENSORES E TRANSDUTORES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0235",
+      "TÓPICOS ESPECIAIS 1 EM ENGENHARIA DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0236",
+      "BIORREFINARIAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0238",
+      "TESTES DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0240",
+      "GERÊNCIA DE CONFIGURAÇÃO E EVOLUÇÃO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0242",
+      "TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0244",
+      "PROGRAMAÇÃO PARA SISTEMAS PARALELOS E DISTRIBUÍDOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0245",
+      "GERÊNCIA DE CONFIGURAÇÃO DE SOFTWARE",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0246",
+      "MÉTODOS FORMAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0247",
+      "MÁQUINAS DE FLUXO",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0248",
+      "SISTEMAS DE PROPULSÃO HÍBRIDOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0249",
+      "DESENVOLVIMENTO AVANÇADO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0250",
+      "PROJETO INTEGRADOR DE ENGENHARIA 2",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0251",
+      "CENTRAIS DE GERAÇÃO TERMOELÉTRICA",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0252",
+      "SISTEMAS HIDROELÉTRICOS",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0253",
+      "INSTRUMENTAÇÃO E SISTEMAS DE CONTROLE",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0254",
+      "CIÊNCIAS AEROESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0255",
+      "CIRCUITOS ELETRÔNICOS 3",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0256",
+      "PROJETO DE SENSORES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0257",
+      "INTEGRIDADES DE SINAIS E DESIGN DE CIRCUITOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0258",
+      "INSTRUMENTAÇÃO BIOMÉDICA 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0259",
+      "MODELAGEM DE SISTEMAS BIOLÓGICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0260",
+      "TÓPICOS AVANÇADOS EM ELETROMAGNETISMO APLICADO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0261",
+      "TÓPICOS ESPECIAIS EM ELETRONICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0262",
+      "TRANSMISSÃO E DISTRIBUIÇÃO DE ENERGIA ELÉTRICA",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0263",
+      "INTRODUÇÃO AOS JOGOS ELETRÔNICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0264",
+      "INTRODUÇÃO A COMPUTAÇÃO GRÁFICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0265",
+      "ECONOMIA DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0266",
+      "ACÚSTICA E VIBRAÇÕES VEICULARES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0267",
+      "PROJETO DE ESTRUTURAS DE VEICULOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0268",
+      "ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0270",
+      "SISTEMAS HIDRÁULICOS E PNEUMÁTICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0271",
+      "PROJETO DE VEÍCULOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0272",
+      "DINÂMICA MULTICORPOS VEICULAR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0273",
+      "MELHORIA DE PROCESSOS DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0274",
+      "PRODUTIVIDADE E PROFISSIONALISMO EM ENGENHARIA DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0275",
+      "ENGENHARIA DE SOFTWARE EXPERIMENTAL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0276",
+      "COMPUTAÇÃO EM NUVEM",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0278",
+      "QUALIDADE DE SOFTWARE 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0279",
+      "PROGRAMAÇÃO WEB",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0280",
+      "PROJETO DE CIRCUITOS ELETRÔNICOS INTEGRADOS 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0281",
+      "SISTEMAS DE PROPULSÃO LIQUIDA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0282",
+      "FUNDAMENTOS DO PROJETO DE AERONAVES",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0283",
+      "MECÂNICA DOS MATERIAIS COMPÓSITOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0284",
+      "ENGENHARIA DE MANUTENÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0285",
+      "INTRODUÇÃO À MECÂNICA DA FRATURA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0286",
+      "FUNDAMENTOS DO MÉTODO DOS ELEMENTOS FINITOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0287",
+      "TRABALHO DE CONCLUSÃO DE CURSO 1",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0288",
+      "ESTÁGIO SUPERVISIONADO",
+      "ATIVIDADE",
+      "210h",
+      ""
+    ],
+    [
+      "FGA0289",
+      "SISTEMAS DE PROPULSÃO SÓLIDA E HÍBRIDA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0290",
+      "TRABALHO DE CONCLUSÃO DE CURSO 2",
+      "ATIVIDADE",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0291",
+      "MECÂNICA DE ESTRUTURAS AERONÁUTICAS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0292",
+      "INTRODUÇÃO À FOTÔNICA E OPTRÔNICA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0293",
+      "FUNDAMENTOS DE MÉTODOS DE OTIMIZAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0294",
+      "IMPACTOS SOCIAIS DA ENGENHARIA AEROESPACIAL",
+      "DISCIPLINA",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0295",
+      "ATIVIDADE DE EXTENSÃO 1",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0296",
+      "ATIVIDADE DE EXTENSÃO 2",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0297",
+      "ATIVIDADE DE EXTENSÃO 3",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0298",
+      "ATIVIDADE DE EXTENSÃO 4",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0299",
+      "SISTEMAS BIOINSPIRADOS APLICADOS A ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0300",
+      "TELECOMUNICAÇÕES ESPACIAIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0301",
+      "INSTALAÇÕES ELÉTRICAS EM SISTEMAS DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0302",
+      "ENGENHARIA E AMBIENTE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0303",
+      "PROJETO INTEGRADOR DE ENGENHARIA 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0304",
+      "PROJETO INTEGRADOR DE ENGENHARIA 2",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0305",
+      "ECONOMIA DE ENERGIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0306",
+      "ENGENHARIA NUCLEAR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0307",
+      "GESTÃO DA PRODUÇÃO E QUALIDADE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0308",
+      "ELETRÔNICA EMBARCADA",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0309",
+      "SISTEMAS OPERACIONAIS EMBARCADOS",
+      "DISCIPLINA",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0310",
+      "PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0311",
+      "PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 2",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0312",
+      "MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0313",
+      "REQUISITOS DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0314",
+      "TESTES DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0315",
+      "QUALIDADE DE SOFTWARE 1",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0316",
+      "ENGENHARIA DE PRODUTO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0317",
+      "GERÊNCIA DE CONFIGURAÇÃO E EVOLUÇÃO DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0318",
+      "ATIVIDADE DE EXTENSÃO ENGENHARIA DE SOFTWARE",
+      "ATIVIDADE",
+      "45h",
+      ""
+    ],
+    [
+      "FGA0319",
+      "GOVERNANÇA EM TECNOLOGIA DA INFORMAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0320",
+      "FELICIDADE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0321",
+      "MELHORIA DE PROCESSOS DE SOFTWARE",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0322",
+      "INTRODUÇÃO À GAMIFICAÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0323",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "15h",
+      ""
+    ],
+    [
+      "FGA0324",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0325",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "45h",
+      ""
+    ],
+    [
+      "FGA0326",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0327",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "90h",
+      ""
+    ],
+    [
+      "FGA0328",
+      "ATIVIDADE COMPLEMENTAR",
+      "ATIVIDADE",
+      "120h",
+      ""
+    ],
+    [
+      "FGA0329",
+      "SISTEMAS HIDROELÉTRICOS",
+      "DISCIPLINA",
+      "75h",
+      ""
+    ],
+    [
+      "FGA0330",
+      "COMBUSTÍVEIS E BIOCOMBUSTÍVEIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0331",
+      "ATIVIDADE DE EXTENSÃO 4",
+      "ATIVIDADE",
+      "45h",
+      ""
+    ],
+    [
+      "FGA0332",
+      "ANÁLISE INSTRUMENTAL DE COMBUSTÍVEIS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0333",
+      "DESENVOLVIMENTO SUSTENTÁVEL",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0334",
+      "SISTEMAS DE INFORMAÇÃO GEOGRÁFICA PARA ENGENHARIA",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0335",
+      "FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0336",
+      "PROCESSOS DE REFINO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0337",
+      "FUNDAMENTOS DE SOFTWARE AUTOMOTIVO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0338",
+      "ENGENHARIA DE MANUTENÇÃO",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0339",
+      "FUNDAMENTOS DE VEÍCULOS ELÉTRICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0340",
+      "ATIVIDADE DE EXTENSÃO 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0341",
+      "ATIVIDADE DE EXTENSÃO 3",
+      "ATIVIDADE",
+      "15h",
+      ""
+    ],
+    [
+      "FGA0342",
+      "ATIVIDADE DE EXTENSÃO 4",
+      "ATIVIDADE",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0379",
+      "FUNDAMENTOS DE PROPULSÃO ELÉTRICA VEICULAR",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0380",
+      "PROCESSOS ESTOCÁSTICOS",
+      "DISCIPLINA",
+      "60h",
+      ""
+    ],
+    [
+      "FGA0381",
+      "MONITORIA EM COMPILADORES 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0382",
+      "MONITORIA EM PROJETOS DE CIRCUITOS INTEGRADOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0383",
+      "MONITORIA EM DINÂMICA DOS MECANISMOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0384",
+      "MONITORIA EM AERODINÂMICA DE SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0385",
+      "MONITORIA EM MECÂNICA DE ESTRUTURAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0386",
+      "MONITORIA EM DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0387",
+      "MONITORIA EM PROCESSOS PETROQUÍMICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0388",
+      "MONITORIA EM DINÂMICA DE ESTRUTURAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0389",
+      "MONITORIA EM SISTEMAS DE BANCO DE DADOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0390",
+      "MONITORIA EM TEORIA DE CIRCUITOS ELETRÔNICOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0391",
+      "MONITORIA EM PRÁTICA DE CIRCUITOS ELETRÔNICOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0392",
+      "MONITORIA EM PRÁTICA DE ELETRÔNICA DIGITAL 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0393",
+      "MONITORIA EM TEORIA DE ELETRÔNICA DIGITAL 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0394",
+      "MONITORIA EM DESENVOLVIMENTO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0395",
+      "MONITORIA EM PRINCÍPIOS DE CONTROLE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0396",
+      "MONITORIA EM TEORIA DE CIRCUITOS ELETRÔNICOS 3",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0397",
+      "MONITORIA EM QUÍMICA ORGÂNICA APLICADA À ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0398",
+      "MONITORIA EM MATEMÁTICA DISCRETA 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0399",
+      "MONITORIA EM FUNDAMENTOS DE SISTEMAS EMBARCADOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0400",
+      "MONITORIA EM TEORIA DE ELETROMAGNETISMO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0401",
+      "MONITORIA EM PROJETO DE ALGORITMOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0402",
+      "MONITORIA EM ENGENHARIA ECONÔMICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0403",
+      "MONITORIA EM SISTEMAS DE BANCO DE DADOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0404",
+      "MONITORIA EM MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0405",
+      "MONITORIA EM FUNDAMENTOS DE ARQUITETURA DE COMPUTADORES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0406",
+      "MONITORIA EM FÍSICA MODERNA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0407",
+      "MONITORIA EM ESTRUTURA DE DADOS E ALGORITMOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0408",
+      "MONITORIA EM ENGENHARIA DE SEGURANÇA DO TRABALHO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0409",
+      "MONITORIA EM MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0410",
+      "MONITORIA EM INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0411",
+      "MONITORIA EM COMBUSTÍVEIS E BIOCOMBUSTÍVEIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0412",
+      "MONITORIA EM PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0413",
+      "MONITORIA EM ORIENTAÇÃO A OBJETOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0414",
+      "MONITORIA EM MÉTODOS NUMÉRICOS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0415",
+      "MONITORIA EM ENGENHARIA E AMBIENTE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0416",
+      "MONITORIA EM INTRODUÇÃO À ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0417",
+      "MONITORIA EM DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0418",
+      "MONITORIA EM FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0419",
+      "MONITORIA EM FUNDAMENTOS DE SISTEMAS OPERACIONAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0420",
+      "MONITORIA EM REQUISITOS DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0421",
+      "MONITORIA EM INTERAÇÃO HUMANO COMPUTADOR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0422",
+      "MONITORIA EM ENGENHARIA DE PETRÓLEO E GÁS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0423",
+      "MONITORIA EM GESTÃO DA PRODUÇÃO E QUALIDADE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0424",
+      "MONITORIA EM DINÂMICA DOS FLUÍDOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0425",
+      "MONITORIA EM ARQUITETURA E DESENHO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0426",
+      "MONITORIA EM PARADIGMAS DE PROGRAMAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0427",
+      "MONITORIA EM PROJETO DE SISTEMAS AUTOMOTIVOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0428",
+      "MONITORIA EM DINÂMICA DE VEÍCULOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0429",
+      "MONITORIA EM TESTES DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0430",
+      "MONITORIA EM GERÊNCIA DE CONFIGURAÇÃO E EVOLUÇÃO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0431",
+      "MONITORIA EM CIÊNCIAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0432",
+      "MONITORIA EM TRANSMISSÃO E DISTRIBUIÇÃO DE ENERGIA ELÉTRICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0433",
+      "MONITORIA EM MELHORIA DE PROCESSOS DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0434",
+      "MONITORIA EM QUALIDADE DE SOFTWARE 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0435",
+      "MONITORIA EM FUNDAMENTOS DO PROJETO DE AERONAVES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0436",
+      "MONITORIA EM INTRODUÇÃO À MECÂNICA DA FRATURA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0437",
+      "MONITORIA EM CONTRATAÇÃO DE SERVIÇOS DE TECNOLOGIA DA INFORMAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0438",
+      "MONITORIA EM TÉCNICAS DE MEDIÇÃO FUNCIONAL E ESTIMATIVAS DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0439",
+      "MONITORIA EM MATEMÁTICA APLICADA A SISTEMAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0440",
+      "MONITORIA EM FUNDAMENTOS DE EQUAÇÕES DIFERENCIAIS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0441",
+      "MONITORIA EM PROJETO DE CIRCUITOS INTEGRADOS DIGITAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0442",
+      "MONITORIA EM INTELIGÊNCIA ARTIFICIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0443",
+      "MONITORIA EM COMUNICAÇÕES DIGITAIS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0444",
+      "MONITORIA EM INSTRUMENTAÇÃO BIOMÉDICA 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0445",
+      "MONITORIA EM PROJETO DE CIRCUITOS ELETRÔNICOS INTEGRADOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0446",
+      "MONITORIA EM MECÂNICA DOS MATERIAIS COMPÓSITOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0447",
+      "MONITORIA EM FUNDAMENTOS DO MÉTODO DOS ELEMENTOS FINITOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0448",
+      "MONITORIA EM SISTEMAS DE PROPULSÃO SÓLIDA E HÍBRIDA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0449",
+      "MONITORIA EM SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0450",
+      "MONITORIA EM PROCESSAMENTO DIGITAL DE IMAGENS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0451",
+      "MONITORIA EM SISTEMAS DE ENERGIA SOLAR E EÓLICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0452",
+      "MONITORIA EM ESTRUTURAS DE DADOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0453",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM ENGENHARIA AEROESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0454",
+      "MONITORIA EM SISTEMAS DE CONTROLE AUTOMOTIVO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0455",
+      "MONITORIA EM MECÂNICA DO VÔO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0456",
+      "MONITORIA EM MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0457",
+      "MONITORIA EM MECÂNICA DO VOO ESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0458",
+      "MONITORIA EM PROPULSÃO AEROESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0459",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM PROGRAMAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0460",
+      "MONITORIA EM TECNOLOGIAS DE FABRICAÇÃO 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0461",
+      "MONITORIA EM TECNOLOGIAS DE FABRICAÇÃO 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0462",
+      "MONITORIA EM PROPULSÃO AERONÁUTICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0463",
+      "MONITORIA EM PROPULSÃO ELÉTRICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0464",
+      "MONITORIA EM TEORIA DE CIRCUITOS ELETRÔNICOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0465",
+      "MONITORIA EM PRÁTICA DE CIRCUITOS ELETRÔNICOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0466",
+      "MONITORIA EM PRÁTICA DE ELETRÔNICA DIGITAL 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0467",
+      "MONITORIA EM TEORIA DE ELETRÔNICA DIGITAL 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0468",
+      "MONITORIA EM LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0469",
+      "MONITORIA EM EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0470",
+      "MONITORIA EM INTRODUÇÃO AO DESGASTE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0471",
+      "MONITORIA EM TEORIA DE MATERIAIS DE CONSTRUÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0472",
+      "MONITORIA EM APRENDIZADO DE MÁQUINA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0473",
+      "MONITORIA EM MATEMÁTICA DISCRETA 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0474",
+      "MONITORIA EM TEORIA DE ELETRICIDADE APLICADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0475",
+      "MONITORIA EM LABORATÓRIO DE ELETRICIDADE APLICADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0476",
+      "MONITORIA EM TEORIA DE SISTEMAS DE CONVERSÃO DE ENERGIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0477",
+      "MONITORIA EM LABORATÓRIO DE SISTEMAS DE CONVERSÃO DE ENERGIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0478",
+      "MONITORIA EM ONDULATÓRIA E FÍSICA TÉRMICA PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0479",
+      "MONITORIA EM MÁQUINAS DE FLUIDO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0480",
+      "MONITORIA EM PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0481",
+      "MONITORIA EM ANTENAS IMPRESSAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0482",
+      "MONITORIA EM ELETRÔNICA EMBARCADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0483",
+      "MONITORIA EM PRÁTICA DE CIRCUITOS ELETRÔNICOS 3",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0484",
+      "MONITORIA EM PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0485",
+      "MONITORIA EM TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0486",
+      "MONITORIA EM SINAIS E SISTEMAS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0487",
+      "MONITORIA EM SISTEMAS OPERACIONAIS EMBARCADOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0488",
+      "MONITORIA EM SISTEMAS DE INFORMAÇÃO GEOGRÁFICA PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0489",
+      "MONITORIA EM PRÁTICA DE ELETROMAGNETISMO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0490",
+      "MONITORIA EM TÓPICOS ESPECIAIS 4 EM ENGENHARIA AEROESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0491",
+      "MONITORIA EM PROCESSAMENTO DIGITAL DE SINAIS FINANCEIROS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0492",
+      "MONITORIA EM REGULAÇÃO AMBIENTAL NO SETOR ENERGÉTICO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0493",
+      "MONITORIA EM ENGENHARIA DE SOFTWARE AUTOMOTIVO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0494",
+      "MONITORIA EM INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0495",
+      "MONITORIA EM TÓPICOS ESPECIAIS DE ENGENHARIA DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0496",
+      "MONITORIA EM GESTÃO AMBIENTAL NO SETOR ENERGÉTICO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0497",
+      "MONITORIA EM PROJETO INTEGRADOR DE ENGENHARIA 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0498",
+      "MONITORIA EM ERGONOMIA DO PRODUTO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0499",
+      "MONITORIA EM HUMANIDADES E CIDADANIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0500",
+      "MONITORIA EM ELEMENTOS E MÉTODOS EM ELETRÔNICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0501",
+      "MONITORIA EM SISTEMAS AUTOMOTIVOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0502",
+      "MONITORIA EM ANÁLISE INSTRUMENTAL DE COMBUSTÍVEIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0503",
+      "MONITORIA EM MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0504",
+      "MONITORIA EM MÉTODOS EXPERIMENTAIS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0505",
+      "MONITORIA EM PROJETO DE ELEMENTOS AUTOMOTIVOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0506",
+      "MONITORIA EM MATERIAIS COMPOSTOS E PLÁSTICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0507",
+      "MONITORIA EM ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0508",
+      "MONITORIA EM GESTÃO DA PRODUÇÃO AUTOMOTIVA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0509",
+      "MONITORIA EM SISTEMAS DE CONTROLE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0510",
+      "MONITORIA EM ENGENHARIA DE PRODUTO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0511",
+      "MONITORIA EM FUNDAMENTOS DE REDES DE COMPUTADORES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0512",
+      "MONITORIA EM PROCESSAMENTO DE SINAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0513",
+      "MONITORIA EM ELETRÔNICA VEICULAR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0514",
+      "MONITORIA EM ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0515",
+      "MONITORIA EM INTEGRAÇÃO E TESTES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0516",
+      "MONITORIA EM SENSORES E TRANSDUTORES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0517",
+      "MONITORIA EM TÓPICOS ESPECIAIS 1 EM ENGENHARIA DE ENERGIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0518",
+      "MONITORIA EM BIORREFINARIAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0519",
+      "MONITORIA EM TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0520",
+      "MONITORIA EM PROGRAMAÇÃO PARA SISTEMAS PARALELOS E DISTRIBUÍDOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0521",
+      "MONITORIA EM MÁQUINAS DE FLUXO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0522",
+      "MONITORIA EM PROJETO INTEGRADOR DE ENGENHARIA 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0523",
+      "MONITORIA EM SISTEMAS HIDROELÉTRICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0524",
+      "MONITORIA EM MODELAGEM DE SISTEMAS BIOLÓGICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0525",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM ELETRONICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0526",
+      "MONITORIA EM ECONOMIA DE ENERGIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0527",
+      "MONITORIA EM ACÚSTICA E VIBRAÇÕES VEICULARES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0528",
+      "MONITORIA EM PROJETO DE ESTRUTURAS DE VEICULOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0529",
+      "MONITORIA EM SISTEMAS HIDRÁULICOS E PNEUMÁTICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0530",
+      "MONITORIA EM PRODUTIVIDADE E PROFISSIONALISMO EM ENGENHARIA DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0531",
+      "MONITORIA EM ENGENHARIA DE SOFTWARE EXPERIMENTAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0537",
+      "MONITORIA EM CONFIABILIDADE DE COMPONENTES E SISTEMAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0539",
+      "MONITORIA EM TRABALHO DE CONCLUSÃO DE CURSO 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0540",
+      "MONITORIA EM PRINCÍPIO DE COMUNICAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0541",
+      "MONITORIA EM TRABALHO DE CONCLUSÃO DE CURSO 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0542",
+      "MONITORIA EM SISTEMAS DE CONTROLE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0543",
+      "MONITORIA EM ANATOMIA E FISIOLOGIA HUMANA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0544",
+      "MONITORIA EM PROCESSAMENTO DE SINAIS BIOLÓGICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0546",
+      "MONITORIA EM TÓPICOS ESPECIAL EM INSTRUMENTAÇÃO BIOMÉDICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0548",
+      "MONITORIA EM TÓPICOS EM SISTEMAS DE COMPUTAÇÃO DE ALTO DESEMPENHO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0549",
+      "MONITORIA EM PROJETO E ANÁLISE DE ALGORITMO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0550",
+      "MONITORIA EM ESTÁGIO SUPERVISIONADO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0552",
+      "MONITORIA EM MODELAGEM E SIMULAÇÃO DE SISTEMAS ENERGÉTICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0554",
+      "MONITORIA EM FUNDAMENTOS DE ARQUITETURA DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0555",
+      "MONITORIA EM PRINCÍPIOS DE ROBÓTICA EDUCACIONAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0556",
+      "MONITORIA EM PROGRAMAÇÃO PARA COMPETIÇÕES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0558",
+      "MONITORIA EM SEMINÁRIOS EM ENGENHARIA DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0559",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM FÍSICA APLICADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0560",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM MATEMÁTICA APLICADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0561",
+      "MONITORIA EM ANÁLISE DE SISTEMAS DE ENERGIA ELÉTRICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0562",
+      "MONITORIA EM PRÉ-CÁLCULO PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0567",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM JOGOS DIGITAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0568",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM SISTEMAS CRÍTICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0570",
+      "MONITORIA EM PROJETO DE SISTEMAS DE CONTROLE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0575",
+      "MONITORIA EM PROJETO DE SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0579",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM GOVERNANÇA DE TECNOLOGIA DA INFORMAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0582",
+      "MONITORIA EM ELETRÔNICA DE POTÊNCIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0583",
+      "MONITORIA EM CRIPTOGRAFIA E SEGURANÇA DE REDES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0585",
+      "MONITORIA EM FÍSICA PARA JOGOS ELETRÔNICOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0586",
+      "MONITORIA EM PROJETO DE SISTEMAS DE OBSERVAÇÃO DA TERRA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0588",
+      "MONITORIA EM PROPULSÃO QUÍMICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0590",
+      "MONITORIA EM FUNDAMENTOS DE VARIÁVEL COMPLEXA PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0603",
+      "MONITORIA EM CONTROLE DE SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0604",
+      "MONITORIA EM ENGENHARIA DE SISTEMAS AEROESPACIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0617",
+      "MONITORIA EM CODIFICAÇÃO E COMPRESSÃO DE SINAIS, IMAGENS E VÍDEO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0619",
+      "MONITORIA EM ELETRÔNICA DE RÁDIO FREQUÊNCIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0627",
+      "MONITORIA EM TÓPICOS ESPECIAIS 2 EM ENGENHARIA AEROESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0628",
+      "MONITORIA EM TÓPICOS ESPECIAIS 3 EM ENGENHARIA AEROESPACIAL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0629",
+      "MONITORIA EM LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0632",
+      "MONITORIA EM COMPILADORES 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0633",
+      "MONITORIA EM INTRODUÇÃO À WEB SEMÂNTICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0634",
+      "MONITORIA EM QUALIDADE DE SOFTWARE 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0635",
+      "MONITORIA EM FÍSICA PARA JOGOS ELETRÔNICOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0636",
+      "MONITORIA EM FÍSICA PARA JOGOS ELETRÔNICOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0637",
+      "MONITORIA EM INFORMAÇÃO, COMUNICAÇÃO E A SOCIEDADE DO CONHECIMENTO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0638",
+      "MONITORIA EM ELETRÔNICA DE ALTA FREQUÊNCIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0639",
+      "MONITORIA EM FUNDAMENTOS DE ENERGIA NUCLEAR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0644",
+      "MONITORIA EM EFICIÊNCIA ENERGÉTICA EM INSTALAÇÕES ELÉTRICAS INDUSTRIAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0645",
+      "MONITORIA EM CÁLCULO PARA ENGENHARIA 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0647",
+      "MONITORIA EM INTRODUÇÃO À GEOMETRIA ANALÍTICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0648",
+      "MONITORIA EM CÁLCULO 2 PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0649",
+      "MONITORIA EM EQUAÇÕES DIFERENCIAIS ORDINÁRIAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0650",
+      "MONITORIA EM CÁLCULO 3 PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0659",
+      "MONITORIA EM MATERIAIS DE CONSTRUÇÃO DE ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0662",
+      "MONITORIA EM FUNDAMENTOS DA TEORIA ELETROMAGNÉTICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0673",
+      "MONITORIA EM ESTRUTURAS MATEMÁTICAS PARA COMPUTAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0678",
+      "MONITORIA EM PROCESSO DE DESENVOLVIMENTO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0684",
+      "MONITORIA EM TÉCNICAS DE PROGRAMAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0687",
+      "MONITORIA EM DESENVOLVIMENTO SUSTENTÁVEL",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0691",
+      "MONITORIA EM PROCESSOS DE FABRICAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0692",
+      "MONITORIA EM INOVAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0693",
+      "MONITORIA EM MICROPROCESSADORES E MICROCONTROLADORES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0694",
+      "MONITORIA EM MATERIAIS ELÉTRICOS E MAGNÉTICOS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0696",
+      "MONITORIA EM ELETRICIDADE APLICADA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0697",
+      "MONITORIA EM MÉTODOS MATEMÁTICOS PARA ENGENHARIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0703",
+      "MONITORIA EM CIRCUITOS ELETRÔNICOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0705",
+      "MONITORIA EM PROJETO COM CIRCUITOS RECONFIGURAVEIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0706",
+      "MONITORIA EM PRINCÍPIOS DE COMUNICAÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0707",
+      "MONITORIA EM ENGENHARIA DE PRODUTO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0709",
+      "MONITORIA EM INFORMÁTICA EM SAÚDE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0710",
+      "MONITORIA EM PLANEJAMENTO E GESTÃO DE ENERGIA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0714",
+      "MONITORIA EM MEDIÇÃO E ANÁLISE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0717",
+      "MONITORIA EM MODELAGEM DE PROCESSOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0718",
+      "MONITORIA EM SISTEMAS CRÍTICOS E TOLERÂNCIA A FALHAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0719",
+      "MONITORIA EM TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0720",
+      "MONITORIA EM PROJETO DE CIRCUITOS ELETRÔNICOS INTEGRADOS 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0721",
+      "MONITORIA EM CIRCUITOS ELETRÔNICOS 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0722",
+      "MONITORIA EM INSTRUMENTAÇÃO ELETRÔNICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0724",
+      "MONITORIA EM SISTEMAS EMBARCADOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0726",
+      "MONITORIA EM INSTRUMENTAÇÃO BIOMÉDICA 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0727",
+      "MONITORIA EM GESTÃO DE PROJETOS EM ENGENHARIA BIOMÉDICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0741",
+      "MONITORIA EM GERÊNCIA DE CONFIGURAÇÃO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0742",
+      "MONITORIA EM MÉTODOS FORMAIS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0744",
+      "MONITORIA EM SISTEMAS DE PROPULSÃO HÍBRIDOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0745",
+      "MONITORIA EM DESENVOLVIMENTO AVANÇADO DE SOFTWARE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0747",
+      "MONITORIA EM CENTRAIS DE GERAÇÃO TERMOELÉTRICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0749",
+      "MONITORIA EM INSTRUMENTAÇÃO E SISTEMAS DE CONTROLE",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0751",
+      "MONITORIA EM CIRCUITOS ELETRÔNICOS 3",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0752",
+      "MONITORIA EM PROJETO DE SENSORES",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0753",
+      "MONITORIA EM INTEGRIDADES DE SINAIS E DESIGN DE CIRCUITOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0756",
+      "MONITORIA EM TÓPICOS AVANÇADOS EM ELETROMAGNETISMO APLICADO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0759",
+      "MONITORIA EM INTRODUÇÃO AOS JOGOS ELETRÔNICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0760",
+      "MONITORIA EM INTRODUÇÃO A COMPUTAÇÃO GRÁFICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0764",
+      "MONITORIA EM ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0766",
+      "MONITORIA EM PROJETO DE VEÍCULOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0767",
+      "MONITORIA EM DINÂMICA MULTICORPOS VEICULAR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0771",
+      "MONITORIA EM COMPUTAÇÃO EM NUVEM",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0773",
+      "MONITORIA EM PROGRAMAÇÃO WEB",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0775",
+      "MONITORIA EM SISTEMAS DE PROPULSÃO LIQUIDA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0778",
+      "MONITORIA EM ENGENHARIA DE MANUTENÇÃO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0781",
+      "MONITORIA EM TRABALHO DE CONCLUSÃO DE CURSO 1",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0782",
+      "MONITORIA EM ESTÁGIO SUPERVISIONADO",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0784",
+      "MONITORIA EM TRABALHO DE CONCLUSÃO DE CURSO 2",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0785",
+      "MONITORIA EM MECÂNICA DE ESTRUTURAS AERONÁUTICAS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0786",
+      "MONITORIA EM INTRODUÇÃO À FOTÔNICA E OPTRÔNICA",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0787",
+      "MONITORIA EM FUNDAMENTOS DE PROPULSÃO ELÉTRICA VEICULAR",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ],
+    [
+      "FGA0788",
+      "MONITORIA EM PROCESSOS ESTOCÁSTICOS",
+      "ATIVIDADE",
+      "30h",
+      ""
+    ]
+  ]
+}

@@ -1,0 +1,4165 @@
+[
+  {
+    "nome": "ENGENHARIA DE SOFTWARE",
+    "coletado_em": "2026-09-28T13:07:09.210Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "6360/2"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA DE SOFTWARE/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2024.2"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria SERES/MEC nº 313"
+      ],
+      [
+        "Data do Decreto:",
+        "05/07/2024"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3525h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "2580h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "405h"
+      ],
+      [
+        "Total:",
+        "2985h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "540h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "480h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "240h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t8  \tMédio:\t10  \tMáximo:\t16"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "CIC0191 - INTRODUÇÃO AO DESENVOLVIMENTO DE JOGOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0001 - FUNDAMENTOS LÓGICOS DE INTELIGÊNCIA ARTIFICIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0002 - PARADIGMAS DE SOLUÇÃO DE PROBLEMAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0003 - ESTRUTURAS DE DADOS PARA COMPETIÇÕES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0004 - MATEMÁTICA PARA COMPETIÇÕES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0005 - ALGORITMOS EM GRAFOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0006 - GEOMETRIA COMPUTACIONAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0007 - ALGORITMOS EM STRINGS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FEF0105 - PRÁTICA DESPORTIVA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0006 - FUNDAMENTOS DE EQUAÇÕES DIFERENCIAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0008 - SISTEMAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0027 - PRINCÍPIOS DE ROBÓTICA EDUCACIONAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0028 - PROGRAMAÇÃO PARA COMPETIÇÕES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0031 - SEMINÁRIOS EM ENGENHARIA DE SOFTWARE - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0034 - TÓPICOS ESPECIAIS EM MATEMÁTICA APLICADA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0038 - AERODINÂMICA DE SISTEMAS AEROESPACIAIS - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0041 - TÓPICOS ESPECIAIS EM JOGOS DIGITAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0043 - DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0045 - MECÂNICA DO VÔO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0053 - TÓPICOS ESPECIAIS EM PROGRAMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0054 - TÓPICOS ESPECIAIS EM GOVERNANÇA DE TECNOLOGIA DA INFORMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0066 - FUNDAMENTOS DE VARIÁVEL COMPLEXA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0072 - PRÁTICA DE ELETRÔNICA DIGITAL 2 - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0074 - TEORIA DE ELETRÔNICA DIGITAL 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0083 - APRENDIZADO DE MÁQUINA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0084 - DESENVOLVIMENTO DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0090 - ONDULATÓRIA E FÍSICA TÉRMICA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0111 - INTRODUÇÃO À WEB SEMÂNTICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0112 - QUALIDADE DE SOFTWARE 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0125 - INTRODUÇÃO À GEOMETRIA ANALÍTICA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0129 - PROCESSAMENTO DIGITAL DE SINAIS FINANCEIROS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0134 - TÓPICOS ESPECIAIS DE ENGENHARIA DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0144 - FÍSICA MODERNA - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0155 - INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0166 - ELEMENTOS E MÉTODOS EM ELETRÔNICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0167 - SISTEMAS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0169 - FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0171 - TÉCNICAS DE PROGRAMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0174 - DESENVOLVIMENTO SUSTENTÁVEL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0179 - MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0181 - INOVAÇÃO - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0186 - ELETRICIDADE APLICADA - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0188 - MÉTODOS EXPERIMENTAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0201 - PROJETO DE CIRCUITOS INTEGRADOS DIGITAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0203 - PLANEJAMENTO E GESTÃO DE ENERGIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0204 - DINÂMICA DOS FLUÍDOS - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0220 - SISTEMAS EMBARCADOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0221 - INTELIGÊNCIA ARTIFICIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0226 - ELETRÔNICA VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0254 - CIÊNCIAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0264 - INTRODUÇÃO A COMPUTAÇÃO GRÁFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0265 - ECONOMIA DE ENERGIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0274 - PRODUTIVIDADE E PROFISSIONALISMO EM ENGENHARIA DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0275 - ENGENHARIA DE SOFTWARE EXPERIMENTAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0279 - PROGRAMAÇÃO WEB - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0319 - GOVERNANÇA EM TECNOLOGIA DA INFORMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0320 - FELICIDADE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0321 - MELHORIA DE PROCESSOS DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0322 - INTRODUÇÃO À GAMIFICAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0323 - ATIVIDADE COMPLEMENTAR - 15h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0324 - ATIVIDADE COMPLEMENTAR - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0325 - ATIVIDADE COMPLEMENTAR - 45h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0326 - ATIVIDADE COMPLEMENTAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0327 - ATIVIDADE COMPLEMENTAR - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0328 - ATIVIDADE COMPLEMENTAR - 120h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FTD0007 - INTRODUCAO A ATIVIDADE EMPRESARIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 4275h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0302 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0071 - PRÁTICA DE ELETRÔNICA DIGITAL 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0073 - TEORIA DE ELETRÔNICA DIGITAL 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0085 - MATEMÁTICA DISCRETA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0158 - ORIENTAÇÃO A OBJETOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 390h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "FGA0108 - MATEMÁTICA DISCRETA 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0142 - FUNDAMENTOS DE ARQUITETURA DE COMPUTADORES - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0146 - ESTRUTURAS DE DADOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0303 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0307 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0312 - MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "FGA0003 - COMPILADORES 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0030 - ESTRUTURAS DE DADOS 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0137 - SISTEMAS DE BANCO DE DADOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0170 - FUNDAMENTOS DE SISTEMAS OPERACIONAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0173 - INTERAÇÃO HUMANO COMPUTADOR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0313 - REQUISITOS DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "FGA0060 - SISTEMAS DE BANCO DE DADOS 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0124 - PROJETO DE ALGORITMOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0208 - ARQUITETURA E DESENHO DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0211 - FUNDAMENTOS DE REDES DE COMPUTADORES - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0314 - TESTES DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0315 - QUALIDADE DE SOFTWARE 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FGA0109 - FUNDAMENTOS DE SISTEMAS EMBARCADOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0242 - TÉCNICAS DE PROGRAMAÇÃO EM PLATAFORMAS EMERGENTES - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0244 - PROGRAMAÇÃO PARA SISTEMAS PARALELOS E DISTRIBUÍDOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 240h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0288 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0316 - ENGENHARIA DE PRODUTO DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0317 - GERÊNCIA DE CONFIGURAÇÃO E EVOLUÇÃO DE SOFTWARE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 330h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0287 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0304 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 150h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0290 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0318 - ATIVIDADE DE EXTENSÃO ENGENHARIA DE SOFTWARE - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 135h"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "ENGENHARIA AEROESPACIAL",
+    "coletado_em": "2026-09-28T13:08:00.223Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "60836/3"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA AEROESPACIAL/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2026.1"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria MEC nº 110"
+      ],
+      [
+        "Data do Decreto:",
+        "04/02/2021"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3900h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "2715h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "600h"
+      ],
+      [
+        "Total:",
+        "3315h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "585h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "435h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "240h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t10  \tMédio:\t10  \tMáximo:\t18"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "FCTE0009 - ESTIMAÇÃO ÓTIMA DE SISTEMAS DINÂMICOS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0010 - FADIGA DE ESTRUTURAS AERONÁUTICAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0011 - GEOLOCALIZAÇÃO POR SATELITES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0012 - INTRODUÇÃO À RADIO ASTRONOMIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0013 - FUNDAMENTOS DE DETERMINAÇÃO E CONTROLE DE ATITUDE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FCTE0014 - DINÂMICA DOS FLUIDOS COMPUTACIONAL APLICADA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0006 - FUNDAMENTOS DE EQUAÇÕES DIFERENCIAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0037 - TÓPICOS ESPECIAIS EM ENGENHARIA AEROESPACIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0044 - PROJETO DE SISTEMAS DE CONTROLE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0049 - PROJETO DE SISTEMAS AEROESPACIAIS - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0055 - TECNOLOGIAS DE FABRICAÇÃO 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0056 - TECNOLOGIAS DE FABRICAÇÃO 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0062 - PROJETO DE SISTEMAS DE OBSERVAÇÃO DA TERRA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0063 - PROPULSÃO AERONÁUTICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0066 - FUNDAMENTOS DE VARIÁVEL COMPLEXA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0067 - TEORIA DE CIRCUITOS ELETRÔNICOS 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0092 - PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0105 - TÓPICOS ESPECIAIS 2 EM ENGENHARIA AEROESPACIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0106 - TÓPICOS ESPECIAIS 3 EM ENGENHARIA AEROESPACIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0121 - TÓPICOS ESPECIAIS 4 EM ENGENHARIA AEROESPACIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0144 - FÍSICA MODERNA - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0191 - MATERIAIS COMPOSTOS E PLÁSTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0281 - SISTEMAS DE PROPULSÃO LIQUIDA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0282 - FUNDAMENTOS DO PROJETO DE AERONAVES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0283 - MECÂNICA DOS MATERIAIS COMPÓSITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0286 - FUNDAMENTOS DO MÉTODO DOS ELEMENTOS FINITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0291 - MECÂNICA DE ESTRUTURAS AERONÁUTICAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FTD0007 - INTRODUCAO A ATIVIDADE EMPRESARIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 1905h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0161 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0254 - CIÊNCIAS AEROESPACIAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0295 - ATIVIDADE DE EXTENSÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0008 - SISTEMAS AEROESPACIAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0125 - QUIMICA GERAL TEORICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0126 - QUIMICA GERAL EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0102 - SINAIS E SISTEMAS PARA ENGENHARIA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0150 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0179 - MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0296 - ATIVIDADE DE EXTENSÃO 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 345h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "ENM0068 - TERMODINAMICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0075 - LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0078 - TEORIA DE MATERIAIS DE CONSTRUÇÃO - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0086 - TEORIA DE ELETRICIDADE APLICADA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0087 - LABORATÓRIO DE ELETRICIDADE APLICADA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0119 - TEORIA DE ELETROMAGNETISMO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0120 - PRÁTICA DE ELETROMAGNETISMO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0204 - DINÂMICA DOS FLUÍDOS - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 375h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "ENM0071 - TRANSFERENCIA DE CALOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0038 - AERODINÂMICA DE SISTEMAS AEROESPACIAIS - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0093 - PRINCÍPIOS DE CONTROLE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0184 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0297 - ATIVIDADE DE EXTENSÃO 3 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FGA0039 - MECÂNICA DE ESTRUTURAS AEROESPACIAIS - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0043 - DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0045 - MECÂNICA DO VÔO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0298 - ATIVIDADE DE EXTENSÃO 4 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 285h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0048 - MECÂNICA DO VOO ESPACIAL - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0050 - DINÂMICA DE ESTRUTURAS AEROESPACIAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0052 - PROPULSÃO AEROESPACIAL - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0250 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0294 - IMPACTOS SOCIAIS DA ENGENHARIA AEROESPACIAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 330h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0287 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0288 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 270h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0290 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 90h"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "ENGENHARIA AUTOMOTIVA",
+    "coletado_em": "2026-09-28T13:08:34.308Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "6297/2"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2021.2"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria SERES nº 110"
+      ],
+      [
+        "Data do Decreto:",
+        "04/02/2021"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3855h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "3225h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "0h"
+      ],
+      [
+        "Total:",
+        "3225h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "630h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "480h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "240h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t10  \tMédio:\t10  \tMáximo:\t16"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "CIC0007 - INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "CIC0088 - COMPUTACAO BASICA - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0200 - ATIVIDADE COMPLEMENTAR 15H - 15h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0201 - ATIVIDADE COMPLEMENTAR 30H - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0202 - ATIVIDADE COMPLEMENTAR 45H - 45h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0203 - ATIVIDADE COMPLEMENTAR 60H - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0205 - ATIVIDADE COMPLEMENTAR 90H - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0206 - ATIVIDADE COMPLEMENTAR 120H - 120h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0207 - ATIVIDADE COMPLEMENTAR 150H - 150h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0208 - ATIVIDADE COMPLEMENTAR 180H - 180h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0209 - ATIVIDADE COMPLEMENTAR 210H - 210h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0210 - ATIVIDADE COMPLEMENTAR 240H - 240h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0211 - ATIVIDADE COMPLEMENTAR 270H - 270h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0212 - ATIVIDADE COMPLEMENTAR 300H - 300h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0213 - ATIVIDADE COMPLEMENTAR 330H - 330h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0214 - ATIVIDADE COMPLEMENTAR 360H - 360h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0215 - ATIVIDADE COMPLEMENTAR 390H - 390h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0216 - ATIVIDADE COMPLEMENTAR 420H - 420h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0217 - ATIVIDADE COMPLEMENTAR 450H - 450h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0218 - ATIVIDADE COMPLEMENTAR 480H - 480h",
+            "Optativa",
+            ""
+          ],
+          [
+            "DEG0219 - ATIVIDADE COMPLEMENTAR 510H - 510h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0007 - CONFIABILIDADE DE COMPONENTES E SISTEMAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0040 - SISTEMAS DE CONTROLE AUTOMOTIVO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0077 - INTRODUÇÃO AO DESGASTE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0123 - CÁLCULO 1 PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0125 - INTRODUÇÃO À GEOMETRIA ANALÍTICA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0126 - CÁLCULO 2 PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0127 - EQUAÇÕES DIFERENCIAIS ORDINÁRIAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0128 - CÁLCULO 3 PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0131 - ENGENHARIA DE SOFTWARE AUTOMOTIVO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0167 - SISTEMAS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0186 - ELETRICIDADE APLICADA - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0195 - GESTÃO DA PRODUÇÃO AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0214 - TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0232 - INTEGRAÇÃO E TESTES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0233 - SENSORES E TRANSDUTORES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0268 - ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0270 - SISTEMAS HIDRÁULICOS E PNEUMÁTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0271 - PROJETO DE VEÍCULOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0272 - DINÂMICA MULTICORPOS VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0284 - ENGENHARIA DE MANUTENÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0285 - INTRODUÇÃO À MECÂNICA DA FRATURA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0379 - FUNDAMENTOS DE PROPULSÃO ELÉTRICA VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 6240h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0161 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0090 - ONDULATÓRIA E FÍSICA TÉRMICA PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0107 - LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0155 - INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0125 - QUIMICA GERAL TEORICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0126 - QUIMICA GERAL EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 450h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0067 - TEORIA DE CIRCUITOS ELETRÔNICOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0075 - LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0078 - TEORIA DE MATERIAIS DE CONSTRUÇÃO - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0150 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0152 - ERGONOMIA DO PRODUTO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 465h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "FGA0055 - TECNOLOGIAS DE FABRICAÇÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0086 - TEORIA DE ELETRICIDADE APLICADA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0087 - LABORATÓRIO DE ELETRICIDADE APLICADA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0102 - SINAIS E SISTEMAS PARA ENGENHARIA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0179 - MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0184 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0188 - MÉTODOS EXPERIMENTAIS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "FGA0023 - DINÂMICA DOS MECANISMOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0056 - TECNOLOGIAS DE FABRICAÇÃO 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0076 - EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0190 - PROJETO DE ELEMENTOS AUTOMOTIVOS - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0191 - MATERIAIS COMPOSTOS E PLÁSTICOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FGA0193 - ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0226 - ELETRÔNICA VEICULAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0228 - PROJETO DE SISTEMAS AUTOMOTIVOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0230 - DINÂMICA DE VEÍCULOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0266 - ACÚSTICA E VIBRAÇÕES VEICULARES - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0229 - ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0250 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0267 - PROJETO DE ESTRUTURAS DE VEICULOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 210h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0009 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0021 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 270h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0011 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 90h"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "ENGENHARIA AUTOMOTIVA",
+    "coletado_em": "2026-09-28T13:08:47.888Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "6297/3"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA AUTOMOTIVA/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2027.1"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria SERES nº 110"
+      ],
+      [
+        "Data do Decreto:",
+        "04/02/2021"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3930h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "2925h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "525h"
+      ],
+      [
+        "Total:",
+        "3450h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "480h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "435h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "255h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t10  \tMédio:\t10  \tMáximo:\t16"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "FCTE0016 - ANÁLISE TÉRMICA DE MATERIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0077 - INTRODUÇÃO AO DESGASTE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0131 - ENGENHARIA DE SOFTWARE AUTOMOTIVO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0152 - ERGONOMIA DO PRODUTO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0167 - SISTEMAS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0195 - GESTÃO DA PRODUÇÃO AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0214 - TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0229 - ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0232 - INTEGRAÇÃO E TESTES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0233 - SENSORES E TRANSDUTORES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0267 - PROJETO DE ESTRUTURAS DE VEICULOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0268 - ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0270 - SISTEMAS HIDRÁULICOS E PNEUMÁTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0271 - PROJETO DE VEÍCULOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0285 - INTRODUÇÃO À MECÂNICA DA FRATURA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0323 - ATIVIDADE COMPLEMENTAR - 15h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0324 - ATIVIDADE COMPLEMENTAR - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0325 - ATIVIDADE COMPLEMENTAR - 45h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0326 - ATIVIDADE COMPLEMENTAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0327 - ATIVIDADE COMPLEMENTAR - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0328 - ATIVIDADE COMPLEMENTAR - 120h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 1380h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0302 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0107 - LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0341 - ATIVIDADE DE EXTENSÃO 3 - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0175 - FISICA 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0125 - QUIMICA GERAL TEORICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0126 - QUIMICA GERAL EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 405h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0067 - TEORIA DE CIRCUITOS ELETRÔNICOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0075 - LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0078 - TEORIA DE MATERIAIS DE CONSTRUÇÃO - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0179 - MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 405h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "FCTE0017 - TECNOLOGIAS DE FABRICAÇÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0086 - TEORIA DE ELETRICIDADE APLICADA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0087 - LABORATÓRIO DE ELETRICIDADE APLICADA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0102 - SINAIS E SISTEMAS PARA ENGENHARIA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0190 - PROJETO DE ELEMENTOS AUTOMOTIVOS - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0307 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "FGA0023 - DINÂMICA DOS MECANISMOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0076 - EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0155 - INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0191 - MATERIAIS COMPOSTOS E PLÁSTICOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0226 - ELETRÔNICA VEICULAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0228 - PROJETO DE SISTEMAS AUTOMOTIVOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0266 - ACÚSTICA E VIBRAÇÕES VEICULARES - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FCTE0018 - TECNOLOGIAS DE FABRICAÇÃO 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0188 - MÉTODOS EXPERIMENTAIS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0194 - ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0230 - DINÂMICA DE VEÍCULOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0303 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0339 - FUNDAMENTOS DE VEÍCULOS ELÉTRICOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0040 - SISTEMAS DE CONTROLE AUTOMOTIVO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0304 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0337 - FUNDAMENTOS DE SOFTWARE AUTOMOTIVO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0338 - ENGENHARIA DE MANUTENÇÃO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0340 - ATIVIDADE DE EXTENSÃO 2 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0287 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0288 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0295 - ATIVIDADE DE EXTENSÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 330h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0290 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0342 - ATIVIDADE DE EXTENSÃO 4 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 150h"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "ENGENHARIA DE ENERGIA",
+    "coletado_em": "2026-09-28T13:10:08.272Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "6289/2"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA DE ENERGIA/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2024.2"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria SERES nº 110"
+      ],
+      [
+        "Data do Decreto:",
+        "04/02/2021"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3735h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "2670h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "585h"
+      ],
+      [
+        "Total:",
+        "3255h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "480h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "405h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "240h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t10  \tMédio:\t10  \tMáximo:\t16"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "ENM0070 - MAQUINAS TERMICAS - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0006 - FUNDAMENTOS DE EQUAÇÕES DIFERENCIAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0008 - SISTEMAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0024 - MODELAGEM E SIMULAÇÃO DE SISTEMAS ENERGÉTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0030 - ESTRUTURAS DE DADOS 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0031 - SEMINÁRIOS EM ENGENHARIA DE SOFTWARE - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0033 - TÓPICOS ESPECIAIS EM FÍSICA APLICADA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0034 - TÓPICOS ESPECIAIS EM MATEMÁTICA APLICADA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0035 - ANÁLISE DE SISTEMAS DE ENERGIA ELÉTRICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0036 - PRÉ-CÁLCULO PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0037 - TÓPICOS ESPECIAIS EM ENGENHARIA AEROESPACIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0038 - AERODINÂMICA DE SISTEMAS AEROESPACIAIS - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0041 - TÓPICOS ESPECIAIS EM JOGOS DIGITAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0042 - TÓPICOS ESPECIAIS EM SISTEMAS CRÍTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0043 - DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0044 - PROJETO DE SISTEMAS DE CONTROLE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0045 - MECÂNICA DO VÔO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0055 - TECNOLOGIAS DE FABRICAÇÃO 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0057 - ELETRÔNICA DE POTÊNCIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0066 - FUNDAMENTOS DE VARIÁVEL COMPLEXA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0068 - TEORIA DE CIRCUITOS ELETRÔNICOS 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0070 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0071 - PRÁTICA DE ELETRÔNICA DIGITAL 1 - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0072 - PRÁTICA DE ELETRÔNICA DIGITAL 2 - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0073 - TEORIA DE ELETRÔNICA DIGITAL 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0074 - TEORIA DE ELETRÔNICA DIGITAL 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0076 - EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0090 - ONDULATÓRIA E FÍSICA TÉRMICA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0093 - PRINCÍPIOS DE CONTROLE - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0100 - PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0101 - TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0107 - LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0122 - EFICIÊNCIA ENERGÉTICA EM INSTALAÇÕES ELÉTRICAS INDUSTRIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0125 - INTRODUÇÃO À GEOMETRIA ANALÍTICA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0127 - EQUAÇÕES DIFERENCIAIS ORDINÁRIAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0130 - REGULAÇÃO AMBIENTAL NO SETOR ENERGÉTICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0134 - TÓPICOS ESPECIAIS DE ENGENHARIA DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0137 - SISTEMAS DE BANCO DE DADOS 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0138 - MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0146 - ESTRUTURAS DE DADOS 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0152 - ERGONOMIA DO PRODUTO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0155 - INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0158 - ORIENTAÇÃO A OBJETOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0159 - ESTRUTURAS MATEMÁTICAS PARA COMPUTAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0166 - ELEMENTOS E MÉTODOS EM ELETRÔNICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0167 - SISTEMAS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0171 - TÉCNICAS DE PROGRAMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0172 - REQUISITOS DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0173 - INTERAÇÃO HUMANO COMPUTADOR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0181 - INOVAÇÃO - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0188 - MÉTODOS EXPERIMENTAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0194 - ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0199 - PRINCÍPIOS DE COMUNICAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0200 - ENGENHARIA DE PRODUTO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0214 - TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0218 - INSTRUMENTAÇÃO ELETRÔNICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0219 - PROCESSAMENTO DE SINAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0226 - ELETRÔNICA VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0232 - INTEGRAÇÃO E TESTES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0235 - TÓPICOS ESPECIAIS 1 EM ENGENHARIA DE ENERGIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0238 - TESTES DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0247 - MÁQUINAS DE FLUXO - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0248 - SISTEMAS DE PROPULSÃO HÍBRIDOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0251 - CENTRAIS DE GERAÇÃO TERMOELÉTRICA - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0254 - CIÊNCIAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0261 - TÓPICOS ESPECIAIS EM ELETRONICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0306 - ENGENHARIA NUCLEAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0323 - ATIVIDADE COMPLEMENTAR - 15h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0324 - ATIVIDADE COMPLEMENTAR - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0325 - ATIVIDADE COMPLEMENTAR - 45h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0326 - ATIVIDADE COMPLEMENTAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0327 - ATIVIDADE COMPLEMENTAR - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0328 - ATIVIDADE COMPLEMENTAR - 120h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0330 - COMBUSTÍVEIS E BIOCOMBUSTÍVEIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0332 - ANÁLISE INSTRUMENTAL DE COMBUSTÍVEIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0333 - DESENVOLVIMENTO SUSTENTÁVEL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0334 - SISTEMAS DE INFORMAÇÃO GEOGRÁFICA PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0335 - FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0336 - PROCESSOS DE REFINO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0379 - FUNDAMENTOS DE PROPULSÃO ELÉTRICA VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FTD0007 - INTRODUCAO A ATIVIDADE EMPRESARIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "IFD0179 - FISICA 3 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 4845h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0302 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 300h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0125 - QUIMICA GERAL TEORICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0126 - QUIMICA GERAL EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0067 - TEORIA DE CIRCUITOS ELETRÔNICOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0075 - LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0078 - TEORIA DE MATERIAIS DE CONSTRUÇÃO - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0104 - QUÍMICA ORGÂNICA APLICADA À ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0119 - TEORIA DE ELETROMAGNETISMO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0120 - PRÁTICA DE ELETROMAGNETISMO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 375h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "ENM0068 - TERMODINAMICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0086 - TEORIA DE ELETRICIDADE APLICADA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0087 - LABORATÓRIO DE ELETRICIDADE APLICADA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0102 - SINAIS E SISTEMAS PARA ENGENHARIA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0204 - DINÂMICA DOS FLUÍDOS - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 375h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "ENM0071 - TRANSFERENCIA DE CALOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0088 - TEORIA DE SISTEMAS DE CONVERSÃO DE ENERGIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0089 - LABORATÓRIO DE SISTEMAS DE CONVERSÃO DE ENERGIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0175 - ENGENHARIA DE PETRÓLEO E GÁS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0295 - ATIVIDADE DE EXTENSÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0307 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 390h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FGA0025 - SISTEMAS DE ENERGIA SOLAR E EÓLICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0091 - MÁQUINAS DE FLUIDO - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0262 - TRANSMISSÃO E DISTRIBUIÇÃO DE ENERGIA ELÉTRICA - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0296 - ATIVIDADE DE EXTENSÃO 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0303 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0305 - ECONOMIA DE ENERGIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 405h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0141 - GESTÃO AMBIENTAL NO SETOR ENERGÉTICO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0297 - ATIVIDADE DE EXTENSÃO 3 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0304 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0329 - SISTEMAS HIDROELÉTRICOS - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 285h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0287 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0288 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 270h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0290 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0331 - ATIVIDADE DE EXTENSÃO 4 - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 135h"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "ENGENHARIA ELETRÔNICA",
+    "coletado_em": "2026-09-28T13:10:33.643Z",
+    "url": "https://sigaa.unb.br/sigaa/public/curso/curriculo.jsf",
+    "meta": [
+      [
+        "Código:",
+        "6131/3"
+      ],
+      [
+        "Matriz Curricular:",
+        "ENGENHARIA ELETRÔNICA/FCTE - Bacharelado - Presencial - D"
+      ],
+      [
+        "Período Letivo de Entrada em Vigor:",
+        "2025.1"
+      ],
+      [
+        "Portaria/Ato Reconhecimento:",
+        "Portaria SERES nº 1.096"
+      ],
+      [
+        "Data do Decreto:",
+        "24/12/2015"
+      ],
+      [
+        "Data de Validade:",
+        "INDEFINIDO"
+      ],
+      [
+        "Total Mínima:",
+        "3795h"
+      ],
+      [
+        "Subtotal de CH de Aula:",
+        "2895h"
+      ],
+      [
+        "Subtotal de CH de Orientação Acadêmica/Profissional:",
+        "480h"
+      ],
+      [
+        "Total:",
+        "3375h"
+      ],
+      [
+        "Carga Horária Optativa Mínima:",
+        "420h"
+      ],
+      [
+        "Carga Horária Complementar Mínima:",
+        "0h"
+      ],
+      [
+        "Carga Horária Obrigatória Atividade Acadêmica Específica:",
+        "0h"
+      ],
+      [
+        "Carga Horária Máxima de Componentes Eletivos:",
+        "360h"
+      ],
+      [
+        "Carga Horária Máxima por Período Letivo:",
+        "420h"
+      ],
+      [
+        "Carga Horária Mínima por Período Letivo:",
+        "240h"
+      ],
+      [
+        "Prazo Para Conclusão (em semestres):",
+        "Mínimo:\t10  \tMédio:\t10  \tMáximo:\t16"
+      ]
+    ],
+    "groups": [
+      {
+        "label": "Optativas",
+        "rows": [
+          [
+            "FGA0003 - COMPILADORES 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0013 - ANATOMIA E FISIOLOGIA HUMANA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0014 - PROCESSAMENTO DE SINAIS BIOLÓGICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0015 - PROCESSAMENTO DIGITAL DE IMAGENS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0016 - TÓPICOS ESPECIAL EM INSTRUMENTAÇÃO BIOMÉDICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0025 - SISTEMAS DE ENERGIA SOLAR E EÓLICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0028 - PROGRAMAÇÃO PARA COMPETIÇÕES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0044 - PROJETO DE SISTEMAS DE CONTROLE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0046 - MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0053 - TÓPICOS ESPECIAIS EM PROGRAMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0057 - ELETRÔNICA DE POTÊNCIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0088 - TEORIA DE SISTEMAS DE CONVERSÃO DE ENERGIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0089 - LABORATÓRIO DE SISTEMAS DE CONVERSÃO DE ENERGIA - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0094 - ANTENAS IMPRESSAS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0095 - CODIFICAÇÃO E COMPRESSÃO DE SINAIS, IMAGENS E VÍDEO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0097 - ELETRÔNICA DE RÁDIO FREQUÊNCIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0116 - ELETRÔNICA DE ALTA FREQUÊNCIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0129 - PROCESSAMENTO DIGITAL DE SINAIS FINANCEIROS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0138 - MÉTODOS DE DESENVOLVIMENTO DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0147 - ESTRUTURA DE DADOS E ALGORITMOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0158 - ORIENTAÇÃO A OBJETOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0165 - PROCESSO DE DESENVOLVIMENTO DE SOFTWARE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0166 - ELEMENTOS E MÉTODOS EM ELETRÔNICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0167 - SISTEMAS AUTOMOTIVOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0169 - FONTES DE ENERGIA E TECNOLOGIAS DE CONVERSÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0170 - FUNDAMENTOS DE SISTEMAS OPERACIONAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0171 - TÉCNICAS DE PROGRAMAÇÃO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0181 - INOVAÇÃO - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0195 - GESTÃO DA PRODUÇÃO AUTOMOTIVA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0198 - PROJETO COM CIRCUITOS RECONFIGURAVEIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0200 - ENGENHARIA DE PRODUTO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0201 - PROJETO DE CIRCUITOS INTEGRADOS DIGITAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0202 - INFORMÁTICA EM SAÚDE - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0211 - FUNDAMENTOS DE REDES DE COMPUTADORES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0221 - INTELIGÊNCIA ARTIFICIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0222 - INSTRUMENTAÇÃO BIOMÉDICA 1 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0224 - COMUNICAÇÕES DIGITAIS PARA ENGENHARIA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0226 - ELETRÔNICA VEICULAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0254 - CIÊNCIAS AEROESPACIAIS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0256 - PROJETO DE SENSORES - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0257 - INTEGRIDADES DE SINAIS E DESIGN DE CIRCUITOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0258 - INSTRUMENTAÇÃO BIOMÉDICA 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0259 - MODELAGEM DE SISTEMAS BIOLÓGICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0260 - TÓPICOS AVANÇADOS EM ELETROMAGNETISMO APLICADO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0261 - TÓPICOS ESPECIAIS EM ELETRONICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0262 - TRANSMISSÃO E DISTRIBUIÇÃO DE ENERGIA ELÉTRICA - 75h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0280 - PROJETO DE CIRCUITOS ELETRÔNICOS INTEGRADOS 2 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0292 - INTRODUÇÃO À FOTÔNICA E OPTRÔNICA - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0323 - ATIVIDADE COMPLEMENTAR - 15h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0324 - ATIVIDADE COMPLEMENTAR - 30h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0325 - ATIVIDADE COMPLEMENTAR - 45h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0326 - ATIVIDADE COMPLEMENTAR - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0327 - ATIVIDADE COMPLEMENTAR - 90h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0328 - ATIVIDADE COMPLEMENTAR - 120h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FGA0380 - PROCESSOS ESTOCÁSTICOS - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "FTD0007 - INTRODUCAO A ATIVIDADE EMPRESARIAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "IFD0177 - FISICA 2 EXPERIMENTAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "IFD0179 - FISICA 3 - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "IFD0181 - FISICA 3 EXPERIMENTAL - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "LIP0174 - LÍNGUA DE SINAIS BRASILEIRA - BÁSICO - 60h",
+            "Optativa",
+            ""
+          ],
+          [
+            "Carga Horária Total: 3555h"
+          ]
+        ]
+      },
+      {
+        "label": "Complementares",
+        "rows": [
+          [
+            "Carga Horária Total: h"
+          ]
+        ]
+      },
+      {
+        "label": "1º Nível",
+        "rows": [
+          [
+            "CIC0004 - ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0163 - INTRODUÇÃO À ENGENHARIA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0168 - DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0302 - ENGENHARIA E AMBIENTE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0025 - CÁLCULO 1 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "2º Nível",
+        "rows": [
+          [
+            "FGA0133 - ENGENHARIA ECONÔMICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0157 - PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0171 - FISICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IFD0173 - FISICA 1 EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0026 - CÁLCULO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0031 - INTRODUCAO A ALGEBRA LINEAR - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "3º Nível",
+        "rows": [
+          [
+            "FGA0071 - PRÁTICA DE ELETRÔNICA DIGITAL 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0073 - TEORIA DE ELETRÔNICA DIGITAL 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0154 - MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0160 - MÉTODOS NUMÉRICOS PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0125 - QUIMICA GERAL TEORICA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "IQD0126 - QUIMICA GERAL EXPERIMENTAL - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "MAT0027 - CÁLCULO 3 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 390h"
+          ]
+        ]
+      },
+      {
+        "label": "4º Nível",
+        "rows": [
+          [
+            "ENM0080 - FENOMENOS DE TRANSPORTE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0067 - TEORIA DE CIRCUITOS ELETRÔNICOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0072 - PRÁTICA DE ELETRÔNICA DIGITAL 2 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0074 - TEORIA DE ELETRÔNICA DIGITAL 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0119 - TEORIA DE ELETROMAGNETISMO - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0120 - PRÁTICA DE ELETROMAGNETISMO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0303 - PROJETO INTEGRADOR DE ENGENHARIA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 405h"
+          ]
+        ]
+      },
+      {
+        "label": "5º Nível",
+        "rows": [
+          [
+            "FGA0075 - LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO - 15h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0078 - TEORIA DE MATERIAIS DE CONSTRUÇÃO - 45h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0086 - TEORIA DE ELETRICIDADE APLICADA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0087 - LABORATÓRIO DE ELETRICIDADE APLICADA - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0100 - PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0101 - TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0102 - SINAIS E SISTEMAS PARA ENGENHARIA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0308 - ELETRÔNICA EMBARCADA - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 420h"
+          ]
+        ]
+      },
+      {
+        "label": "6º Nível",
+        "rows": [
+          [
+            "FGA0068 - TEORIA DE CIRCUITOS ELETRÔNICOS 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0070 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0092 - PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0093 - PRINCÍPIOS DE CONTROLE - 75h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0164 - HUMANIDADES E CIDADANIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0307 - GESTÃO DA PRODUÇÃO E QUALIDADE - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "7º Nível",
+        "rows": [
+          [
+            "FGA0017 - PROJETOS DE CIRCUITOS INTEGRADOS 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0132 - INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0148 - ENGENHARIA DE SEGURANÇA DO TRABALHO - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0219 - PROCESSAMENTO DE SINAIS - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0309 - SISTEMAS OPERACIONAIS EMBARCADOS - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0310 - PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 360h"
+          ]
+        ]
+      },
+      {
+        "label": "8º Nível",
+        "rows": [
+          [
+            "FGA0098 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 3 - 30h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0099 - TEORIA DE CIRCUITOS ELETRÔNICOS 3 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0295 - ATIVIDADE DE EXTENSÃO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0304 - PROJETO INTEGRADOR DE ENGENHARIA 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 240h"
+          ]
+        ]
+      },
+      {
+        "label": "9º Nível",
+        "rows": [
+          [
+            "FGA0287 - TRABALHO DE CONCLUSÃO DE CURSO 1 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0288 - ESTÁGIO SUPERVISIONADO - 210h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0311 - PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 330h"
+          ]
+        ]
+      },
+      {
+        "label": "10º Nível",
+        "rows": [
+          [
+            "FGA0290 - TRABALHO DE CONCLUSÃO DE CURSO 2 - 90h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "FGA0296 - ATIVIDADE DE EXTENSÃO 2 - 60h",
+            "Obrigatória",
+            ""
+          ],
+          [
+            "Carga Horária Total: 150h"
+          ]
+        ]
+      }
+    ]
+  }
+]

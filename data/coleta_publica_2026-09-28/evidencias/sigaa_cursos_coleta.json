@@ -1,0 +1,30 @@
+{
+  "coletado_em": "2026-09-28T13:05:26.383Z",
+  "cursos": [
+    {
+      "nome": "ENGENHARIA AEROESPACIAL",
+      "turno": "DIURNO",
+      "url": "https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414916&lc=pt_BR&nivel=G"
+    },
+    {
+      "nome": "ENGENHARIA AUTOMOTIVA",
+      "turno": "DIURNO",
+      "url": "https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414919&lc=pt_BR&nivel=G"
+    },
+    {
+      "nome": "ENGENHARIA DE ENERGIA",
+      "turno": "DIURNO",
+      "url": "https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414922&lc=pt_BR&nivel=G"
+    },
+    {
+      "nome": "ENGENHARIA DE SOFTWARE",
+      "turno": "DIURNO",
+      "url": "https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414924&lc=pt_BR&nivel=G"
+    },
+    {
+      "nome": "ENGENHARIA ELETRÔNICA",
+      "turno": "DIURNO",
+      "url": "https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414926&lc=pt_BR&nivel=G"
+    }
+  ]
+}

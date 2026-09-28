@@ -1,0 +1,11 @@
+ano,periodo,primeiro_dia_aulas,ultimo_dia_aulas,ultimo_dia_letivo,consolidacao_ate,fonte_url,observacao
+2022,1,2022-06-06,2022-10-09,2022-09-28,2022-10-09,https://saa.unb.br/images/documentos/graduacao/Calendarios/Atividades/2022_1/2022_1_Calendario_Atividades-Graduacao.pdf,"O documento traz último dia letivo (28/09/22) anterior ao último dia de aulas (09/10/22, reposição); vale a data mais tardia"
+2022,2,2022-10-25,2023-02-18,2023-02-25,2023-02-25,https://saa.unb.br/images/documentos/graduacao/Calendarios/Atividades/2022_2/2022_2_Calend_Atv_Grad_21_12_2022.pdf,
+2023,1,2023-03-28,,2023-08-12,2023-07-29,https://saa.unb.br/wp-content/uploads/2025/09/2023_1_Calend_Atv_Grad_04_05_2023.pdf,Último dia de aulas não identificado no documento
+2023,2,2023-08-25,2023-12-23,2023-12-27,2023-12-27,https://fe.unb.br/images/Graduacao/Presencial/docs/2023_2_Calend_Ativ_Grad_05_07_2023_v2.pdf,"Versão de 05/07/2023; a SAA publica uma revisão de 15/12/2023 (saa.unb.br/wp-content/uploads/2025/09/2023_2_Calend_Ativ_Grad_15_12_2023.pdf) que não pôde ser lida automaticamente: conferir"
+2024,1,2024-03-18,2024-09-21,,2024-09-23,https://saa.unb.br/wp-content/uploads/2025/09/2024_1_Calend_Ativ_Grad_23_09_24.pdf,Último dia de aulas com prorrogação; último dia letivo não identificado no documento
+2024,2,2024-10-14,2025-02-22,2025-02-27,2025-02-26,https://saa.unb.br/wp-content/uploads/2025/09/2024_2_Calend_Ativ_Grad_19_11_2024.pdf,
+2025,1,2025-03-24,2025-07-26,2025-07-31,2025-08-05,https://saa.unb.br/wp-content/uploads/2025/09/2025_1_Calend_Ativ_Grad_30_07_2025.pdf,
+2025,2,2025-08-18,2025-12-15,2025-12-22,2025-12-18,https://saa.unb.br/wp-content/uploads/2026/01/2025_2_Calend_Ativ_Grad_06_10_2025.pdf,
+2026,1,2026-03-16,2026-07-18,2026-07-23,2026-07-21,https://saa.unb.br/wp-content/uploads/2026/06/2026_1_Calend_Ativ_Grad_22_06_2026.pdf,
+2026,2,2026-08-10,2026-12-14,,,https://saa.unb.br/calendario-academico-graduacao/,Período de aulas pela Resolução CEPE nº 140/2025; calendário por atividades não conferido

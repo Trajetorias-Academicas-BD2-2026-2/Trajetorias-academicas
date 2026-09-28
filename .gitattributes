@@ -1,0 +1,4 @@
+# Os lotes de coleta são conferidos byte a byte por SHA256SUMS.txt: o git
+# não pode converter fins de linha (os CSVs usam CRLF, como o módulo csv do
+# Python grava) nem acusar esse CR como espaço sobrando.
+data/coleta_publica_*/** -text whitespace=cr-at-eol

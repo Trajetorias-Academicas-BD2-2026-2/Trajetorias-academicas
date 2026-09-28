@@ -1,0 +1,6 @@
+codigo,nome,turno,unidade,url_fonte,coletado_em
+FGA_AERO,ENGENHARIA AEROESPACIAL,DIURNO,FCTE,https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414916&lc=pt_BR&nivel=G,2026-09-28T13:05:26.383Z
+FGA_AUTO,ENGENHARIA AUTOMOTIVA,DIURNO,FCTE,https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414919&lc=pt_BR&nivel=G,2026-09-28T13:05:26.383Z
+FGA_ENERG,ENGENHARIA DE ENERGIA,DIURNO,FCTE,https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414922&lc=pt_BR&nivel=G,2026-09-28T13:05:26.383Z
+FGA_SOFT,ENGENHARIA DE SOFTWARE,DIURNO,FCTE,https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414924&lc=pt_BR&nivel=G,2026-09-28T13:05:26.383Z
+FGA_ELET,ENGENHARIA ELETRÔNICA,DIURNO,FCTE,https://sigaa.unb.br/sigaa/public/curso/portal.jsf?id=414926&lc=pt_BR&nivel=G,2026-09-28T13:05:26.383Z

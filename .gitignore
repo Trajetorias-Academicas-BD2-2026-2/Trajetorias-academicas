@@ -1,7 +1,7 @@
-# O recorte em data/raw/ É versionado (carga reprodutível sem o SIGAA).
+# Os lotes de coleta em data/ SÃO versionados (carga reprodutível sem o SIGAA).
 # Só ficam fora do git os artefatos de diagnóstico e temporários.
 debug/
-data/raw/*.tmp
+data/**/*.tmp
 
 # Python
 __pycache__/

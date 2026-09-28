@@ -1,0 +1,81 @@
+[
+  {
+    "semestre": "2026.1",
+    "coletado_em": "2026-09-28T13:00:37.237Z",
+    "tables": [
+      [
+        "Código",
+        "Ano-Período",
+        "Docente",
+        "Horário",
+        "Qtde Vagas Ofertadas",
+        "Qtde Vagas Ocupadas",
+        "Local"
+      ],
+      [
+        "FGA0069 - PRÁTICA DE CIRCUITOS ELETRÔNICOS 1"
+      ],
+      [
+        "03",
+        "2026.1",
+        "MARCUS VINICIUS CHAFFIM COSTA (30h)",
+        "5M34 (16/03/2026 - 18/07/2026)",
+        "",
+        "24",
+        "0",
+        "FCTE - LAB NEI 1"
+      ],
+      [
+        "1 turmas encontrada(s)"
+      ]
+    ]
+  },
+  {
+    "semestre": "2022.1",
+    "coletado_em": "2026-09-28T13:00:38.332Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2022.2",
+    "coletado_em": "2026-09-28T13:00:39.422Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2023.1",
+    "coletado_em": "2026-09-28T13:00:40.501Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2023.2",
+    "coletado_em": "2026-09-28T13:00:54.567Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2024.1",
+    "coletado_em": "2026-09-28T13:00:55.671Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2024.2",
+    "coletado_em": "2026-09-28T13:00:57.390Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2025.1",
+    "coletado_em": "2026-09-28T13:00:58.381Z",
+    "messages": true,
+    "tables": []
+  },
+  {
+    "semestre": "2025.2",
+    "coletado_em": "2026-09-28T13:00:59.468Z",
+    "messages": true,
+    "tables": []
+  }
+]
