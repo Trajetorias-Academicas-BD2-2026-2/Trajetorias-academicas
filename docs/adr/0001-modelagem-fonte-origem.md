@@ -43,7 +43,7 @@ domina PostgreSQL; a E2 vai capturar mudanças deste banco (CDC).
 Medido por `loader/caracterizar.py` sobre o recorte real de `data/raw/`
 (reproduzível: `docker compose run --rm -T loader python caracterizar.py`).
 `q0` é a consulta da pergunta de gestão
-([`db/consultas/q0_pergunta_de_gestao.sql`](../../db/consultas/q0_pergunta_de_gestao.sql)),
+([`db/consultas/q0_pergunta_de_gestao.sql`](https://github.com/Trajetorias-Academicas-BD2-2026-2/Trajetorias-academicas/blob/main/db/consultas/q0_pergunta_de_gestao.sql)),
 mediana de 5 execuções. C' é a massa de C numa tabela única desnormalizada,
 com histórico, para medir se a desnormalização se paga.
 

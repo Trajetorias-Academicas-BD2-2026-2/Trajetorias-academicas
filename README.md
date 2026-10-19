@@ -51,6 +51,40 @@ institutos, como Cálculo e Física) sem ver como essas reservas evoluíram.
 | Coleta nova de reservas | `loader/coletar_ofertas_por_curso.py` (requests + BeautifulSoup) |
 | Orquestração | Docker Compose |
 
+## E2 — ingestão em lote e captura de mudanças
+
+A branch `feat/e2-ingestao-cdc-parquet` adiciona os dois caminhos exigidos:
+
+- `ingestion/batch_to_delta.py` lê o lote público, gera Parquet particionado
+  por `ano/periodo` com Zstandard e publica uma tabela Delta;
+- `db/migrations/V006__e2_ingestao.sql` cria uma outbox transacional no OLTP;
+- `ingestion/demo_change.py` altera uma linha no OLTP e
+  `ingestion/cdc_consumer.py` consome `INSERT`, `UPDATE` e `DELETE` para a
+  tabela Delta de mudanças.
+
+Para executar depois da carga normal:
+
+```bash
+docker compose run --rm --build --profile e2 e2-batch
+docker compose run --rm --build --profile e2 e2-cdc
+```
+
+Para demonstrar reexecução e mudança no OLTP:
+
+```bash
+docker compose run --rm --build --profile e2 e2-batch
+docker compose run --rm --build --profile e2 e2-batch
+docker compose run --rm --build --profile e2 e2-cdc
+docker compose run --rm --build --profile e2 e2-cdc
+```
+
+O segundo lote substitui a mesma tabela Delta sem duplicar linhas. O segundo
+consumo não reaplica eventos já confirmados pelo checkpoint. O [ADR-0005](docs/adr/0005-ingestao-e2.md)
+registra a comparação com a opção nula e a política para dados atrasados.
+
+O roteiro com contagens, checksum, atualização do OLTP e caso de dado atrasado
+está em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
+
 ## Como rodar
 
 Pré-requisito: Docker e Docker Compose. Não precisa de acesso ao SIGAA.

@@ -2,6 +2,8 @@
 # Só ficam fora do git os artefatos de diagnóstico e temporários.
 debug/
 data/**/*.tmp
+analytical/
+site/
 
 # Python
 __pycache__/

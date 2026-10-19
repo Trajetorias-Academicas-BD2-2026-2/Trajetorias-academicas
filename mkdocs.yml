@@ -1,0 +1,25 @@
+site_name: G2 — Entrega E2
+site_description: Documentação da ingestão em lote e captura de mudanças
+docs_dir: docs
+theme:
+  name: readthedocs
+nav:
+  - Início: index.md
+  - Evidência da E2: evidencia-e2.md
+  - ADR-0005 — Ingestão E2: adr/0005-ingestao-e2.md
+  - Diário:
+      - Índice: diario/README.md
+      - Semana 07: diario/semana-07.md
+      - Semana 08: diario/semana-08.md
+      - Semana 09: diario/semana-09.md
+      - Semana 10: diario/semana-10.md
+  - Coleta pública: COLETA_SIGAA_2026-09-28.md
+  - Histórico: historico.md
+  - Carga medida: carga-medida.md
+  - Carga de trabalho: carga-de-trabalho.md
+  - Uso de IA: AI-USAGE.md
+  - ADRs anteriores:
+      - ADR-0001: adr/0001-modelagem-fonte-origem.md
+      - ADR-0002: adr/0002-extracao-via-navegador-real.md
+      - ADR-0003: adr/0003-reservas-por-curso-e-curriculo-versionado.md
+      - ADR-0004: adr/0004-coleta-publica-versionada.md

@@ -68,5 +68,39 @@ services:
       - ./tests:/tests:ro
     entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/sanity_checks.sql"]
 
+  e2-batch:
+    build:
+      context: .
+      dockerfile: ingestion/Dockerfile
+    profiles: ["e2"]
+    command:
+      - python
+      - ingestion/batch_to_delta.py
+      - --source
+      - data/coleta_publica_2026-09-28/ofertas_por_curso.csv
+      - --output
+      - analytical/batch/ofertas
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+
+  e2-cdc:
+    build:
+      context: .
+      dockerfile: ingestion/Dockerfile
+    profiles: ["e2"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment: *pg-env
+    command:
+      - python
+      - ingestion/cdc_consumer.py
+      - --output
+      - analytical/cdc/reservas
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+
 volumes:
   db_data:

@@ -46,11 +46,11 @@
 - Modelo novo pela migração V003, substituindo o do ADR-0001.
 - A carga lê o lote versionado e conferido por checksum; scrapers
   Playwright removidos ([ADR-0004](../adr/0004-coleta-publica-versionada.md)).
-- Decisões acima tomadas por Davi Araújo em 28/09, na revisão da E1 com
-  apoio de IA; ⟨PREENCHER: confirmação da Squad⟩
+- Decisões acima foram registradas por Davi Araújo em 28/09, na revisão da
+  E1 com apoio de IA, e incorporadas pela Squad G2 nesta branch da E2.
 
 ## Próxima semana
-- [ ] Subir tudo com `docker compose` numa máquina limpa e rodar os testes (⟨PREENCHER: responsável⟩)
-- [ ] Validar com um coordenador a premissa de leitura (5 × 10 consultas por semana) (⟨PREENCHER: responsável⟩)
-- [ ] Investigar a quebra de 2023.2 nas reservas grandes de Software (⟨PREENCHER: responsável⟩)
-- [ ] Combinar com a professora a nova tag da E1 (⟨PREENCHER: responsável⟩)
+- [ ] Subir tudo com `docker compose` numa máquina limpa e rodar os testes (Squad G2)
+- [ ] Validar com um coordenador a premissa de leitura (5 × 10 consultas por semana) (Squad G2)
+- [ ] Investigar a quebra de 2023.2 nas reservas grandes de Software (Squad G2)
+- [ ] Combinar com a professora a nova tag da E1 (Squad G2)
