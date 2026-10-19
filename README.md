@@ -65,17 +65,17 @@ A branch `feat/e2-ingestao-cdc-parquet` adiciona os dois caminhos exigidos:
 Para executar depois da carga normal:
 
 ```bash
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-cdc
+docker compose run --rm --build e2-batch
+docker compose run --rm --build e2-cdc
 ```
 
 Para demonstrar reexecução e mudança no OLTP:
 
 ```bash
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-cdc
-docker compose run --rm --build --profile e2 e2-cdc
+docker compose run --rm --build e2-batch
+docker compose run --rm --build e2-batch
+docker compose run --rm --build e2-cdc
+docker compose run --rm --build e2-cdc
 ```
 
 O segundo lote substitui a mesma tabela Delta sem duplicar linhas. O segundo
