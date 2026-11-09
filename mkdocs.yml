@@ -1,18 +1,29 @@
-site_name: G2 — Entrega E2
-site_description: Documentação da ingestão em lote e captura de mudanças
+site_name: G2 — Observatório de Reservas UnB
+site_description: Plataforma analítica de reservas de vagas da UnB — E1 a E4
 docs_dir: docs
 theme:
   name: readthedocs
 nav:
   - Início: index.md
-  - Evidência da E2: evidencia-e2.md
-  - ADR-0005 — Ingestão E2: adr/0005-ingestao-e2.md
+  - E2 — Evidência da ingestão: evidencia-e2.md
+  - E3/E4 — Observatório e governança: observatorio-e-governanca.md
+  - E3/E4 — Orquestração e performance: orquestracao-e-performance.md
+  - E3/E4 — Roteiro de apresentação: roteiro-apresentacao.md
+  - Evidências executadas:
+      - Backfill: evidencias/backfill-2024.1.txt
+      - Controle de acesso: evidencias/controle-acesso.txt
+      - Plano antes: evidencias/explain-antes.txt
+      - Plano depois: evidencias/explain-depois.txt
+      - Retry: evidencias/retry.txt
   - Diário:
       - Índice: diario/README.md
       - Semana 07: diario/semana-07.md
       - Semana 08: diario/semana-08.md
       - Semana 09: diario/semana-09.md
       - Semana 10: diario/semana-10.md
+      - Semana 11: diario/semana-11.md
+      - Semana 12: diario/semana-12.md
+      - Semana 13: diario/semana-13.md
   - Coleta pública: COLETA_SIGAA_2026-09-28.md
   - Histórico: historico.md
   - Carga medida: carga-medida.md
@@ -21,6 +32,7 @@ nav:
   - Observatório e governança: observatorio-e-governanca.md
   - Orquestração e performance: orquestracao-e-performance.md
   - Roteiro de apresentação: roteiro-apresentacao.md
+  - Alinhamento da E1: alinhamento-planilha-e1.md
   - ADRs anteriores:
       - ADR-0001: adr/0001-modelagem-fonte-origem.md
       - ADR-0002: adr/0002-extracao-via-navegador-real.md

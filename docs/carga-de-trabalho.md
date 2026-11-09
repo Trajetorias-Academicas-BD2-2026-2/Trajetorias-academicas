@@ -61,7 +61,7 @@ então errar esta premissa não muda nenhuma decisão do ADR-0003.
 
 Todas as consultas são **analíticas e agregadas**; nenhuma busca por
 registro único. As consultas de referência estão em
-[`db/consultas/`](../db/consultas/):
+diretório `db/consultas/`:
 
 | Consulta | Pergunta |
 |---|---|
