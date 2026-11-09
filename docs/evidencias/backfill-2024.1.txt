@@ -1,0 +1,9 @@
+ linhas_historicas
+-------------------
+               174
+(1 row)
+
+ linhas_totais_apos_backfill
+-----------------------------
+                        1776
+(1 row)

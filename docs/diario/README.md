@@ -28,9 +28,9 @@ Regras:
 | 8 | 29/09 | Sistemas e abstrações de armazenamento | | [semana-08](semana-08.md) |
 | 9 | 06/10 | Ingestão | | [semana-09](semana-09.md) |
 | 10 | 13/10 | Consultas | **E2** | [semana-10](semana-10.md) |
-| 11 | 20/10 | Modelagem de dados | | |
-| 12 | 27/10 | Transformações | | |
-| 13 | 03/11 | Disponibilização | **E3** | |
+| 11 | 20/10 | Modelagem de dados | | [semana-11](semana-11.md) |
+| 12 | 27/10 | Transformações | | [semana-12](semana-12.md) |
+| 13 | 03/11 | Disponibilização | **E3** | [semana-13](semana-13.md) |
 | 14 | 10/11 | Segurança e privacidade | | |
 | 15 | 17/11 | Futuro da engenharia de dados | | |
 | 16 | 24/11 | Defesa final e retrospectiva | **E4** | |

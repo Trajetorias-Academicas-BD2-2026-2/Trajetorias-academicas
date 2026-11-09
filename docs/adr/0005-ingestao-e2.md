@@ -61,3 +61,12 @@ arquivos Parquet; o consumidor precisa de uma etapa de compactação em cargas
 grandes. O fluxo não pretende ser uma implementação de Debezium e deve ser
 revisitado se a latência exigida cair para segundos ou se o volume justificar
 Kafka.
+
+## Gatilho de revisão
+
+- Latência de atualização menor que 1 minuto ou volume que exija particionamento
+  distribuído: avaliar Debezium e Kafka.
+- Falhas de deduplicação ou crescimento do Delta acima de 1 milhão de eventos:
+  introduzir compactação e retenção de outbox.
+- Nova fonte pública com atualização diária: revisar se o lote inteiro continua
+  sendo a opção nula adequada.

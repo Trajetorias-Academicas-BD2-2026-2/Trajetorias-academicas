@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: fct_reservas
+    description: "Uma linha por turma, curso e disciplina em um semestre."
+    columns:
+      - name: turma_id
+        data_tests: [not_null]
+      - name: curso_id
+        data_tests: [not_null]
+      - name: disciplina_id
+        data_tests: [not_null]
+      - name: vagas_reservadas
+        data_tests: [not_null]
+      - name: obrigatoria
+        data_tests: [not_null]
+  - name: mart_serie_curso
+    description: "Métricas da pergunta de gestão por curso e semestre."
+    columns:
+      - name: curso_codigo
+        data_tests: [not_null]
+      - name: semestre
+        data_tests: [not_null]
+      - name: vagas_reservadas
+        data_tests: [not_null]
+  - name: mart_observatorio
+    description: >
+      Indicadores oficiais do observatório. vagas_reservadas é a soma do
+      campo SIGAA Vgs Reservadas; não representa ocupação nem oferta total.

@@ -1,0 +1,65 @@
+falha controlada para demonstrar retry
+tentativa 1 falhou; repetindo após 2s
+ Container bd2-db-1 Running
+ Container bd2-db-1 Waiting
+ Container bd2-db-1 Healthy
+ Container bd2-migrate-1 Starting
+ Container bd2-migrate-1 Started
+ Container bd2-migrate-1 Waiting
+ Container bd2-migrate-1 Exited
+ Container bd2-loader-1 Starting
+ Container bd2-loader-1 Started
+ Container bd2-loader-1 Waiting
+ Container bd2-loader-1 Exited
+ Container bd2-analytics-run-7ee62f3f841b Creating
+ Container bd2-analytics-run-7ee62f3f841b Created
+[0m01:24:23  Running with dbt=1.8.2
+[0m01:24:23  Registered adapter: postgres=1.8.2
+[0m01:24:24  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m01:24:24  Found 7 models, 11 data tests, 6 sources, 428 macros
+[0m01:24:24
+[0m01:24:24  Concurrency: 2 threads (target='dev')
+[0m01:24:24
+[0m01:24:24  1 of 18 START sql table model analytics.dim_curso .............................. [RUN]
+[0m01:24:24  2 of 18 START sql table model analytics.dim_disciplina ......................... [RUN]
+[0m01:24:24  1 of 18 OK created sql table model analytics.dim_curso ......................... [[32mSELECT 5[0m in 0.07s]
+[0m01:24:24  2 of 18 OK created sql table model analytics.dim_disciplina .................... [[32mSELECT 633[0m in 0.07s]
+[0m01:24:24  3 of 18 START sql table model analytics.dim_semestre ........................... [RUN]
+[0m01:24:24  4 of 18 START sql view model analytics.stg_reservas ............................ [RUN]
+[0m01:24:24  3 of 18 OK created sql table model analytics.dim_semestre ...................... [[32mSELECT 9[0m in 0.04s]
+[0m01:24:24  4 of 18 OK created sql view model analytics.stg_reservas ....................... [[32mCREATE VIEW[0m in 0.04s]
+[0m01:24:24  5 of 18 START sql table model analytics.fct_reservas ........................... [RUN]
+[0m01:24:24  5 of 18 OK created sql table model analytics.fct_reservas ...................... [[32mSELECT 1776[0m in 0.02s]
+[0m01:24:24  6 of 18 START test not_null_fct_reservas_curso_id .............................. [RUN]
+[0m01:24:24  7 of 18 START test not_null_fct_reservas_disciplina_id ......................... [RUN]
+[0m01:24:24  6 of 18 PASS not_null_fct_reservas_curso_id .................................... [[32mPASS[0m in 0.03s]
+[0m01:24:24  7 of 18 PASS not_null_fct_reservas_disciplina_id ............................... [[32mPASS[0m in 0.03s]
+[0m01:24:24  8 of 18 START test not_null_fct_reservas_obrigatoria ........................... [RUN]
+[0m01:24:24  9 of 18 START test not_null_fct_reservas_turma_id .............................. [RUN]
+[0m01:24:24  9 of 18 PASS not_null_fct_reservas_turma_id .................................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  8 of 18 PASS not_null_fct_reservas_obrigatoria ................................. [[32mPASS[0m in 0.02s]
+[0m01:24:24  10 of 18 START test not_null_fct_reservas_vagas_reservadas ..................... [RUN]
+[0m01:24:24  11 of 18 START test test_distribuicao_reservas ................................. [RUN]
+[0m01:24:24  10 of 18 PASS not_null_fct_reservas_vagas_reservadas ........................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  11 of 18 PASS test_distribuicao_reservas ....................................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  12 of 18 START test test_unicidade_fato ........................................ [RUN]
+[0m01:24:24  13 of 18 START test test_volume_minimo ......................................... [RUN]
+[0m01:24:24  13 of 18 PASS test_volume_minimo ............................................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  12 of 18 PASS test_unicidade_fato .............................................. [[32mPASS[0m in 0.02s]
+[0m01:24:24  14 of 18 START sql table model analytics.mart_observatorio ..................... [RUN]
+[0m01:24:24  15 of 18 START sql table model analytics.mart_serie_curso ...................... [RUN]
+[0m01:24:24  14 of 18 OK created sql table model analytics.mart_observatorio ................ [[32mSELECT 45[0m in 0.03s]
+[0m01:24:24  15 of 18 OK created sql table model analytics.mart_serie_curso ................. [[32mSELECT 45[0m in 0.03s]
+[0m01:24:24  16 of 18 START test not_null_mart_serie_curso_curso_codigo ..................... [RUN]
+[0m01:24:24  17 of 18 START test not_null_mart_serie_curso_semestre ......................... [RUN]
+[0m01:24:24  16 of 18 PASS not_null_mart_serie_curso_curso_codigo ........................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  17 of 18 PASS not_null_mart_serie_curso_semestre ............................... [[32mPASS[0m in 0.02s]
+[0m01:24:24  18 of 18 START test not_null_mart_serie_curso_vagas_reservadas ................. [RUN]
+[0m01:24:24  18 of 18 PASS not_null_mart_serie_curso_vagas_reservadas ....................... [[32mPASS[0m in 0.01s]
+[0m01:24:24
+[0m01:24:24  Finished running 6 table models, 1 view model, 11 data tests in 0 hours 0 minutes and 0.36 seconds (0.36s).
+[0m01:24:25
+[0m01:24:25  [32mCompleted successfully[0m
+[0m01:24:25
+[0m01:24:25  Done. PASS=18 WARN=0 ERROR=0 SKIP=0 TOTAL=18
+pipeline concluído; para backfill use BACKFILL_SEMESTRE=YYYY.N

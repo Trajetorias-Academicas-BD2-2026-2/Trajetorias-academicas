@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: oltp
+    schema: public
+    tables:
+      - name: curso
+      - name: disciplina
+      - name: turma
+      - name: reserva_vaga
+      - name: curriculo_referencia
+      - name: curriculo_componente

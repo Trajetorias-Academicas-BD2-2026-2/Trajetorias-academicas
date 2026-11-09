@@ -68,6 +68,17 @@ services:
       - ./tests:/tests:ro
     entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/sanity_checks.sql"]
 
+  analytics-tests:
+    image: postgres:16
+    profiles: ["test"]
+    depends_on:
+      analytics:
+        condition: service_completed_successfully
+    environment: *pg-env
+    volumes:
+      - ./tests:/tests:ro
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/analytics_checks.sql"]
+
   e2-batch:
     build:
       context: .
@@ -101,6 +112,40 @@ services:
     volumes:
       - .:/workspace
     working_dir: /workspace
+
+  analytics:
+    build:
+      context: .
+      dockerfile: analytics/Dockerfile
+    depends_on:
+      loader:
+        condition: service_completed_successfully
+    environment:
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: g2
+      PGDATABASE: ofertas_unb
+      PGPASSWORD: g2_dev_only
+      DBT_ALLOW_EXPERIMENTAL_ADAPTERS: "true"
+    command: ["bash", "/workspace/analytics/run.sh"]
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+
+  dashboard:
+    build: ./dashboard
+    depends_on:
+      analytics:
+        condition: service_completed_successfully
+    environment:
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: g2
+      PGDATABASE: ofertas_unb
+      PGPASSWORD: g2_dev_only
+      PORT: "8080"
+    ports:
+      - "8080:8080"
 
 volumes:
   db_data:

@@ -1,4 +1,4 @@
-# G2 — Oferta de Disciplinas UnB (Projeto Integrado BD2, E1)
+# G2 — Oferta de Disciplinas UnB (Projeto Integrado BD2, E3/E4)
 
 Fonte transacional (OLTP) com o histórico de **vagas reservadas** pelas
 turmas a cada curso de engenharia da FCTE (Campus Gama) e as **versões
@@ -84,6 +84,28 @@ registra a comparação com a opção nula e a política para dados atrasados.
 
 O roteiro com contagens, checksum, atualização do OLTP e caso de dado atrasado
 está em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
+
+## E3/E4 — observatório analítico e governança
+
+O serviço `analytics` executa as transformações dbt, testes, métricas de
+freshness e o ETL reverso. O `dashboard` disponibiliza o observatório em
+`http://localhost:8080`, com filtro por curso.
+
+```bash
+docker compose up --build
+docker compose --profile test run --rm tests
+docker compose run --rm analytics
+docker compose --profile test run --rm analytics-tests
+```
+
+Os modelos e testes estão em [`analytics/`](analytics/). A implementação,
+catálogo, linhagem, SLA, LGPD e acesso mínimo estão em
+[`docs/observatorio-e-governanca.md`](docs/observatorio-e-governanca.md).
+Retry, backfill e o roteiro de `EXPLAIN (ANALYZE, BUFFERS)` estão em
+[`docs/orquestracao-e-performance.md`](docs/orquestracao-e-performance.md).
+As evidências executadas e o roteiro de defesa estão em
+[`docs/evidencias/`](docs/evidencias/) e
+[`docs/roteiro-apresentacao.md`](docs/roteiro-apresentacao.md).
 
 ## Como rodar
 

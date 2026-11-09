@@ -1,0 +1,19 @@
+                                                        QUERY PLAN
+--------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=63.21..63.33 rows=45 width=24) (actual time=0.389..0.391 rows=45 loops=1)
+   Sort Key: curso_codigo, semestre
+   Sort Method: quicksort  Memory: 27kB
+   Buffers: shared hit=35
+   ->  HashAggregate  (cost=61.53..61.98 rows=45 width=24) (actual time=0.347..0.351 rows=45 loops=1)
+         Group Key: curso_codigo, semestre
+         Batches: 1  Memory Usage: 24kB
+         Buffers: shared hit=32
+         ->  Seq Scan on fct_reservas  (cost=0.00..49.76 rows=1569 width=20) (actual time=0.006..0.142 rows=1569 loops=1)
+               Filter: obrigatoria
+               Rows Removed by Filter: 207
+               Buffers: shared hit=32
+ Planning:
+   Buffers: shared hit=79
+ Planning Time: 0.215 ms
+ Execution Time: 0.452 ms
+(16 rows)

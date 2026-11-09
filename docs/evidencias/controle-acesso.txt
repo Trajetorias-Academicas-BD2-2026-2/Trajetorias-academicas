@@ -1,0 +1,4 @@
+     rolname      | rolcanlogin | analytics_usage | can_read_mart | can_read_oltp
+------------------+-------------+-----------------+---------------+---------------
+ dashboard_reader | f           | t               | t             | f
+(1 row)

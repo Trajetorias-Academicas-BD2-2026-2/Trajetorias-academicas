@@ -1,0 +1,2 @@
+# Execução diária às 02:00; o script implementa três tentativas.
+0 2 * * * cd /caminho/para/Trajetorias-academicas && ./orchestration/run_pipeline.sh >> logs/pipeline.log 2>&1

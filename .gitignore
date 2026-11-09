@@ -3,6 +3,9 @@
 debug/
 data/**/*.tmp
 analytical/
+analytics/target/
+analytics/logs/
+analytics/.user.yml
 site/
 
 # Python

@@ -1,0 +1,16 @@
+name: ofertas_unb
+version: '1.0'
+config-version: 2
+
+profile: ofertas_unb
+
+model-paths: ["models"]
+test-paths: ["tests"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  ofertas_unb:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

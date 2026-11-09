@@ -18,8 +18,12 @@ nav:
   - Carga medida: carga-medida.md
   - Carga de trabalho: carga-de-trabalho.md
   - Uso de IA: AI-USAGE.md
+  - Observatório e governança: observatorio-e-governanca.md
+  - Orquestração e performance: orquestracao-e-performance.md
+  - Roteiro de apresentação: roteiro-apresentacao.md
   - ADRs anteriores:
       - ADR-0001: adr/0001-modelagem-fonte-origem.md
       - ADR-0002: adr/0002-extracao-via-navegador-real.md
       - ADR-0003: adr/0003-reservas-por-curso-e-curriculo-versionado.md
       - ADR-0004: adr/0004-coleta-publica-versionada.md
+      - ADR-0005: adr/0005-ingestao-e2.md

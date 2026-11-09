@@ -1,0 +1,12 @@
+ofertas_unb:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('PGHOST', 'db') }}"
+      port: 5432
+      user: "{{ env_var('PGUSER', 'g2') }}"
+      password: "{{ env_var('PGPASSWORD', 'g2_dev_only') }}"
+      dbname: "{{ env_var('PGDATABASE', 'ofertas_unb') }}"
+      schema: analytics
+      threads: 2

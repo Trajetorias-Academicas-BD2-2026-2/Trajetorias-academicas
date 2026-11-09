@@ -1,6 +1,6 @@
 # Uso de IA neste projeto
 
-Registro do uso de IA (Claude, via chat) no desenvolvimento da E1 do G2.
+Registro do uso de IA (Claude, via chat) no desenvolvimento das entregas do G2.
 Este documento é atualizado à medida que o projeto avança, reflete o que
 foi de fato pedido e decidido, não um resumo genérico escrito no final.
 
@@ -152,3 +152,16 @@ insert-only, o que acontece quando um lote diverge do banco e de onde vem
 a data de encerramento de cada semestre; o que
 significa cada carimbo de tempo; por que a carga lê um lote versionado em
 vez de raspar o SIGAA.
+
+## Atualização E2, E3 e E4
+
+Na E2 a IA foi usada para revisar a semântica de reprocessamento e a
+documentação da outbox. Na E3/E4, o grupo usou a referência do
+[Observatório da Evasão e Permanência](https://www.unbdatalab.org/observatoriodaevasao)
+para orientar filtros por curso e período, mas manteve a pergunta de gestão
+das reservas do SIGAA.
+
+O código de dbt, o painel, o ETL reverso e a documentação de governança foram
+revisados pelo grupo e validados com compilação Python, `docker compose
+config` e execução dos testes no ambiente Docker quando disponível. A IA não
+foi usada como substituta da explicação individual na defesa.

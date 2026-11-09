@@ -16,10 +16,12 @@ CREATE TEMP TABLE resultado (grupo TEXT, teste TEXT, ok BOOLEAN, detalhe TEXT);
 
 -- ============ Esquema e linhagem ============
 INSERT INTO resultado
-SELECT 'esquema', 'migrações V001 a V005 aplicadas', count(*) = 5, count(*) || ' registradas'
+SELECT 'esquema', 'migrações V001 a V008 aplicadas', count(*) = 8, count(*) || ' registradas'
 FROM schema_migrations
 WHERE versao IN ('V001__schema_base', 'V002__correcoes_pos_e1', 'V003__reservas_por_curso',
-                 'V004__calendario_academico', 'V005__curriculo_referencia_fixo');
+                 'V004__calendario_academico', 'V005__curriculo_referencia_fixo',
+                 'V006__e2_ingestao', 'V007__camada_analitica_governanca',
+                 'V008__indices_consumo_analitico');
 
 INSERT INTO resultado
 SELECT 'esquema', 'turmas e reservas de um único lote', count(DISTINCT lote) = 1,
