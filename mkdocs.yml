@@ -35,3 +35,4 @@ nav:
       - ADR-0003: adr/0003-reservas-por-curso-e-curriculo-versionado.md
       - ADR-0004: adr/0004-coleta-publica-versionada.md
       - ADR-0005: adr/0005-ingestao-e2.md
+      - ADR-0006: adr/0006-camada-analitica-observatorio-e3.md
