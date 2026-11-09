@@ -3,6 +3,11 @@
 Plataforma integrada de dados sobre reservas de vagas nas disciplinas da UnB,
 da fonte transacional ao observatório analítico e ao ETL reverso.
 
+## Squad G2
+
+Este projeto foi desenvolvido por Ana Joyce, Gustavo Alves, Gabriel Lima da
+Silva, Nathan Abreu, Guilherme Evangelista, Angélica Campos e Davi Araújo.
+
 ## Pergunta de gestão
 
 > Como evoluíram, entre 2022.1 e 2026.1, as vagas reservadas publicadas para
@@ -20,15 +25,11 @@ Comece pelo README do projeto na raiz do repositório, depois consulte o
 [observatório e governança](observatorio-e-governanca.md) e o
 [roteiro de apresentação](roteiro-apresentacao.md).
 
-Esta entrega implementa:
+Para a E3, a página principal de demonstração é o
+[observatório analítico](observatorio-e-governanca.md): ele usa dbt para
+transformar a fato de reservas em métricas por curso e semestre, executa testes
+de qualidade e disponibiliza filtros no dashboard em `http://localhost:8080`.
 
-- ingestão em lote idempotente da coleta pública;
-- Parquet particionado por ano e período, com compressão Zstandard;
-- tabela Delta sobre Parquet;
-- captura de mudanças do OLTP por outbox transacional;
-- consumidor CDC idempotente;
-- tratamento documentado de reprocessamento e dados atrasados.
-
-Consulte a [evidência da E2](evidencia-e2.md), o
+Para a E2, consulte a [evidência da ingestão](evidencia-e2.md), o
 [ADR-0005](adr/0005-ingestao-e2.md) e o
 [diário das semanas 8 a 10](diario/README.md).
