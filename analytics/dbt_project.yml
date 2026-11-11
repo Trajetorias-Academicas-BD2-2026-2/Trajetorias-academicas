@@ -14,3 +14,5 @@ models:
       +materialized: view
     marts:
       +materialized: table
+    ml:
+      +materialized: view

@@ -6,7 +6,8 @@ x-pg-env: &pg-env
 
 services:
   db:
-    image: postgres:16
+    # Postgres 16 oficial + extensão pgvector (camada vetorial, V009).
+    image: pgvector/pgvector:pg16
     environment:
       POSTGRES_DB: ofertas_unb
       POSTGRES_USER: g2
@@ -132,6 +133,34 @@ services:
       - .:/workspace
     working_dir: /workspace
 
+  # Camada vetorial (P12): docker compose --profile ml run --rm ml
+  # Vetoriza só textos novos de analytics.ml_stg_texto; o modelo fica no volume.
+  ml:
+    build:
+      context: .
+      dockerfile: ml/Dockerfile
+    profiles: ["ml"]
+    depends_on:
+      analytics:
+        condition: service_completed_successfully
+    environment:
+      <<: *pg-env
+      MODELO_DIR: /modelos
+    volumes:
+      - ml_modelos:/modelos
+
+  # Checagens da camada vetorial (P13): docker compose --profile ml run --rm ml-tests
+  ml-tests:
+    image: postgres:16
+    profiles: ["ml"]
+    depends_on:
+      ml:
+        condition: service_completed_successfully
+    environment: *pg-env
+    volumes:
+      - ./tests:/tests:ro
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/ml_checks.sql"]
+
   dashboard:
     build: ./dashboard
     depends_on:
@@ -149,3 +178,4 @@ services:
 
 volumes:
   db_data:
+  ml_modelos:
