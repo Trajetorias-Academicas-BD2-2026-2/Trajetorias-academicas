@@ -107,6 +107,23 @@ As evidências executadas e o roteiro de defesa estão em
 [`docs/evidencias/`](docs/evidencias/) e
 [`docs/roteiro-apresentacao.md`](docs/roteiro-apresentacao.md).
 
+## Camada vetorial para ML (opcional)
+
+A migração V009 cria o schema `ml` com pgvector; o serviço `db` usa a imagem
+`pgvector/pgvector:pg16`. O dbt monta os textos em `analytics.ml_stg_texto`
+(P11), o serviço `ml` vetoriza só os textos novos (P12) e `ml-tests` confere
+cobertura, dimensão e norma (P13). Nada disso roda no `docker compose up`.
+
+```bash
+docker compose --profile ml run --rm ml          # P12; antes, roda loader e analytics
+docker compose --profile ml run --rm ml-tests    # P13
+ML=1 ./orchestration/run_pipeline.sh             # pipeline completo com a camada vetorial
+```
+
+O modelo `intfloat/multilingual-e5-small`, fixado por commit, tem cerca de
+470 MB e é baixado na primeira execução para o volume `ml_modelos`. A consulta
+de vizinhos está em [`ml/consultas/`](ml/consultas/).
+
 ## Como rodar
 
 Pré-requisito: Docker e Docker Compose. Não precisa de acesso ao SIGAA.
@@ -207,7 +224,11 @@ loader/
   caracterizar.py         mede a carga e gera docs/carga-medida.md
   run.sh                  testes unitários + carga
   tests/                  testes unitários
+ml/
+  gerar_embeddings.py     P12: sincroniza textos e gera embeddings (pgvector)
+  consultas/              consultas de similaridade (fora de db/consultas/)
 tests/sanity_checks.sql   testes de dados pós-carga
+tests/ml_checks.sql       checagens da camada vetorial (P13)
 docker-compose.yml
 ```
 

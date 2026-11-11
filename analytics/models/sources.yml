@@ -4,6 +4,7 @@ sources:
   - name: oltp
     schema: public
     tables:
+      - name: unidade
       - name: curso
       - name: disciplina
       - name: turma
