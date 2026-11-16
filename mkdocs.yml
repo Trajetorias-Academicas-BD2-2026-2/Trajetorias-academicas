@@ -16,6 +16,7 @@ nav:
       - Plano antes: evidencias/explain-antes.txt
       - Plano depois: evidencias/explain-depois.txt
       - Retry: evidencias/retry.txt
+      - Busca vetorial: evidencias/busca-vetorial.txt
   - Diário:
       - Índice: diario/README.md
       - Semana 07: diario/semana-07.md

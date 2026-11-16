@@ -1,0 +1,15 @@
+SET
+  codigo  |                   nome                    | distancia 
+----------+-------------------------------------------+-----------
+ FGA0137  | SISTEMAS DE BANCO DE DADOS 1              |     0.026
+ FGA0135  | SISTEMAS DE BANCOS DE DADOS               |     0.027
+ FGA0389  | MONITORIA EM SISTEMAS DE BANCO DE DADOS 2 |     0.042
+ FGA0030  | ESTRUTURAS DE DADOS 2                     |     0.057
+ FGA0403  | MONITORIA EM SISTEMAS DE BANCO DE DADOS 1 |     0.067
+ FGA0452  | MONITORIA EM ESTRUTURAS DE DADOS 2        |     0.078
+ FGA0146  | ESTRUTURAS DE DADOS 1                     |     0.082
+ FGA0147  | ESTRUTURA DE DADOS E ALGORITMOS           |     0.098
+ FCTE0008 | MONITORIA EM ESTRUTURAS DE DADOS 1        |     0.106
+ FGA0112  | QUALIDADE DE SOFTWARE 2                   |     0.106
+(10 rows)
+
