@@ -130,6 +130,60 @@ Para a disciplina consultada, os resultados mais próximos incluíram:
 
 Quanto menor a distância, maior a proximidade semântica entre os textos.
 
+## Arquitetura em camadas
+
+O projeto organiza o fluxo de dados em três camadas clássicas de uma
+arquitetura analítica:
+
+| Camada | Papel no projeto | Conteúdo |
+|---|---|---|
+| **Bronze** | Preservar a origem | Arquivos públicos coletados, lote versionado e checksums |
+| **Prata** | Validar e estruturar | PostgreSQL transacional, migrações, chaves, regras de integridade e histórico |
+| **Ouro** | Disponibilizar informação | Modelos dbt, `fct_reservas`, `mart_observatorio`, métricas e dashboard |
+
+### Bronze — dados brutos preservados
+
+A camada Bronze mantém o lote original da coleta pública, sem substituir
+silenciosamente os arquivos de origem. O lote é acompanhado por checksum,
+período de coleta e evidências de validação. Essa preservação permite
+reprocessar os dados e comparar futuras coletas com a versão utilizada na
+análise.
+
+### Prata — dados tratados e relacionais
+
+Na camada Prata, os dados são carregados no PostgreSQL e organizados em
+tabelas relacionais. Turmas, reservas por curso, disciplinas, currículos e
+semestres possuem relacionamentos e restrições de integridade. O histórico é
+mantido de forma insert-only, evitando que uma nova carga altere o passado
+sem registro.
+
+Essa camada também concentra a validação do lote, a rejeição de divergências,
+o controle dos semestres encerrados e a linhagem da origem até o banco.
+
+### Ouro — dados prontos para decisão
+
+A camada Ouro é construída pelo dbt. Ela aplica as regras de negócio,
+testa os modelos e entrega dados prontos para consumo:
+
+```text
+staging → dimensões → fct_reservas → mart_observatorio
+```
+
+O dashboard utiliza o mart, e não as tabelas operacionais. Assim, a mesma
+definição de métrica é reutilizada na apresentação, nos testes e no ETL
+reverso.
+
+## Linhagem e responsabilidades
+
+| Origem | Transformação | Produto |
+|---|---|---|
+| Arquivos públicos do SIGAA | Preservação e checksum | Lote Bronze |
+| Lote versionado | Carga e validação relacional | PostgreSQL Prata |
+| Tabelas operacionais | Modelos dbt e testes | Fato analítica |
+| `fct_reservas` | Filtros e agregações | `mart_observatorio` |
+| Mart analítico | Consulta por curso e semestre | Dashboard |
+| Textos de disciplinas | Embeddings e índice HNSW | Busca vetorial |
+
 ## Resultados consolidados
 
 | Dimensão | Resultado obtido |
@@ -139,6 +193,54 @@ Quanto menor a distância, maior a proximidade semântica entre os textos.
 | Consumo | Dashboard com visão por curso e semestre |
 | Governança | Linhagem, catálogo e privilégio mínimo |
 | Inteligência semântica | Busca de disciplinas semelhantes com pgvector |
+
+## Qualidade dos dados
+
+A qualidade é verificada em diferentes pontos do fluxo:
+
+| Verificação | Objetivo |
+|---|---|
+| Checksums | Confirmar que o lote utilizado é o lote coletado |
+| Chaves e restrições | Evitar relações inválidas entre turmas, cursos e disciplinas |
+| Unicidade | Impedir duplicidade na fato e nos textos vetorizados |
+| Volume e distribuição | Detectar cargas incompletas ou fora do padrão |
+| Freshness | Identificar dados analíticos desatualizados |
+| Norma e dimensão vetorial | Garantir embeddings compatíveis com o modelo |
+
+Os testes dbt da camada analítica terminaram com 18 aprovações. Na camada
+vetorial, todas as 72 disciplinas do fato possuem vetor, com 384 dimensões e
+norma unitária.
+
+## Operação e governança
+
+O pipeline possui mecanismos para operação segura e reprodutível:
+
+- **Retry:** recupera uma falha transitória sem considerar a execução
+  automaticamente bem-sucedida.
+- **Backfill:** permite reprocessar um semestre específico sem duplicar o
+  histórico completo.
+- **ETL reverso:** publica 113 alertas agregados em
+  `operations.alertas_reserva` para apoiar a coordenação.
+- **Catálogo e linhagem:** relacionam cada métrica à tabela e à transformação
+  que a originaram.
+- **Acesso mínimo:** o papel `dashboard_reader` lê somente os objetos
+  necessários para o consumo analítico.
+- **Performance:** os planos `EXPLAIN` foram registrados antes e depois da
+  criação dos índices; no volume atual, o ganho não foi significativo.
+
+## Decisões arquiteturais
+
+As decisões mais importantes estão registradas em ADRs:
+
+| Decisão | Registro |
+|---|---|
+| Modelagem de turmas e reservas por curso | ADR-0003 |
+| Lote público versionado | ADR-0004 |
+| Ingestão em lote e CDC por outbox | ADR-0005 |
+| Camada analítica e observatório | [ADR-0006](adr/0006-camada-analitica-observatorio-e3.md) |
+
+Esses registros explicam as alternativas consideradas, os motivos das
+escolhas, as consequências e os gatilhos para revisão da arquitetura.
 
 ## Limitações
 
