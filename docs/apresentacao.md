@@ -1,63 +1,63 @@
-# Apresentação do projeto
+# Entrega 3 — Observatório analítico
 
-Use esta página como roteiro da defesa. A apresentação deve seguir a ordem:
+## O que foi entregue
 
-**problema → dados → pipeline → camada analítica → dashboard → camada
-vetorial → evidências e limites**.
+Transformamos os dados de reservas de vagas em uma camada analítica testada,
+um dashboard para consulta e uma camada vetorial para busca semântica.
 
-## 1. Problema e pergunta de gestão
+| Parte | Resultado |
+|---|---|
+| Dados | 733 turmas, 1.776 reservas e 9 semestres |
+| Transformação | dbt com staging, fato e mart |
+| Observatório | Dashboard com filtros por curso e semestre |
+| Qualidade | Testes de unicidade, volume, distribuição e freshness |
+| Operação | Retry, backfill, ETL reverso e controle de acesso |
+| Camada vetorial | pgvector, embeddings e busca por similaridade |
 
-O projeto analisa a evolução das **vagas reservadas publicadas** para os
-cursos da FCTE entre 2022.1 e 2026.1, considerando as disciplinas
-obrigatórias do currículo de referência de 2026.1.
+## 1. Problema de gestão
 
-Vaga reservada não significa vaga ocupada nem oferta total de vagas.
+O projeto responde:
 
-## 2. Dados e armazenamento
+> Como evoluíram, entre 2022.1 e 2026.1, as vagas reservadas publicadas para
+> cada curso da FCTE nas disciplinas obrigatórias do currículo de referência
+> selecionado para 2026.1?
 
-O lote público foi carregado no PostgreSQL. O modelo operacional separa
-turmas, reservas por curso, disciplinas, cursos, currículos e semestres.
-O histórico é mantido de forma insert-only e o lote é conferido por checksum.
+O foco é **reserva publicada**. Isso não significa ocupação real por alunos
+nem oferta total de vagas.
 
-Mostre:
-
-- [Visão geral do projeto](index.md);
-- [Coleta pública](COLETA_SIGAA_2026-09-28.md);
-- [Arquitetura e modelo de dados](historico.md).
-
-## 3. Ingestão da E2
-
-Explique que a E2 implementou:
-
-- carga em lote;
-- Parquet/Delta;
-- outbox transacional;
-- consumidor CDC;
-- checkpoint e deduplicação;
-- tratamento de dado atrasado.
-
-Mostre a [evidência da E2](evidencia-e2.md) e o
-[ADR-0005](adr/0005-ingestao-e2.md).
-
-## 4. E3: camada analítica
-
-O dbt transforma o PostgreSQL em uma camada própria para análise:
+## 2. Fluxo completo
 
 ```text
-OLTP → staging → fct_reservas → mart_observatorio → dashboard
+Dados públicos do SIGAA
+          ↓
+Lote conferido por checksum
+          ↓
+PostgreSQL transacional
+          ↓
+dbt: staging → fct_reservas → mart_observatorio
+          ↓
+Dashboard e ETL reverso
+          ↓
+Busca vetorial opcional
 ```
 
-A `fct_reservas` tem uma linha por turma, curso, disciplina e semestre. O
-`mart_observatorio` calcula:
+## 3. Modelo analítico
 
-- vagas reservadas;
-- disciplinas obrigatórias com reserva;
-- turmas com reserva.
+A `fct_reservas` tem uma linha por **turma, curso, disciplina e semestre**.
+O `mart_observatorio` disponibiliza:
 
-Mostre a [ADR-0006 da E3](adr/0006-camada-analitica-observatorio-e3.md) e o
-[observatório e governança](observatorio-e-governanca.md).
+- `vagas_reservadas`;
+- `obrigatorias_com_reserva`;
+- `turmas_com_reserva`.
 
-## 5. Dashboard
+Exemplo: se `FGA_SOFT`, em `2026.1`, apresenta 3.816 vagas reservadas, 30
+obrigatórias com reserva e 79 turmas, as reservas publicadas somaram 3.816
+vagas em 30 disciplinas e 79 turmas. Isso não significa 3.816 alunos.
+
+A decisão está registrada na
+[ADR-0006 da camada analítica](adr/0006-camada-analitica-observatorio-e3.md).
+
+## 4. Dashboard
 
 O dashboard é executado localmente porque depende do PostgreSQL, das
 migrações, da carga e do dbt.
@@ -66,75 +66,68 @@ migrações, da carga e do dbt.
 docker compose up --build
 ```
 
-Depois abra <http://localhost:8080> e filtre, por exemplo:
+Depois abra <http://localhost:8080> e filtre `FGA_SOFT` e `2026.1`.
 
-- curso: `FGA_SOFT`;
-- semestre: `2026.1`.
+## 5. Qualidade e governança
 
-Explique que os valores exibidos vêm do `mart_observatorio`, e não de uma
-consulta improvisada diretamente nas tabelas operacionais.
+Foram implementados:
 
-## 6. Qualidade e operação
-
-Execute:
+- 18 testes dbt aprovados;
+- freshness;
+- retry e backfill;
+- ETL reverso para `operations.alertas_reserva`;
+- catálogo, linhagem e controle de acesso;
+- evidências de `EXPLAIN`.
 
 ```bash
 docker compose run --rm analytics
 docker compose --profile test run --rm analytics-tests
 ```
 
-Mostre as evidências de [retry](evidencias/retry.txt), [backfill](evidencias/backfill-2024.1.txt),
-[controle de acesso](evidencias/controle-acesso.txt) e
-[`EXPLAIN` antes/depois](evidencias/explain-antes.txt). Explique também o ETL reverso para
-`operations.alertas_reserva`.
+## 6. Camada vetorial
 
-## 7. Camada vetorial
-
-A camada vetorial foi adicionada com pgvector para permitir busca de
-disciplinas semanticamente parecidas:
+A camada vetorial usa pgvector para encontrar disciplinas semanticamente
+parecidas:
 
 ```text
-texto da disciplina → embedding de 384 dimensões → índice HNSW → vizinhos
+nome → embedding de 384 dimensões → índice HNSW → vizinhos
 ```
 
-Ela usa o modelo `intfloat/multilingual-e5-small`. A execução é opcional no
-fluxo padrão:
+Foi utilizado o modelo `intfloat/multilingual-e5-small`.
 
 ```bash
 docker compose --profile ml run --rm ml
 docker compose --profile ml run --rm ml-tests
 ```
 
-Resultado validado no lote atual:
+Resultado validado:
 
 - 638 textos vetorizados;
 - 100% das 72 disciplinas do fato com vetor;
 - vetores com 384 dimensões e norma 1;
-- testes `ml-tests` finalizados com código 0.
+- testes finalizados com código 0.
 
-Para demonstrar a busca:
+## 7. Demonstração
 
-```bash
-docker compose exec -T db psql -U g2 -d ofertas_unb -v codigo=FGA0060 \
-  < ml/consultas/consulta_vizinhos.sql
-```
+1. Explique a pergunta de gestão.
+2. Mostre PostgreSQL → dbt → mart.
+3. Abra o dashboard e filtre `FGA_SOFT` e `2026.1`.
+4. Mostre os testes e as evidências.
+5. Mostre a busca vetorial.
+6. Explique as limitações.
 
-## 8. Fechamento e limitações
+## 8. Limitações
 
-Finalize destacando:
+- Mede vagas reservadas publicadas, não ocupação real.
+- Reservas não representam a oferta total.
+- O currículo de referência é o de 2026.1.
+- O dashboard é uma demonstração local.
+- A camada vetorial apoia busca semântica, mas não substitui o modelo
+  relacional das métricas.
 
-- o projeto mede reservas publicadas, não ocupação real;
-- o volume atual é pequeno;
-- o dashboard é uma demonstração local;
-- a camada vetorial apoia busca semântica, mas não substitui o modelo
-  analítico relacional;
-- novas fontes ou uma pergunta sobre ocupação exigiriam revisão da arquitetura.
+## Conclusão
 
-## Ordem das páginas
-
-1. [Início](index.md)
-2. [ADR-0006 da E3](adr/0006-camada-analitica-observatorio-e3.md)
-3. [Observatório e governança](observatorio-e-governanca.md)
-4. Dashboard em <http://localhost:8080>
-5. [Evidências de retry](evidencias/retry.txt)
-6. Camada vetorial e busca por similaridade
+A Entrega 3 transforma dados operacionais em informação analítica
+reproduzível: o dbt organiza e testa as métricas, o dashboard permite a
+consulta por curso e semestre, a governança documenta o uso e a camada
+vetorial amplia o projeto com busca semântica.
