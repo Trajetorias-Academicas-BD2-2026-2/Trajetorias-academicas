@@ -71,6 +71,15 @@ services:
       - ./tests:/tests:ro
     entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/sanity_checks.sql"]
 
+  # Controle de acesso da E4: docker compose --profile test run --rm --no-deps acesso-tests
+  acesso-tests:
+    image: postgres:16
+    profiles: ["test"]
+    environment: *pg-env
+    volumes:
+      - ./tests:/tests:ro
+    entrypoint: ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-f", "/tests/acesso_checks.sql"]
+
   analytics-tests:
     image: postgres:16
     profiles: ["test"]
@@ -123,6 +132,9 @@ services:
     depends_on:
       loader:
         condition: service_completed_successfully
+      coordenacao:
+        condition: service_started
+        required: false
     environment:
       PGHOST: db
       PGPORT: "5432"
@@ -132,6 +144,10 @@ services:
       DBT_ALLOW_EXPERIMENTAL_ADAPTERS: "true"
       BACKFILL_SEMESTRE: ${BACKFILL_SEMESTRE:-}
       FULL_REFRESH: ${FULL_REFRESH:-0}
+      # ETL reverso (E4): usuário só com o que precisa, destino = Pauta da coordenação
+      ETL_PGUSER: etl_reverso
+      ETL_PGPASSWORD: etl_dev_only
+      PAUTA_URL: http://coordenacao:8090
     command: ["bash", "/workspace/analytics/run.sh"]
     volumes:
       - .:/workspace
@@ -171,15 +187,26 @@ services:
       analytics:
         condition: service_completed_successfully
     environment:
+      # E4: o painel lê só a camada de consumo, com um usuário sem acesso ao OLTP
       PGHOST: db
       PGPORT: "5432"
-      PGUSER: g2
+      PGUSER: painel
       PGDATABASE: ofertas_unb
-      PGPASSWORD: g2_dev_only
+      PGPASSWORD: painel_dev_only
       PORT: "8080"
     ports:
       - "8080:8080"
 
+  # ETL reverso (E4): o sistema da coordenação, separado do warehouse, com banco próprio.
+  # O coordenador abre http://localhost:8090 antes da negociação de vagas.
+  coordenacao:
+    build: ./coordenacao
+    ports:
+      - "8090:8090"
+    volumes:
+      - pauta_dados:/dados
+
 volumes:
+  pauta_dados:
   db_data:
   ml_modelos:
