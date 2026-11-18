@@ -1,0 +1,66 @@
+version: 2
+
+# Quem consome a camada analítica (E4). Aparecem no grafo de linhagem do
+# catálogo (dbt docs) como o ponto final de cada caminho.
+
+exposures:
+  - name: painel_observatorio
+    label: "Painel: lugares guardados nas engenharias do Gama"
+    type: dashboard
+    maturity: high
+    url: https://trajetorias-academicas-bd2-2026-2.github.io/Trajetorias-academicas/
+    description: >
+      História em sete cenas para o coordenador de curso e para qualquer pessoa.
+      Números de topo vêm de analytics.metricas_oficiais (camada semântica);
+      detalhe visual vem dos marts. Lê com o papel painel (sem acesso ao OLTP).
+    depends_on:
+      - source('semantica', 'metricas_oficiais')
+      - source('semantica', 'metricas_definicoes')
+      - source('operacional', 'envio_pauta')
+      - ref('mart_disciplina_semestre')
+      - ref('mart_cobertura_curriculo')
+      - ref('metricas_freshness')
+      - ref('dim_curso')
+      - ref('dim_semestre')
+      - ref('fct_reservas')
+    owner:
+      name: Squad G2
+
+  - name: pauta_coordenacao
+    label: "Pauta da coordenação (ETL reverso)"
+    type: application
+    maturity: medium
+    url: http://localhost:8090
+    description: >
+      Sistema operacional da coordenação. Recebe, por API com Idempotency-Key, os itens
+      a conferir antes da negociação de vagas: reservas grandes, obrigatórias sem reserva
+      e quedas fortes. O coordenador marca cada item como revisado.
+      Enviado por analytics/etl_reverso.py com fila operations.envio_pauta.
+    depends_on:
+      - source('semantica', 'metricas_oficiais')
+      - source('operacional', 'envio_pauta')
+      - ref('mart_cobertura_curriculo')
+      - ref('dim_disciplina')
+    owner:
+      name: Coordenação de curso (consumidor) · Squad G2 (mantenedor)
+
+  - name: csv_pauta
+    label: "CSV da pauta por curso (opção nula do ETL reverso)"
+    type: analysis
+    maturity: low
+    description: "saida/pauta_<curso>.csv a cada execução, com os mesmos itens da Pauta (analytics/exportar_pauta_csv.py)."
+    depends_on:
+      - source('semantica', 'metricas_oficiais')
+      - ref('mart_cobertura_curriculo')
+    owner:
+      name: Squad G2
+
+  - name: camada_vetorial
+    label: "Busca de disciplinas parecidas (pgvector)"
+    type: ml
+    maturity: low
+    description: "ml/gerar_embeddings.py vetoriza os nomes de disciplina e curso de ml_stg_texto (perfil ml)."
+    depends_on:
+      - ref('ml_stg_texto')
+    owner:
+      name: Squad G2

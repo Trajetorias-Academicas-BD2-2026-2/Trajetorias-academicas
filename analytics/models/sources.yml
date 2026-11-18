@@ -1,8 +1,20 @@
 version: 2
 
+# Fontes: o OLTP (schema public), carregado pelo loader a partir do lote
+# público versionado data/coleta_publica_2026-09-28/ (conferido por SHA-256),
+# que por sua vez veio das páginas públicas do SIGAA em 28/09/2026.
+
 sources:
   - name: oltp
+    description: >
+      Banco transacional insert-only da E1 (PostgreSQL, schema public). Origem pública:
+      páginas do SIGAA da UnB coletadas em 28/09/2026 (lote data/coleta_publica_2026-09-28,
+      conferido por SHA-256).
     schema: public
+    meta:
+      fonte_publica: "https://sigaa.unb.br/sigaa/public/curso/lista.jsf?nivel=G&aba=p-graduacao"
+      lote: "data/coleta_publica_2026-09-28"
+      dono: "Squad G2"
     # SLA da origem: um lote novo por semestre encerrado. Sem carga nova em
     # 200 dias (um semestre e meio), avisa; em 400 dias, erro.
     freshness:
@@ -10,20 +22,127 @@ sources:
       error_after: {count: 400, period: day}
     tables:
       - name: unidade
+        description: "Unidades acadêmicas (só a FCTE; disciplinas de outros departamentos têm unidade nula)."
+        meta: {dado_pessoal: false}
         freshness: null
       - name: curso
+        description: "Cursos de engenharia da FCTE, da listagem pública de cursos do SIGAA (cursos.csv)."
+        meta: {dado_pessoal: false, arquivo_do_lote: "cursos.csv"}
         freshness: null
       - name: disciplina
+        description: "Catálogo de componentes da FCTE e disciplinas de outros departamentos citadas (componentes_catalogo.csv). Recebe upsert: o histórico fica no snapshot snap_disciplina."
+        meta: {dado_pessoal: false, arquivo_do_lote: "componentes_catalogo.csv"}
         freshness: null
       - name: semestre_letivo
+        description: "Calendário acadêmico oficial da UnB, com a data de encerramento de cada semestre e a URL da fonte."
+        meta: {dado_pessoal: false, arquivo_do_lote: "data/calendario_academico.csv"}
         freshness: null
       - name: turma
+        description: "Turmas de semestres encerrados (insert-only), da página pública Turmas do curso do SIGAA (ofertas_por_curso.csv)."
+        meta: {dado_pessoal: false, arquivo_do_lote: "ofertas_por_curso.csv"}
         loaded_at_field: ingerido_em
       - name: reserva_vaga
+        description: "Lugares que cada turma guardou para cada curso (insert-only). Campo 'Vgs Reservadas' da página Turmas do curso do SIGAA."
+        meta: {dado_pessoal: false, arquivo_do_lote: "ofertas_por_curso.csv", campo_sigaa: "Vgs Reservadas"}
         loaded_at_field: ingerido_em
+        columns:
+          - name: vagas_reservadas
+            description: "{{ doc('vagas_reservadas') }}"
+            meta: {fonte_publica: "SIGAA › Turmas do curso › Vgs Reservadas", coluna_do_lote: "ofertas_por_curso.csv: vagas_reservadas"}
       - name: curriculo
+        description: "Versões curriculares de cada curso, das estruturas curriculares públicas do SIGAA (curriculos.csv)."
+        meta: {dado_pessoal: false, arquivo_do_lote: "curriculos.csv"}
         freshness: null
       - name: curriculo_referencia
+        description: "View: a versão curricular em vigor em 2026.1 para cada curso (fixada pela V005)."
+        meta: {dado_pessoal: false}
         freshness: null
       - name: curriculo_componente
+        description: "Componentes de cada versão curricular, com a natureza obrigatória/optativa (curso_disciplina_por_curriculo.csv)."
+        meta: {dado_pessoal: false, arquivo_do_lote: "curso_disciplina_por_curriculo.csv"}
         freshness: null
+      - name: docente
+        description: >
+          DADO PESSOAL: nome dos docentes das turmas, como publicado no SIGAA (coluna docentes de
+          ofertas_por_curso.csv). Usado só no OLTP para conferir divergência entre lotes; nenhum
+          modelo dbt, painel ou pauta o lê. Coluna nome sem SELECT para os papéis de consumo (V012);
+          retenção até 30/06/2027 e descarte por operations.descartar_dados_pessoais (V014). Ver docs/lgpd.md.
+        meta: {dado_pessoal: true, base_legal: "LGPD art. 7º §§3º-4º (dado tornado público pela UnB); Lei 12.527/2011", retencao: "até 30/06/2027", descarte: "pseudonimização (V014)"}
+        freshness: null
+        columns:
+          - name: nome
+            description: "Nome do docente. Dado pessoal; acesso só do dono do banco."
+            meta: {dado_pessoal: true}
+
+  # Tabelas gravadas fora do dbt, declaradas aqui para entrarem no catálogo e na linhagem.
+  - name: semantica
+    description: "Saída da camada semântica (MetricFlow), gravada por analytics/semantica.py depois do dbt build."
+    schema: analytics
+    meta: {dono: "Squad G2", gerado_por: "analytics/semantica.py", definicao: "analytics/models/semantic/semantica.yml"}
+    tables:
+      - name: metricas_oficiais
+        description: "Valor de cada métrica oficial por curso, semestre e recorte. É o que o painel, a Pauta e o CSV leem."
+        meta: {dado_pessoal: false, rls: "por curso (V012)"}
+        columns:
+          - name: metrica
+            description: "Nome da métrica definida em semantica.yml (ex.: lugares_guardados)."
+          - name: versao
+            description: "Versão da definição da métrica (meta.versao)."
+          - name: curso_codigo
+            description: "{{ doc('curso_codigo') }}"
+          - name: semestre
+            description: "Semestre (AAAA.N) ou 'todos' para o período inteiro."
+          - name: recorte
+            description: "'total', 'disciplina:<código>' ou 'unidade:<departamento>'."
+          - name: valor
+            description: "Valor calculado pelo MetricFlow."
+          - name: calculado_em
+            description: "Quando o valor foi calculado."
+      - name: metricas_definicoes
+        description: "Dicionário das métricas oficiais: rótulo e descrição em linguagem simples, tipo e versão. O painel mostra este texto."
+        meta: {dado_pessoal: false}
+        columns:
+          - name: metrica
+            description: "Nome da métrica."
+          - name: rotulo
+            description: "Nome mostrado ao usuário."
+          - name: descricao
+            description: "Definição em linguagem simples."
+          - name: tipo
+            description: "simple ou ratio (MetricFlow)."
+          - name: versao
+            description: "Versão da definição."
+          - name: desde
+            description: "Entrega em que a métrica surgiu."
+
+  - name: operacional
+    description: "Schema operations: o que sai do analítico para sistemas operacionais (ETL reverso)."
+    schema: operations
+    meta: {dono: "Squad G2"}
+    tables:
+      - name: envio_pauta
+        description: "Fila de envio (outbox) do ETL reverso para a Pauta da coordenação: item, versão, estado da entrega e tentativas."
+        meta: {dado_pessoal: false, destino: "Pauta da coordenação (http://localhost:8090)"}
+        columns:
+          - name: chave
+            description: "Identificador do item (tipo, curso, semestre, disciplina)."
+          - name: versao
+            description: "Versão do conteúdo; vai no header Idempotency-Key."
+          - name: curso_codigo
+            description: "{{ doc('curso_codigo') }}"
+          - name: tipo
+            description: "reserva_grande, obrigatoria_sem_reserva ou queda_forte."
+          - name: payload
+            description: "Item completo enviado à Pauta (título, detalhe, métrica, versão da métrica, valor)."
+          - name: status
+            description: "pendente, enviado ou retirado."
+          - name: tentativas
+            description: "Quantas vezes o envio foi tentado."
+          - name: ultimo_erro
+            description: "Último erro de envio (ex.: Pauta fora do ar)."
+          - name: criado_em
+            description: "Quando o item entrou na fila."
+          - name: atualizado_em
+            description: "Última mudança no item."
+          - name: enviado_em
+            description: "Quando a Pauta confirmou o recebimento."

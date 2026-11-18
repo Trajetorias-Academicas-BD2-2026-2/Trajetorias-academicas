@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: stg_reservas
+    description: "Staging: cada reserva do OLTP com turma, curso, disciplina e se a disciplina é obrigatória no currículo de referência."
+    meta: {camada: staging, dado_pessoal: false}
+    columns:
+      - name: turma_id
+        description: "{{ doc('turma_id') }}"
+      - name: curso_id
+        description: "Curso que recebeu a reserva (public.reserva_vaga.curso_id)."
+      - name: vagas_reservadas
+        description: "{{ doc('vagas_reservadas') }}"
+      - name: disciplina_id
+        description: "Disciplina da turma (public.turma.disciplina_id)."
+      - name: ano
+        description: "Ano da turma."
+      - name: periodo
+        description: "Período da turma."
+      - name: semestre_key
+        description: "{{ doc('semestre_key') }}"
+      - name: semestre
+        description: "{{ doc('semestre') }}"
+      - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: unidade_origem
+        description: "{{ doc('unidade_origem') }}"
+      - name: de_outra_unidade
+        description: "{{ doc('de_outra_unidade') }}"
+      - name: obrigatoria
+        description: "{{ doc('obrigatoria') }}"
+      - name: ingerido_em
+        description: "{{ doc('ingerido_em') }}"
+
+  - name: stg_curriculo_componente
+    description: "Staging: componentes de cada versão curricular, com o semestre em que a versão começa a valer."
+    meta: {camada: staging, dado_pessoal: false}
+    columns:
+      - name: curso_id
+        description: "Curso da versão curricular."
+      - name: disciplina_id
+        description: "Disciplina do componente."
+      - name: curriculo_id
+        description: "Versão curricular (public.curriculo.id)."
+      - name: curriculo_codigo
+        description: "Código da versão curricular no SIGAA."
+      - name: natureza
+        description: "OBRIGATORIA ou OPTATIVA."
+      - name: grupo
+        description: "Grupo do componente."
+      - name: vigencia_inicio_key
+        description: "Semestre (chave) de início da vigência."
+      - name: e_referencia_2026_1
+        description: "Verdadeiro na versão de referência de 2026.1."

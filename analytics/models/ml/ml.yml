@@ -2,19 +2,26 @@ version: 2
 
 models:
   - name: ml_stg_texto
+    meta: {camada: ml, dado_pessoal: false}
     description: >
       P11 da camada vetorial: um texto por disciplina e por curso, com o nome
       normalizado e seu SHA-256. O job ml/gerar_embeddings.py vetoriza só os
       textos que ainda não têm vetor no modelo ativo.
     columns:
       - name: entidade
+        description: "componente (disciplina) ou curso_unb."
         data_tests:
           - not_null
           - accepted_values:
               values: ['componente', 'curso_unb']
       - name: chave_origem
+        description: "Código da disciplina ou do curso."
         data_tests: [not_null]
       - name: texto
+        description: "Nome normalizado que é vetorizado (sem dado pessoal)."
         data_tests: [not_null]
       - name: texto_sha256
+        description: "SHA-256 do texto, para vetorizar só o que mudou."
         data_tests: [not_null]
+      - name: atributos
+        description: "Filtros (tipo, unidade, turno) em JSON, fora do texto vetorizado."

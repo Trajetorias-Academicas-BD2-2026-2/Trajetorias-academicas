@@ -18,6 +18,9 @@ on:
       - "db/**"
       - "data/**"
       - "loader/**"
+      - "coordenacao/**"
+      - "tests/**"
+      - "orchestration/**"
       - "docker-compose.yml"
       - ".github/workflows/painel.yml"
   workflow_dispatch:
@@ -39,8 +42,8 @@ jobs:
       - name: Baixar o código
         uses: actions/checkout@v4
 
-      - name: Subir o pipeline (banco, migrações, carga, dbt, painel)
-        run: docker compose up -d --build --wait dashboard
+      - name: Subir o pipeline (banco, migrações, carga, dbt, métricas, ETL reverso, painel)
+        run: docker compose up -d --build --wait dashboard coordenacao
 
       - name: Testes de dados da origem
         run: docker compose run --rm --no-deps tests
@@ -48,9 +51,26 @@ jobs:
       - name: Testes da camada analítica
         run: docker compose --profile test run --rm --no-deps analytics-tests
 
+      - name: "E4: controle de acesso (recorte de linha e de coluna)"
+        run: docker compose --profile test run --rm --no-deps acesso-tests
+
+      - name: "E4: ETL reverso (Pauta fora do ar, volta, reenvio sem duplicar)"
+        run: ./orchestration/demo_etl_reverso.sh
+
+      - name: "E4: a mesma métrica com o mesmo valor em todas as telas"
+        run: docker compose run --rm --no-deps analytics python /workspace/tests/metricas_consistentes.py
+
+      - name: "E4: catálogo completo e publicado"
+        run: |
+          docker compose run --rm --no-deps analytics bash -c \
+            'cd /workspace/analytics && dbt docs generate --static --profiles-dir . --no-use-colors -q && python /workspace/tests/catalogo_cobertura.py'
+          mkdir -p site/catalogo
+          cp analytics/target/static_index.html site/catalogo/index.html
+
       - name: Salvar os dados do painel
         run: |
           mkdir -p site
+          docker compose up -d --no-deps --force-recreate dashboard
           for tentativa in $(seq 1 20); do
             if curl -fsS http://localhost:8080/api/observatorio -o site/observatorio.json; then break; fi
             sleep 2

@@ -1,0 +1,27 @@
+version: 2
+
+snapshots:
+  - name: snap_disciplina
+    description: "Snapshot (SCD 2 em tempo de processamento) do catálogo de disciplinas: guarda cada versão de nome, carga horária, tipo e unidade."
+    meta: {camada: snapshot, dado_pessoal: false}
+    columns:
+      - name: disciplina_id
+        description: "Identificador interno da disciplina."
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: carga_horaria
+        description: "Carga horária em horas."
+      - name: tipo
+        description: "DISCIPLINA ou ATIVIDADE."
+      - name: unidade_id
+        description: "Unidade da disciplina ou nulo."
+      - name: dbt_scd_id
+        description: "Chave da versão."
+      - name: dbt_updated_at
+        description: "Quando o dbt registrou a versão."
+      - name: dbt_valid_from
+        description: "Início da validade da versão."
+      - name: dbt_valid_to
+        description: "Fim da validade; nulo na versão corrente."

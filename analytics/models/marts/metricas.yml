@@ -1,122 +1,290 @@
 version: 2
 
+# Catálogo da camada analítica (E4): toda tabela e coluna descrita, com a
+# origem pública e se é dado pessoal. Nenhuma coluna destas camadas é dado
+# pessoal (o nome de docente fica só no OLTP, com acesso restrito: docs/lgpd.md).
+
 models:
   - name: dim_curso
-    description: "Uma linha por curso."
+    description: "Dimensão de curso: uma linha por curso de engenharia da FCTE no recorte."
+    meta: {camada: estrela, dado_pessoal: false, dono: "Squad G2"}
     columns:
       - name: curso_id
+        description: "Identificador interno do curso (public.curso.id)."
         data_tests: [unique, not_null]
       - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
         data_tests: [unique, not_null]
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: turno
+        description: "Turno do curso na listagem do SIGAA (DIURNO, NOTURNO, INTEGRAL)."
 
   - name: dim_semestre
-    description: "Uma linha por semestre do calendário acadêmico."
+    description: "Dimensão de semestre: uma linha por semestre do calendário acadêmico oficial da UnB."
+    meta: {camada: estrela, dado_pessoal: false, fonte_publica: "Calendário acadêmico da UnB (SAA), data/calendario_academico.csv"}
     columns:
       - name: semestre_key
+        description: "{{ doc('semestre_key') }}"
         data_tests: [unique, not_null]
+      - name: ano
+        description: "Ano do semestre."
+      - name: periodo
+        description: "Período do semestre (1 ou 2)."
+      - name: semestre
+        description: "{{ doc('semestre') }}"
+      - name: encerramento
+        description: "Data em que o semestre se encerra: a mais tardia entre último dia de aulas, último dia letivo e consolidação no SIGAA."
 
   - name: dim_disciplina
-    description: "SCD tipo 2: uma linha por versão de disciplina (nome, carga horária, tipo, unidade)."
+    description: "SCD tipo 2 de disciplina: uma linha por versão (nome, carga horária, tipo, unidade), a partir do snapshot snap_disciplina."
+    meta: {camada: estrela, scd: tipo_2, dado_pessoal: false}
     data_tests:
       - uma_versao_corrente
     columns:
       - name: disciplina_sk
+        description: "Chave da versão da disciplina (dbt_scd_id do snapshot)."
         data_tests: [unique, not_null]
       - name: disciplina_id
+        description: "Identificador interno da disciplina (public.disciplina.id)."
         data_tests: [not_null]
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: carga_horaria
+        description: "Carga horária em horas, do catálogo público de componentes."
       - name: tipo
+        description: "DISCIPLINA ou ATIVIDADE, como no catálogo do SIGAA."
         data_tests:
           - accepted_values:
               values: ['DISCIPLINA', 'ATIVIDADE']
+      - name: unidade_id
+        description: "Unidade da disciplina (FCTE) ou nulo para disciplinas de outros departamentos."
+      - name: valid_from
+        description: "Início da validade da versão (a primeira versão vale desde sempre)."
+      - name: valid_to
+        description: "Fim da validade da versão; nulo na versão corrente."
+      - name: is_current
+        description: "Verdadeiro na versão em vigor."
 
   - name: dim_curriculo_componente
-    description: "SCD tipo 2 em tempo de negócio: natureza da disciplina no curso, por versão curricular."
+    description: "SCD tipo 2 em tempo de negócio: natureza (obrigatória/optativa) da disciplina no curso, por versão curricular."
+    meta: {camada: estrela, scd: tipo_2, dado_pessoal: false, fonte_publica: "SIGAA › Estruturas curriculares do curso"}
     columns:
       - name: curriculo_componente_sk
+        description: "Chave da linha (versão curricular × disciplina)."
         data_tests: [unique, not_null]
+      - name: curso_id
+        description: "Curso da versão curricular."
+        data_tests:
+          - relationships:
+              to: ref('dim_curso')
+              field: curso_id
+      - name: disciplina_id
+        description: "Disciplina do componente."
+      - name: curriculo_codigo
+        description: "Código da versão curricular no SIGAA (ex.: 6360/2)."
       - name: natureza
+        description: "OBRIGATORIA ou OPTATIVA nessa versão curricular."
         data_tests:
           - not_null
           - accepted_values:
               values: ['OBRIGATORIA', 'OPTATIVA']
-      - name: curso_id
-        data_tests:
-          - relationships:
-              to: ref('dim_curso')
-              field: curso_id
+      - name: grupo
+        description: "Grupo do componente na estrutura curricular (ex.: período sugerido)."
+      - name: valid_from_key
+        description: "Semestre (chave) em que a versão curricular começa a valer."
+      - name: valid_to_key
+        description: "Semestre (chave) em que a próxima versão começa; nulo se não há versão posterior coletada."
+      - name: e_referencia_2026_1
+        description: "Verdadeiro se esta é a versão curricular de referência (em vigor em 2026.1)."
 
   - name: fct_reservas
     description: >
-      Uma linha por turma e curso: as vagas que uma turma de um semestre
-      reservou para um curso. Incremental por semestre.
+      Fato de reservas. Granularidade: uma linha por turma e curso, isto é, os
+      lugares que uma turma de um semestre guardou para um curso. Incremental
+      por semestre (delete+insert), com backfill por janela.
+    meta: {camada: estrela, granularidade: "turma × curso", dado_pessoal: false, rls: "por curso (V012)"}
     columns:
       - name: turma_id
+        description: "{{ doc('turma_id') }}"
         data_tests: [not_null]
       - name: curso_id
+        description: "Curso que recebeu a reserva."
         data_tests:
           - not_null
           - relationships:
               to: ref('dim_curso')
               field: curso_id
+      - name: disciplina_id
+        description: "Disciplina da turma."
       - name: disciplina_sk
-        description: "Versão da disciplina vigente quando a reserva foi ingerida."
+        description: "Versão da disciplina vigente quando a reserva foi ingerida (liga à SCD)."
         data_tests:
           - not_null
           - relationships:
               to: ref('dim_disciplina')
               field: disciplina_sk
       - name: semestre_key
+        description: "{{ doc('semestre_key') }}"
         data_tests:
           - not_null
           - relationships:
               to: ref('dim_semestre')
               field: semestre_key
-      - name: vagas_reservadas
-        data_tests: [not_null]
+      - name: semestre_inicio
+        description: "Primeiro dia aproximado do semestre (março ou agosto); dimensão de tempo da camada semântica."
+      - name: ano
+        description: "Ano da turma."
+      - name: periodo
+        description: "Período da turma (1 ou 2)."
+      - name: semestre
+        description: "{{ doc('semestre') }}"
+      - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: unidade_origem
+        description: "{{ doc('unidade_origem') }}"
+      - name: de_outra_unidade
+        description: "{{ doc('de_outra_unidade') }}"
       - name: obrigatoria
+        description: "{{ doc('obrigatoria') }}"
         data_tests: [not_null]
       - name: natureza_na_epoca
         description: "Natureza pela versão curricular vigente no semestre; nula quando essa versão não foi coletada."
         data_tests:
           - accepted_values:
               values: ['OBRIGATORIA', 'OPTATIVA']
+      - name: vagas_reservadas
+        description: "{{ doc('vagas_reservadas') }}"
+        meta: {fonte_publica: "SIGAA › Turmas do curso › Vgs Reservadas", dado_pessoal: false}
+        data_tests: [not_null]
+      - name: ingerido_em
+        description: "{{ doc('ingerido_em') }}"
+      - name: processado_em
+        description: "{{ doc('processado_em') }}"
 
   - name: mart_observatorio
     description: >
-      Indicadores oficiais do observatório, uma linha por curso e semestre.
-      vagas_reservadas é a soma do campo SIGAA Vgs Reservadas; não representa
-      ocupação nem oferta total.
+      Uma linha por curso e semestre, só obrigatórias do currículo de referência.
+      Mantido como conferência da E3; os números do painel vêm de
+      metricas_oficiais (camada semântica), e tests/metricas_consistentes.py
+      garante que os dois batem.
+    meta: {camada: mart, dado_pessoal: false, rls: "por curso (V012)"}
     columns:
       - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
         data_tests: [not_null]
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: semestre_key
+        description: "{{ doc('semestre_key') }}"
       - name: semestre
+        description: "{{ doc('semestre') }}"
         data_tests: [not_null]
       - name: vagas_reservadas
+        description: "Soma de vagas_reservadas nas obrigatórias (= métrica lugares_guardados)."
         data_tests: [not_null]
+      - name: obrigatorias_com_reserva
+        description: "Obrigatórias distintas com reserva (= métrica materias_com_reserva)."
+      - name: turmas_com_reserva
+        description: "Turmas distintas com reserva (= métrica turmas_que_guardaram)."
+      - name: freshness_at
+        description: "Última ingestão de reserva refletida no mart."
+      - name: processado_em
+        description: "{{ doc('processado_em') }}"
 
   - name: metricas_freshness
     description: "Freshness do mart_observatorio frente à última carga da origem; SLA de 24 h."
+    meta: {camada: mart, dado_pessoal: false}
+    columns:
+      - name: tabela
+        description: "Tabela de consumo medida."
+      - name: ultima_carga_origem
+        description: "Maior ingerido_em em public.reserva_vaga."
+      - name: ultima_carga_no_mart
+        description: "Maior freshness_at no mart."
+      - name: mart_processado_em
+        description: "Quando o mart foi processado."
+      - name: atraso_horas
+        description: "Quanto a origem está à frente do mart, em horas (0 = em dia)."
+      - name: sla_horas
+        description: "Compromisso de atualização: 24 h."
+      - name: idade_mart_horas
+        description: "Horas desde o último processamento do mart."
 
   - name: mart_disciplina_semestre
-    description: "Uma linha por curso, disciplina e semestre."
+    description: "Uma linha por curso, disciplina e semestre: lugares guardados e turmas. Alimenta a matriz do painel."
+    meta: {camada: mart, dado_pessoal: false, rls: "por curso (V012)"}
     data_tests:
       - unique_combination:
           columns: [curso_codigo, disciplina_codigo, semestre_key]
     columns:
       - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
         data_tests:
           - relationships:
               to: ref('dim_curso')
               field: curso_codigo
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: unidade_origem
+        description: "{{ doc('unidade_origem') }}"
+      - name: de_outra_unidade
+        description: "{{ doc('de_outra_unidade') }}"
+      - name: obrigatoria
+        description: "{{ doc('obrigatoria') }}"
+      - name: semestre_key
+        description: "{{ doc('semestre_key') }}"
+      - name: semestre
+        description: "{{ doc('semestre') }}"
+      - name: vagas_reservadas
+        description: "{{ doc('vagas_reservadas') }}"
+      - name: turmas
+        description: "Turmas distintas da disciplina que guardaram lugar para o curso no semestre."
 
   - name: mart_cobertura_curriculo
-    description: "Uma linha por curso e obrigatória do currículo de referência de 2026.1."
+    description: "Uma linha por curso e obrigatória do currículo de referência de 2026.1, inclusive as que nunca tiveram reserva."
+    meta: {camada: mart, dado_pessoal: false, rls: "por curso (V012)"}
     data_tests:
       - unique_combination:
           columns: [curso_codigo, disciplina_codigo]
     columns:
       - name: curso_codigo
+        description: "{{ doc('curso_codigo') }}"
         data_tests:
           - relationships:
               to: ref('dim_curso')
               field: curso_codigo
+      - name: curso_nome
+        description: "{{ doc('curso_nome') }}"
+      - name: curriculo_codigo
+        description: "Versão curricular de referência do curso."
+      - name: disciplina_codigo
+        description: "{{ doc('disciplina_codigo') }}"
+      - name: disciplina_nome
+        description: "{{ doc('disciplina_nome') }}"
+      - name: unidade_origem
+        description: "{{ doc('unidade_origem') }}"
+      - name: grupo
+        description: "Grupo do componente na estrutura curricular."
+      - name: semestres_com_reserva
+        description: "Em quantos dos 9 semestres a disciplina guardou lugar para o curso (0 = nunca)."
+      - name: vagas_no_recorte
+        description: "Total de lugares guardados de 2022.1 a 2026.1."
+      - name: primeiro_semestre
+        description: "Primeiro semestre com reserva."
+      - name: ultimo_semestre
+        description: "Último semestre com reserva."
+      - name: data_referencia
+        description: "Data de referência do currículo (início de 2026.1); dimensão de tempo da camada semântica."
