@@ -33,6 +33,7 @@ select
     o.disciplina_id,
     d.disciplina_sk,
     o.semestre_key,
+    make_date(o.ano, case when o.periodo = 1 then 3 else 8 end, 1) as semestre_inicio,
     o.ano,
     o.periodo,
     o.semestre,

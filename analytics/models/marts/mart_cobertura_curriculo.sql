@@ -25,7 +25,8 @@ select
     coalesce(r.semestres_com_reserva, 0) as semestres_com_reserva,
     coalesce(r.vagas_no_recorte, 0) as vagas_no_recorte,
     r.primeiro_semestre,
-    r.ultimo_semestre
+    r.ultimo_semestre,
+    date '2026-03-01' as data_referencia
 from obrigatorias o
 join {{ ref('dim_curso') }} c on c.curso_id = o.curso_id
 join {{ ref('dim_disciplina') }} d on d.disciplina_id = o.disciplina_id and d.is_current

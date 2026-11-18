@@ -18,4 +18,9 @@ else
     "${DBT[@]}" build "${ARGS[@]}"
 fi
 
+# Camada semântica: grava as métricas oficiais definidas em models/semantic/semantica.yml
+python /workspace/analytics/semantica.py
+
+# ETL reverso: itens da pauta para a Pauta da coordenação (API) e, como opção nula, CSV por curso
 python /workspace/analytics/etl_reverso.py
+python /workspace/analytics/exportar_pauta_csv.py

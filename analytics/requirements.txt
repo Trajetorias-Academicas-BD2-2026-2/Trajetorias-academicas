@@ -1,3 +1,6 @@
 dbt-core==1.8.2
 dbt-postgres==1.8.2
+# Camada semântica (E4): MetricFlow compatível com dbt-core 1.8
+dbt-metricflow[postgres]==0.7.1
+metricflow==0.206.0
 psycopg[binary]==3.2.13

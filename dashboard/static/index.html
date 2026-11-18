@@ -180,6 +180,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .rodape h3 { font-size: 20px; margin-bottom: 8px; }
 .rodape p { color: var(--texto-escuro-2); font-size: 16px; }
 .rodape a { color: var(--texto-escuro); font-weight: 600; }
+.rodape .definicoes { grid-column: 1 / -1; }
+.rodape dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px 28px; }
+.rodape dt { font: 700 16px/1.3 var(--display); }
+.rodape dd { margin: 2px 0 0; color: var(--texto-escuro-2); font-size: 15px; }
+.rodape dd small { display: block; margin-top: 4px; font-size: 13px; }
 .creditos { max-width: 1120px; margin: 40px auto 0; padding-top: 22px; border-top: 1px solid var(--giz-2); font-size: 14px; color: var(--texto-escuro-2); }
 
 /* dica flutuante */
@@ -387,7 +392,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   <div class="miolo">
     <div><h3>De onde vêm os números</h3><p>Das páginas públicas de turmas do sistema acadêmico da UnB (SIGAA), consultadas em 28 de setembro de 2026, para os cinco cursos de engenharia do Campus Gama e nove semestres já encerrados.</p></div>
     <div><h3>O que eles não dizem</h3><p>Lugar guardado não é aluno matriculado, nem o total de vagas da turma. A partir do 2º semestre de 2023 a forma de registrar reservas grandes parece ter mudado; compare esse período com cuidado.</p></div>
-    <div><h3>Atualização</h3><p id="rodape-atualizacao">Carregando…</p><p style="margin-top:10px"><a href="https://trajetorias-academicas-bd2-2026-2.github.io/documentation/">Como o projeto foi feito</a></p></div>
+    <div class="definicoes"><h3>Como cada número é calculado</h3><dl id="definicoes"></dl></div>
+    <div><h3>Atualização</h3><p id="rodape-atualizacao">Carregando…</p><p style="margin-top:10px"><a href="https://trajetorias-academicas-bd2-2026-2.github.io/documentation/">Como o projeto foi feito</a> · <a href="https://trajetorias-academicas-bd2-2026-2.github.io/Trajetorias-academicas/catalogo/">Catálogo de dados</a></p></div>
   </div>
   <p class="creditos">Observatório de lugares guardados · Squad G2 · Sistemas de Banco de Dados 2 · FCTE/UnB · 2026</p>
 </footer>
@@ -417,6 +423,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   const semestreCurto = s => s.replace('.', '/');
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const serie = c => estado.d.serie.filter(s => s.curso_codigo === c);
+  // valor do período inteiro de uma métrica oficial (camada semântica)
+  const total = (c, metrica) => Number((estado.d.totais.find(t => t.curso_codigo === c && t.metrica === metrica) || {}).valor || 0);
   const nomeCompleto = c => titulo(estado.d.cursos.find(x => x.codigo === c).nome);
   const el = (tag, attrs = {}) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
   const vezes = r => `${new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 }).format(r)}×`;
@@ -615,14 +623,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
   // ---------- cena 5 ----------
   function origem() {
-    const linhas = estado.d.disciplinas.filter(d => d.obrigatoria);
+    // lugares por departamento e a parte "de fora" vêm prontos da camada semântica
     const dados = ORDEM.map(c => {
       const r = { fcte: 0, mat: 0, fis: 0 };
-      linhas.filter(d => d.curso_codigo === c).forEach(d => {
-        r[d.unidade_origem === 'FGA' ? 'fcte' : d.unidade_origem === 'MAT' ? 'mat' : 'fis'] += d.vagas_reservadas;
+      estado.d.origem.filter(o => o.curso_codigo === c).forEach(o => {
+        r[o.unidade === 'FGA' ? 'fcte' : o.unidade === 'MAT' ? 'mat' : 'fis'] += o.valor;
       });
       const t = r.fcte + r.mat + r.fis;
-      return { c, ...r, t, fora: (r.mat + r.fis) / t };
+      return { c, ...r, t, fora: total(c, 'participacao_outros_departamentos') };
     });
     const pct = v => fmt(100 * v);
     document.getElementById('fileiras').innerHTML = dados.map(d => `
@@ -662,21 +670,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
     box.innerHTML = '';
     ORDEM.forEach(c => {
       const lista = cob.filter(x => x.curso_codigo === c).sort((a, b) => (b.semestres_com_reserva > 0) - (a.semestres_com_reserva > 0));
-      const com = lista.filter(x => x.semestres_com_reserva > 0).length, nunca = lista.length - com;
-      if (!pior || nunca / lista.length > pior.p) pior = { c, p: nunca / lista.length, nunca, total: lista.length };
+      const com = total(c, 'obrigatorias_cobertas'), noCurriculo = total(c, 'obrigatorias_no_curriculo'), nunca = noCurriculo - com;
+      if (!pior || nunca / noCurriculo > pior.p) pior = { c, p: nunca / noCurriculo, nunca, total: noCurriculo };
       const corTexto = c === 'FGA_ENERG' ? '#9A6A00' : c === 'FGA_ELET' ? '#12806D' : CURSOS[c].cor;
       const linha = document.createElement('div');
       linha.className = 'cob';
       linha.style.setProperty('--cor', CURSOS[c].cor);
       linha.innerHTML = `<span class="rot" style="color:${corTexto}">${CURSOS[c].curto}</span>
-        <span class="cartas" role="img" aria-label="${CURSOS[c].curto}: ${com} de ${lista.length} matérias obrigatórias guardaram lugar">${lista.map(x =>
+        <span class="cartas" role="img" aria-label="${CURSOS[c].curto}: ${com} de ${noCurriculo} matérias obrigatórias guardaram lugar">${lista.map(x =>
           `<span class="carta" data-acesa="${x.semestres_com_reserva > 0}" title="${esc(titulo(x.disciplina_nome))}: ${x.semestres_com_reserva > 0 ? `guardou lugar em ${x.semestres_com_reserva} de 9 semestres` : 'nunca guardou lugar para o curso'}"></span>`).join('')}</span>
-        <span class="txt"><b>${nunca} de ${lista.length}</b>nunca guardaram lugar</span>`;
+        <span class="txt"><b>${nunca} de ${noCurriculo}</b>nunca guardaram lugar</span>`;
       box.append(linha);
     });
-    const total = cob.length, nuncaTotal = cob.filter(x => x.semestres_com_reserva === 0).length;
+    const totalGeral = ORDEM.reduce((a, c) => a + total(c, 'obrigatorias_no_curriculo'), 0);
+    const nuncaTotal = ORDEM.reduce((a, c) => a + total(c, 'obrigatorias_no_curriculo') - total(c, 'obrigatorias_cobertas'), 0);
     document.getElementById('frase-cobertura').innerHTML =
-      `Somando os cinco cursos, <em style="background: rgba(255,122,89,.2)">${nuncaTotal} das ${total}</em> matérias obrigatórias nunca guardaram um lugar sequer para o curso que as exige. Em ${CURSOS[pior.c].curto}, são ${pior.nunca} de ${pior.total}.`;
+      `Somando os cinco cursos, <em style="background: rgba(255,122,89,.2)">${nuncaTotal} das ${totalGeral}</em> matérias obrigatórias nunca guardaram um lugar sequer para o curso que as exige. Em ${CURSOS[pior.c].curto}, são ${pior.nunca} de ${pior.total}.`;
   }
   function animarCobertura() {
     document.querySelectorAll('#cobertura .carta[data-acesa="true"]').forEach((c, i) => {
@@ -688,8 +697,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   function explore() {
     const c = estado.curso, s = serie(c);
     const linhas = estado.d.disciplinas.filter(d => d.curso_codigo === c && d.obrigatoria);
-    const cob = estado.d.cobertura.filter(x => x.curso_codigo === c);
-    const com = cob.filter(x => x.semestres_com_reserva > 0).length;
+    const com = total(c, 'obrigatorias_cobertas'), noCurriculo = total(c, 'obrigatorias_no_curriculo');
     const ultimo = s.at(-1);
     const ano = k => Math.floor(k / 10);
     const mapa = new Map();
@@ -707,9 +715,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
     const grandes = estado.d.alertas.filter(a => a.curso_codigo === c);
     const ultimoSem = grandes.length ? grandes.map(a => a.semestre).sort().at(-1) : null;
     const grandesUlt = grandes.filter(a => a.semestre === ultimoSem).slice(0, 5);
-    const doUltimo = linhas.filter(d => d.semestre_key === ultimo.semestre_key);
-    const totUlt = doUltimo.reduce((a, d) => a + d.vagas_reservadas, 0);
-    const pctFora = totUlt ? doUltimo.filter(d => d.unidade_origem !== 'FGA').reduce((a, d) => a + d.vagas_reservadas, 0) / totUlt : 0;
+    const pctFora = ultimo.participacao_outros || 0;
     const item = (r, cl) => `<li><span class="seta ${cl}" aria-hidden="true">${cl === 'sobe' ? '↑' : '↓'}</span><span class="nm">${esc(titulo(r.nome))}</span><span class="q" style="color: var(${cl === 'sobe' ? '--ganho' : '--perda'})">${r.d > 0 ? '+' : '−'}${fmt(Math.abs(r.d))} lugares</span></li>`;
 
     const painel = document.getElementById('painel-curso');
@@ -717,7 +723,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
     painel.innerHTML = `
       <div class="historia">
         <div class="fato"><b>${fmt(ultimo.vagas_reservadas)}</b><p>lugares guardados para ${esc(nomeCompleto(c))} no 1º semestre de 2026, em ${fmt(ultimo.turmas_com_reserva)} turmas.</p></div>
-        <div class="fato"><b>${com} de ${cob.length}</b><p>matérias obrigatórias do curso guardaram lugar pelo menos uma vez desde 2022.</p></div>
+        <div class="fato"><b>${com} de ${noCurriculo}</b><p>matérias obrigatórias do curso guardaram lugar pelo menos uma vez desde 2022.</p></div>
         <div class="fato"><b>${fmt(pctFora * 100)}%</b><p>dos lugares de 2026 vêm de matérias de outros departamentos, como Matemática e Física.</p></div>
       </div>
       <div class="bloco">
@@ -792,6 +798,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
         ? `Os números foram atualizados em ${dataTxt}, às ${horaTxt}, e já incluem a última coleta.`
         : `Atenção: a última coleta ainda não aparece aqui. Os números são de ${dataTxt}.`;
     }
+    const PAINEL = ['lugares_guardados', 'turmas_que_guardaram', 'materias_com_reserva', 'participacao_outros_departamentos', 'cobertura_curricular'];
+    document.getElementById('definicoes').innerHTML = j.definicoes.filter(d => PAINEL.includes(d.metrica)).map(d =>
+      `<div><dt>${esc(d.rotulo)}</dt><dd>${esc(d.descricao)}<small>Definição oficial versão ${d.versao}, a mesma usada na Pauta da coordenação.</small></dd></div>`).join('');
     salas('salas-2022', '2022.1', false);
     salas('salas-2026', '2026.1', true);
     frasesSalas();

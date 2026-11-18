@@ -1,0 +1,147 @@
+version: 2
+
+# Camada semântica da E4: cada métrica do observatório é definida AQUI, uma
+# vez. Painel, Pauta da coordenação (ETL reverso) e CSV leem o resultado
+# desta definição (analytics.metricas_oficiais, gerada por analytics/semantica.py).
+# Mudou a regra? Mude aqui e suba `meta.versao`.
+
+semantic_models:
+  - name: reservas
+    description: "Reservas de vagas: uma linha por turma e curso (fct_reservas)."
+    model: ref('fct_reservas')
+    defaults:
+      agg_time_dimension: semestre_inicio
+    entities:
+      - name: reserva
+        type: primary
+        expr: "turma_id::text || '-' || curso_id::text"
+    dimensions:
+      - name: semestre_inicio
+        type: time
+        type_params:
+          time_granularity: day
+      - name: semestre
+        type: categorical
+      - name: curso_codigo
+        type: categorical
+      - name: disciplina_codigo
+        type: categorical
+      - name: obrigatoria
+        type: categorical
+      - name: unidade_origem
+        type: categorical
+      - name: de_outra_unidade
+        type: categorical
+    measures:
+      - name: vagas
+        description: "Soma do campo Vgs Reservadas do SIGAA."
+        agg: sum
+        expr: vagas_reservadas
+      - name: vagas_outras_unidades
+        description: "Vagas de turmas oferecidas por departamentos de fora da FCTE."
+        agg: sum
+        expr: "case when de_outra_unidade then vagas_reservadas else 0 end"
+      - name: turmas
+        agg: count_distinct
+        expr: turma_id
+      - name: disciplinas
+        agg: count_distinct
+        expr: disciplina_codigo
+
+  - name: cobertura
+    description: "Obrigatórias do currículo de referência de 2026.1, uma linha por curso e disciplina."
+    model: ref('mart_cobertura_curriculo')
+    defaults:
+      agg_time_dimension: data_referencia
+    entities:
+      - name: item_curricular
+        type: primary
+        expr: "curso_codigo || '-' || disciplina_codigo"
+    dimensions:
+      - name: data_referencia
+        type: time
+        type_params:
+          time_granularity: day
+      - name: curso_codigo
+        type: categorical
+    measures:
+      - name: obrigatorias_no_curriculo
+        agg: count
+        expr: disciplina_codigo
+      - name: obrigatorias_cobertas
+        agg: sum
+        expr: "case when semestres_com_reserva > 0 then 1 else 0 end"
+
+metrics:
+  - name: lugares_guardados
+    label: "Lugares guardados"
+    description: >
+      Quantos lugares as turmas guardaram para alunos do curso nas matérias
+      obrigatórias do currículo de referência de 2026.1. Soma de
+      "Vgs Reservadas" do SIGAA. Não é aluno matriculado nem vaga ocupada.
+    type: simple
+    type_params:
+      measure: vagas
+    filter: "{{ Dimension('reserva__obrigatoria') }} = true"
+    meta: {versao: 1, dono: "Squad G2", desde: "E3"}
+
+  - name: turmas_que_guardaram
+    label: "Turmas que guardaram lugar"
+    description: "Turmas distintas com ao menos um lugar guardado para o curso, nas obrigatórias."
+    type: simple
+    type_params:
+      measure: turmas
+    filter: "{{ Dimension('reserva__obrigatoria') }} = true"
+    meta: {versao: 1, dono: "Squad G2", desde: "E3"}
+
+  - name: materias_com_reserva
+    label: "Matérias obrigatórias com lugar guardado"
+    description: "Matérias obrigatórias distintas com ao menos um lugar guardado para o curso."
+    type: simple
+    type_params:
+      measure: disciplinas
+    filter: "{{ Dimension('reserva__obrigatoria') }} = true"
+    meta: {versao: 1, dono: "Squad G2", desde: "E3"}
+
+  - name: lugares_outros_departamentos
+    label: "Lugares vindos de outros departamentos"
+    description: "Lugares guardados nas obrigatórias em turmas de fora da FCTE (Matemática, Física e outros)."
+    type: simple
+    type_params:
+      measure: vagas_outras_unidades
+    filter: "{{ Dimension('reserva__obrigatoria') }} = true"
+    meta: {versao: 1, dono: "Squad G2", desde: "E4"}
+
+  - name: participacao_outros_departamentos
+    label: "Parte que vem de outros departamentos"
+    description: "Que parte dos lugares guardados vem de turmas de fora da FCTE, como Matemática e Física. O painel mostra em porcentagem."
+    type: ratio
+    type_params:
+      numerator: lugares_outros_departamentos
+      denominator: lugares_guardados
+    meta: {versao: 1, dono: "Squad G2", desde: "E4"}
+
+  - name: obrigatorias_no_curriculo
+    label: "Matérias obrigatórias no currículo"
+    description: "Quantas matérias são obrigatórias no currículo de referência de 2026.1 do curso."
+    type: simple
+    type_params:
+      measure: obrigatorias_no_curriculo
+    meta: {versao: 1, dono: "Squad G2", desde: "E4"}
+
+  - name: obrigatorias_cobertas
+    label: "Obrigatórias que guardaram lugar alguma vez"
+    description: "Matérias obrigatórias do currículo de referência que guardaram lugar em pelo menos um semestre de 2022.1 a 2026.1."
+    type: simple
+    type_params:
+      measure: obrigatorias_cobertas
+    meta: {versao: 1, dono: "Squad G2", desde: "E4"}
+
+  - name: cobertura_curricular
+    label: "Cobertura do currículo"
+    description: "Que parte das matérias obrigatórias do currículo guardou lugar pelo menos uma vez desde 2022. O painel mostra em porcentagem."
+    type: ratio
+    type_params:
+      numerator: obrigatorias_cobertas
+      denominator: obrigatorias_no_curriculo
+    meta: {versao: 1, dono: "Squad G2", desde: "E4"}

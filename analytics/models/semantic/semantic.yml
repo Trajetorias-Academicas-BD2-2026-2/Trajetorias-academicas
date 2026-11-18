@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: metricflow_time_spine
+    description: "Calendário diário exigido pelo MetricFlow (camada semântica da E4)."
+    meta: {camada: semantica, dado_pessoal: false}
+    columns:
+      - name: date_day
+        description: "Um dia do calendário, de 2020 a 2027."

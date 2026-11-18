@@ -16,3 +16,9 @@ models:
       +materialized: table
     ml:
       +materialized: view
+    semantic:
+      +materialized: table
+
+# E4: o dbt recria as tabelas de consumo; reaplica RLS e grants (V012) ao fim de cada execução.
+on-run-end:
+  - "select operations.aplicar_acesso_analytics()"
