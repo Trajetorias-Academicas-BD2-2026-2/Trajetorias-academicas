@@ -12,3 +12,6 @@ site/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# saída do CSV agendado da pauta (opção nula do ETL reverso, E4)
+saida/

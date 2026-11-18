@@ -22,8 +22,14 @@ SELECT 'freshness registrada', count(*) > 0, coalesce(max(freshness_at)::text, '
 FROM analytics.mart_observatorio;
 
 INSERT INTO resultado
-SELECT 'ETL reverso populado', count(*) > 0, count(*)::text
-FROM operations.alertas_reserva;
+SELECT 'ETL reverso: itens entregues à Pauta', count(*) FILTER (WHERE status = 'enviado') > 0
+       AND count(*) FILTER (WHERE status = 'pendente') = 0,
+       count(*) FILTER (WHERE status = 'enviado') || ' enviados, ' || count(*) FILTER (WHERE status = 'pendente') || ' pendentes'
+FROM operations.envio_pauta;
+
+INSERT INTO resultado
+SELECT 'camada semântica: métricas oficiais gravadas', count(DISTINCT metrica) >= 8, count(DISTINCT metrica) || ' métricas, ' || count(*) || ' valores'
+FROM analytics.metricas_oficiais;
 
 INSERT INTO resultado
 SELECT 'SLA: mart até 24 h atrás da origem', bool_and(atraso_horas <= sla_horas), max(atraso_horas)::text || ' h'
