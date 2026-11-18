@@ -762,8 +762,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
   abertura();
   salaExemplo();
 
-  fetch('/api/observatorio').then(r => r.json().then(j => ({ ok: r.ok, j }))).then(({ ok, j }) => {
-    if (!ok) throw new Error(j.erro || 'Não foi possível carregar os dados.');
+  // Com o servidor do projeto, os dados vêm da API. Na versão publicada no
+  // GitHub Pages não há servidor: o mesmo JSON fica num arquivo ao lado da página.
+  async function carregar() {
+    let falha = 'Não foi possível carregar os dados.';
+    for (const fonte of ['api/observatorio', 'observatorio.json']) {
+      try {
+        const r = await fetch(fonte, { cache: 'no-store' });
+        const j = await r.json();
+        if (r.ok) return j;
+        if (j && j.erro) falha = j.erro;
+      } catch (e) { /* tenta a próxima fonte */ }
+    }
+    throw new Error(falha);
+  }
+
+  carregar().then(j => {
     estado.d = j;
     try { const salvo = localStorage.getItem('lugares.curso'); if (CURSOS[salvo]) estado.curso = salvo; } catch (e) {}
     const p = new URLSearchParams(location.search).get('curso');

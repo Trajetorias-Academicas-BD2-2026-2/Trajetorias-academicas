@@ -1,0 +1,90 @@
+# Publica o painel do observatório no GitHub Pages, de graça.
+#
+# O Actions sobe o pipeline inteiro (banco, migrações, carga, dbt e painel),
+# roda os testes de dados e salva o JSON da API. O Pages hospeda só a página
+# e esse JSON: não há banco nem senha expostos na internet.
+#
+# Uma vez: Settings → Pages → Build and deployment → Source: GitHub Actions.
+# Endereço: https://trajetorias-academicas-bd2-2026-2.github.io/Trajetorias-academicas/
+
+name: Publicar painel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "dashboard/**"
+      - "analytics/**"
+      - "db/**"
+      - "data/**"
+      - "loader/**"
+      - "docker-compose.yml"
+      - ".github/workflows/painel.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"   # toda segunda, 06:00 UTC: execução agendada do pipeline
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Subir o pipeline (banco, migrações, carga, dbt, painel)
+        run: docker compose up -d --build --wait dashboard
+
+      - name: Testes de dados da origem
+        run: docker compose run --rm --no-deps tests
+
+      - name: Testes da camada analítica
+        run: docker compose --profile test run --rm --no-deps analytics-tests
+
+      - name: Salvar os dados do painel
+        run: |
+          mkdir -p site
+          for tentativa in $(seq 1 20); do
+            if curl -fsS http://localhost:8080/api/observatorio -o site/observatorio.json; then break; fi
+            sleep 2
+          done
+          cp dashboard/static/index.html site/index.html
+          touch site/.nojekyll
+
+      - name: Conferir o JSON antes de publicar
+        run: |
+          jq -e '(.cursos | length) == 5' site/observatorio.json
+          jq -e '(.serie | length) == 45' site/observatorio.json
+          jq -e '.freshness.mart_processado_em != null' site/observatorio.json
+          echo "cursos: $(jq '.cursos | length' site/observatorio.json), série: $(jq '.serie | length' site/observatorio.json), processado em: $(jq -r '.freshness.mart_processado_em' site/observatorio.json)"
+
+      - name: Logs dos serviços (se algo falhou)
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Empacotar o site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  publicar:
+    needs: gerar
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

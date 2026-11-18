@@ -142,6 +142,28 @@ O modelo `intfloat/multilingual-e5-small`, fixado por commit, tem cerca de
 470 MB e é baixado na primeira execução para o volume `ml_modelos`. A consulta
 de vizinhos está em [`ml/consultas/`](ml/consultas/).
 
+## Painel publicado
+
+O painel está no ar em <https://trajetorias-academicas-bd2-2026-2.github.io/Trajetorias-academicas/>, de graça, pelo GitHub Pages.
+
+O workflow [`.github/workflows/painel.yml`](.github/workflows/painel.yml) faz cinco passos:
+
+1. sobe o pipeline inteiro com `docker compose` numa máquina do GitHub Actions;
+2. roda os testes de dados (`tests` e `analytics-tests`);
+3. salva o JSON de `/api/observatorio`;
+4. confere o JSON;
+5. publica `index.html` + `observatorio.json`.
+
+Se um teste falha, nada é publicado. Não há banco nem senha expostos: a página lê o arquivo JSON quando não encontra a API.
+
+**Quando o painel atualiza:**
+
+- a cada push na `main` que mude o pipeline;
+- toda segunda às 06:00 UTC;
+- à mão, em **Actions → Publicar painel → Run workflow**.
+
+**Primeira vez:** em **Settings → Pages → Source**, escolher **GitHub Actions**.
+
 ## Como rodar
 
 Pré-requisito: Docker e Docker Compose. Não precisa de acesso ao SIGAA.
