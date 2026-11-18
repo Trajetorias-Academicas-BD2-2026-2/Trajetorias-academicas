@@ -1,2 +1,4 @@
-# Execução diária às 02:00; o script implementa três tentativas.
-0 2 * * * cd /caminho/para/Trajetorias-academicas && ./orchestration/run_pipeline.sh >> logs/pipeline.log 2>&1
+# Execução diária às 02:00 (UTC do host). O script repete cada etapa até 3 vezes.
+# Instale trocando o caminho pelo do clone:
+#   (crontab -l 2>/dev/null; sed "s|__REPO__|$PWD|" orchestration/crontab | grep -v '^#') | crontab -
+0 2 * * * cd __REPO__ && mkdir -p logs && ./orchestration/run_pipeline.sh >> logs/pipeline.log 2>&1

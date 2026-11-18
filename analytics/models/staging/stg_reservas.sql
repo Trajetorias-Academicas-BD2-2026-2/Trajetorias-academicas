@@ -6,11 +6,14 @@ with reservas as (
         t.disciplina_id,
         t.ano,
         t.periodo,
+        t.ano * 10 + t.periodo as semestre_key,
         concat(t.ano, '.', t.periodo) as semestre,
         c.codigo as curso_codigo,
         c.nome as curso_nome,
         d.codigo as disciplina_codigo,
         d.nome as disciplina_nome,
+        substring(d.codigo from '^[A-Z]+') as unidade_origem,
+        d.unidade_id is null as de_outra_unidade,
         coalesce(cc.natureza = 'OBRIGATORIA', false) as obrigatoria,
         rv.ingerido_em
     from {{ source('oltp', 'reserva_vaga') }} rv

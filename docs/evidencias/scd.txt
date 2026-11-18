@@ -1,0 +1,53 @@
+# SCD tipo 2 (dim_disciplina via dbt snapshot) — 2026-11-18T00:52Z
+## 1. Estado inicial
+ disciplina_codigo |       disciplina_nome        | carga_horaria |     valid_from      | valid_to | is_current 
+-------------------+------------------------------+---------------+---------------------+----------+------------
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1 |            60 | 1900-01-01 00:00:00 |          | t
+(1 row)
+
+## 2. Correção de catálogo no OLTP (UPDATE em disciplina) e nova execução do dbt
+$ docker compose run --rm e2-cdc python ingestion/demo_change.py --disciplina FGA0137 --nome "SISTEMAS DE BANCO DE DADOS 1 (REVISADA)" --carga-horaria 90
+OLTP disciplina FGA0137: 'SISTEMAS DE BANCO DE DADOS 1'/60h -> 'SISTEMAS DE BANCO DE DADOS 1 (REVISADA)'/90h
+último evento na outbox para a chave: (3060, 'UPDATE')
+$ docker compose run --rm --no-deps analytics
+00:52:54  5 of 52 START snapshot analytics.snap_disciplina ............................... [RUN]
+00:52:54  5 of 52 OK snapshotted analytics.snap_disciplina ............................... [INSERT 0 1 in 0.09s]
+00:52:55  Done. PASS=51 WARN=1 ERROR=0 SKIP=0 TOTAL=52
+ disciplina_codigo |             disciplina_nome             | carga_horaria |     valid_from      |      valid_to       | is_current 
+-------------------+-----------------------------------------+---------------+---------------------+---------------------+------------
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1            |            60 | 1900-01-01 00:00:00 | 2026-11-18 00:52:54 | f
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1 (REVISADA) |            90 | 2026-11-18 00:52:54 |                     | t
+(2 rows)
+
+## 3. Reservas já carregadas continuam ligadas à versão vigente quando foram ingeridas
+        versao_na_fato        | reservas 
+------------------------------+----------
+ SISTEMAS DE BANCO DE DADOS 1 |       17
+(1 row)
+
+## 4. Reverter ao valor do lote (outro UPDATE) e rodar o dbt de novo: terceira versão
+OLTP disciplina FGA0137: 'SISTEMAS DE BANCO DE DADOS 1 (REVISADA)'/90h -> 'SISTEMAS DE BANCO DE DADOS 1'/60h
+último evento na outbox para a chave: (3061, 'UPDATE')
+00:53:01  5 of 52 START snapshot analytics.snap_disciplina ............................... [RUN]
+00:53:01  5 of 52 OK snapshotted analytics.snap_disciplina ............................... [INSERT 0 1 in 0.09s]
+00:53:01  Done. PASS=51 WARN=1 ERROR=0 SKIP=0 TOTAL=52
+ disciplina_codigo |             disciplina_nome             | carga_horaria |     valid_from      |      valid_to       | is_current 
+-------------------+-----------------------------------------+---------------+---------------------+---------------------+------------
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1            |            60 | 1900-01-01 00:00:00 | 2026-11-18 00:52:54 | f
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1 (REVISADA) |            90 | 2026-11-18 00:52:54 | 2026-11-18 00:53:01 | f
+ FGA0137           | SISTEMAS DE BANCO DE DADOS 1            |            60 | 2026-11-18 00:53:01 |                     | t
+(3 rows)
+
+## 5. Natureza por versão curricular (SCD em tempo de negócio, dim_curriculo_componente)
+ curso_codigo | disciplina_codigo | curriculo_codigo |  natureza   | valid_from_key | valid_to_key | e_referencia_2026_1 
+--------------+-------------------+------------------+-------------+----------------+--------------+---------------------
+ FGA_AUTO     | FGA0040           | 6297/2           | OPTATIVA    |          20212 |        20271 | t
+ FGA_AUTO     | FGA0040           | 6297/3           | OBRIGATORIA |          20271 |              | f
+ FGA_AUTO     | FGA0152           | 6297/2           | OBRIGATORIA |          20212 |        20271 | t
+ FGA_AUTO     | FGA0152           | 6297/3           | OPTATIVA    |          20271 |              | f
+ FGA_AUTO     | FGA0229           | 6297/2           | OBRIGATORIA |          20212 |        20271 | t
+ FGA_AUTO     | FGA0229           | 6297/3           | OPTATIVA    |          20271 |              | f
+ FGA_AUTO     | FGA0267           | 6297/2           | OBRIGATORIA |          20212 |        20271 | t
+ FGA_AUTO     | FGA0267           | 6297/3           | OPTATIVA    |          20271 |              | f
+(8 rows)
+

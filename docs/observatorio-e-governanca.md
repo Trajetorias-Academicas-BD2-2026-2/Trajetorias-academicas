@@ -15,7 +15,9 @@ disciplinas obrigatórias do currículo de referência de 2026.1.
 - `obrigatorias_com_reserva`: quantidade de disciplinas obrigatórias distintas
   com ao menos uma reserva no curso e semestre.
 - `turmas_com_reserva`: quantidade de turmas distintas com reserva.
-- Freshness: maior `ingerido_em` da tabela fato; SLA de atualização: até 24
+- Freshness: view `analytics.metricas_freshness` (`atraso_horas` = quanto a
+  última carga da origem está à frente do mart), testada em
+  `test_sla_freshness_mart` e exibida no painel; maior `ingerido_em` da tabela fato; SLA de atualização: até 24
   horas após uma nova carga encerrada.
 
 As definições ficam versionadas nos modelos dbt em `analytics/models/marts/`.

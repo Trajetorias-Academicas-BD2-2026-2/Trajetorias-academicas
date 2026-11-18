@@ -3,11 +3,27 @@ version: 2
 sources:
   - name: oltp
     schema: public
+    # SLA da origem: um lote novo por semestre encerrado. Sem carga nova em
+    # 200 dias (um semestre e meio), avisa; em 400 dias, erro.
+    freshness:
+      warn_after: {count: 200, period: day}
+      error_after: {count: 400, period: day}
     tables:
       - name: unidade
+        freshness: null
       - name: curso
+        freshness: null
       - name: disciplina
+        freshness: null
+      - name: semestre_letivo
+        freshness: null
       - name: turma
+        loaded_at_field: ingerido_em
       - name: reserva_vaga
+        loaded_at_field: ingerido_em
+      - name: curriculo
+        freshness: null
       - name: curriculo_referencia
+        freshness: null
       - name: curriculo_componente
+        freshness: null

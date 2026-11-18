@@ -1,19 +1,67 @@
-                                                        QUERY PLAN
---------------------------------------------------------------------------------------------------------------------------
- Sort  (cost=63.21..63.33 rows=45 width=24) (actual time=0.389..0.391 rows=45 loops=1)
-   Sort Key: curso_codigo, semestre
-   Sort Method: quicksort  Memory: 27kB
-   Buffers: shared hit=35
-   ->  HashAggregate  (cost=61.53..61.98 rows=45 width=24) (actual time=0.347..0.351 rows=45 loops=1)
-         Group Key: curso_codigo, semestre
-         Batches: 1  Memory Usage: 24kB
-         Buffers: shared hit=32
-         ->  Seq Scan on fct_reservas  (cost=0.00..49.76 rows=1569 width=20) (actual time=0.006..0.142 rows=1569 loops=1)
-               Filter: obrigatoria
-               Rows Removed by Filter: 207
-               Buffers: shared hit=32
+=== ANTES: q0 original (CTE total agregado juntado antes do fato) ===
+                                                                                      QUERY PLAN                                                                                      
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=51.01..51.44 rows=9 width=137) (actual time=2.733..2.904 rows=45 loops=1)
+   Group Key: c.codigo, t.ano, t.periodo, obrigatoria.curriculo, (count(*))
+   Buffers: shared hit=5721
+   CTE obrigatoria
+     ->  Nested Loop  (cost=1.42..20.02 rows=207 width=15) (actual time=0.019..0.054 rows=254 loops=1)
+           Buffers: shared hit=13
+           ->  Unique  (cost=1.15..1.17 rows=4 width=285) (actual time=0.010..0.012 rows=5 loops=1)
+                 Buffers: shared hit=1
+                 ->  Sort  (cost=1.15..1.16 rows=5 width=285) (actual time=0.010..0.011 rows=5 loops=1)
+                       Sort Key: c_1.curso_id, c_1.inicio_vigencia_ano DESC, c_1.inicio_vigencia_periodo DESC
+                       Sort Method: quicksort  Memory: 25kB
+                       Buffers: shared hit=1
+                       ->  Seq Scan on curriculo c_1  (cost=0.00..1.09 rows=5 width=285) (actual time=0.004..0.005 rows=5 loops=1)
+                             Filter: (ROW(inicio_vigencia_ano, inicio_vigencia_periodo) <= ROW(2026, 1))
+                             Rows Removed by Filter: 1
+                             Buffers: shared hit=1
+           ->  Index Only Scan using idx_curriculo_componente_obrigatoria on curriculo_componente cc  (cost=0.27..4.18 rows=52 width=8) (actual time=0.004..0.006 rows=51 loops=5)
+                 Index Cond: (curriculo_id = c_1.id)
+                 Heap Fetches: 0
+                 Buffers: shared hit=12
+   ->  Sort  (cost=30.99..31.01 rows=9 width=89) (actual time=2.722..2.759 rows=1569 loops=1)
+         Sort Key: c.codigo, t.ano, t.periodo, obrigatoria.curriculo, (count(*)), t.disciplina_id
+         Sort Method: quicksort  Memory: 151kB
+         Buffers: shared hit=5721
+         ->  Nested Loop  (cost=11.96..30.85 rows=9 width=89) (actual time=0.139..1.580 rows=1569 loops=1)
+               Join Filter: (rv.curso_id = c.id)
+               Rows Removed by Join Filter: 2449
+               Buffers: shared hit=5709
+               ->  Nested Loop  (cost=11.68..21.01 rows=19 width=105) (actual time=0.135..0.544 rows=1681 loops=1)
+                     Buffers: shared hit=638
+                     ->  Hash Join  (cost=11.40..16.37 rows=5 width=91) (actual time=0.121..0.163 rows=254 loops=1)
+                           Hash Cond: (o.curso_id = c.id)
+                           Buffers: shared hit=14
+                           ->  CTE Scan on obrigatoria o  (cost=0.00..4.14 rows=207 width=8) (actual time=0.020..0.030 rows=254 loops=1)
+                                 Buffers: shared hit=4
+                           ->  Hash  (cost=11.34..11.34 rows=5 width=83) (actual time=0.096..0.097 rows=5 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=10
+                                 ->  Hash Join  (cost=6.80..11.34 rows=5 width=83) (actual time=0.092..0.094 rows=5 loops=1)
+                                       Hash Cond: (obrigatoria.curso_id = c.id)
+                                       Buffers: shared hit=10
+                                       ->  HashAggregate  (cost=5.69..7.69 rows=200 width=70) (actual time=0.083..0.084 rows=5 loops=1)
+                                             Group Key: obrigatoria.curso_id, obrigatoria.curriculo
+                                             Batches: 1  Memory Usage: 40kB
+                                             Buffers: shared hit=9
+                                             ->  CTE Scan on obrigatoria  (cost=0.00..4.14 rows=207 width=62) (actual time=0.000..0.061 rows=254 loops=1)
+                                                   Buffers: shared hit=9
+                                       ->  Hash  (cost=1.05..1.05 rows=5 width=13) (actual time=0.004..0.004 rows=5 loops=1)
+                                             Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                             Buffers: shared hit=1
+                                             ->  Seq Scan on curso c  (cost=0.00..1.05 rows=5 width=13) (actual time=0.001..0.002 rows=5 loops=1)
+                                                   Buffers: shared hit=1
+                     ->  Index Scan using turma_disciplina_id_codigo_turma_ano_periodo_key on turma t  (cost=0.28..0.83 rows=10 width=18) (actual time=0.001..0.001 rows=7 loops=254)
+                           Index Cond: ((disciplina_id = o.disciplina_id) AND (ROW(ano, periodo) >= ROW(2022, 1)) AND (ROW(ano, periodo) <= ROW(2026, 1)))
+                           Buffers: shared hit=624
+               ->  Index Scan using reserva_vaga_pkey on reserva_vaga rv  (cost=0.28..0.49 rows=2 width=16) (actual time=0.000..0.000 rows=2 loops=1681)
+                     Index Cond: (turma_id = t.id)
+                     Buffers: shared hit=5071
  Planning:
-   Buffers: shared hit=79
- Planning Time: 0.215 ms
- Execution Time: 0.452 ms
-(16 rows)
+   Buffers: shared hit=418
+ Planning Time: 0.975 ms
+ Execution Time: 2.997 ms
+(62 rows)
+

@@ -88,16 +88,33 @@ executada em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
 
 ## E3/E4 — observatório analítico e governança
 
-O serviço `analytics` executa as transformações dbt, testes, métricas de
-freshness e o ETL reverso. O `dashboard` disponibiliza o observatório em
-`http://localhost:8080`, com filtro por curso.
+O serviço `analytics` roda o dbt sobre o OLTP:
+
+- **Snapshot:** `snap_disciplina`, SCD tipo 2 de disciplina.
+- **Staging.**
+- **Estrela:** dimensões de curso, semestre, disciplina (SCD) e natureza
+  curricular por versão, e o fato `fct_reservas`, com uma linha por turma
+  e curso, incremental por semestre.
+- **Marts:** `mart_observatorio`, `mart_disciplina_semestre`,
+  `mart_cobertura_curriculo` e `metricas_freshness`.
+- **Testes:** 50 testes de esquema, unicidade, integridade referencial,
+  volume e distribuição.
+- **ETL reverso.**
+
+O painel, em `http://localhost:8080`, responde à pergunta por curso: série
+de vagas reservadas, matriz disciplina × semestre, ganhos e perdas,
+departamento de origem, obrigatórias sem reserva, fila de revisão e SLA.
+`?curso=FGA_ELET&modo=indice` abre direto num curso e na escala comparada.
 
 ```bash
 docker compose up --build
 docker compose --profile test run --rm tests
-docker compose run --rm analytics
 docker compose --profile test run --rm analytics-tests
+./orchestration/run_pipeline.sh                          # grafo completo com retry
+BACKFILL_SEMESTRE=2024.1 ./orchestration/run_pipeline.sh # refaz só uma janela
 ```
+
+Decisões no [ADR-0006](docs/adr/0006-camada-analitica-observatorio-e3.md).
 
 Os modelos e testes estão em [`analytics/`](analytics/). A implementação,
 catálogo, linhagem, SLA, LGPD e acesso mínimo estão em

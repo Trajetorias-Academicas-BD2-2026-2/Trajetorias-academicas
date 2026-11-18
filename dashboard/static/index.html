@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório de reservas FCTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --papel: #F6F7F9;
+  --superficie: #FFFFFF;
+  --tinta: #14213D;
+  --grafite: #5B6475;
+  --linha: #DCE1E8;
+  --linha-forte: #C3CBD6;
+  --foco: #1D5FD1;
+  --foco-suave: rgba(29, 95, 209, .12);
+  --contexto: #A7B0BE;
+  --ganho: #0F8A6B;
+  --perda: #C2410C;
+  --u-fcte: #1D5FD1;
+  --u-mat: #7C5CC4;
+  --u-ifd: #C98A12;
+  --u-outras: #A7B0BE;
+  --calor-0: #EEF2F8;
+  --calor-1: #0E3E91;
+  --sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #0F1626; --superficie: #151E31; --tinta: #E6EAF2; --grafite: #9AA5B8;
+    --linha: #26314A; --linha-forte: #34405C; --foco: #6E9EFF; --foco-suave: rgba(110,158,255,.16);
+    --contexto: #4D5A74; --ganho: #3CC6A0; --perda: #FF8A5B;
+    --u-fcte: #6E9EFF; --u-mat: #A98BF0; --u-ifd: #E5AE3E; --u-outras: #5B6782;
+    --calor-0: #1B2540; --calor-1: #8DB4FF; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papel: #0F1626; --superficie: #151E31; --tinta: #E6EAF2; --grafite: #9AA5B8;
+  --linha: #26314A; --linha-forte: #34405C; --foco: #6E9EFF; --foco-suave: rgba(110,158,255,.16);
+  --contexto: #4D5A74; --ganho: #3CC6A0; --perda: #FF8A5B;
+  --u-fcte: #6E9EFF; --u-mat: #A98BF0; --u-ifd: #E5AE3E; --u-outras: #5B6782;
+  --calor-0: #1B2540; --calor-1: #8DB4FF; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--papel); color: var(--tinta);
+  font: 400 15px/1.5 var(--sans);
+}
+.pagina { max-width: 1180px; margin: 0 auto; padding: 28px 24px 64px; }
+h1, h2, h3 { font-weight: 600; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 { font-size: 18px; }
+h2 { font-size: 18px; }
+h3 { font-size: 15px; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; border-radius: 4px; }
+
+/* Cabeçalho */
+.topo { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline; justify-content: space-between;
+        padding-bottom: 18px; border-bottom: 1px solid var(--linha); }
+.topo .sub { color: var(--grafite); font-size: 13px; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grafite); }
+.status .ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--ganho); flex: none; }
+.status.fora .ponto { background: var(--perda); }
+
+/* Abas de curso */
+.abas { display: flex; gap: 4px; margin: 20px 0 0; overflow-x: auto; scrollbar-width: none; }
+.abas::-webkit-scrollbar { display: none; }
+.aba { flex: none; border: 1px solid transparent; background: none; padding: 7px 14px; border-radius: 999px;
+       cursor: pointer; color: var(--grafite); font-weight: 500; white-space: nowrap; }
+.aba:hover { color: var(--tinta); }
+.aba[aria-selected="true"] { background: var(--tinta); color: var(--papel); }
+
+/* Resposta */
+.resposta { padding: 36px 0 8px; }
+.frase { font: 400 clamp(24px, 3.2vw, 38px)/1.22 var(--serif); max-width: 30ch; letter-spacing: -.012em;
+         text-wrap: pretty; min-height: 2.4em; }
+.frase b { font-weight: 500; }
+.frase .delta-ganho { color: var(--ganho); }
+.frase .delta-perda { color: var(--perda); }
+.apoio { margin-top: 14px; color: var(--grafite); max-width: 72ch; font-size: 15px; }
+
+.barra-grafico { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+                 margin-top: 28px; }
+.legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--grafite); }
+.legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.legenda i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.alternar { display: inline-flex; border: 1px solid var(--linha-forte); border-radius: 8px; padding: 2px; }
+.alternar button { border: 0; background: none; padding: 5px 12px; border-radius: 6px; cursor: pointer;
+                   font-size: 13px; color: var(--grafite); }
+.alternar button[aria-pressed="true"] { background: var(--foco-suave); color: var(--tinta); font-weight: 600; }
+
+.grafico-principal { position: relative; margin-top: 8px; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { font-family: var(--sans); fill: var(--grafite); font-size: 12px; }
+.eixo-linha { stroke: var(--linha); }
+.serie-foco { stroke: var(--foco); stroke-width: 2.5; fill: none; }
+.area-foco { fill: var(--foco-suave); }
+.serie-contexto { stroke: var(--contexto); stroke-width: 1.5; fill: none; }
+.marca { stroke: var(--linha-forte); stroke-dasharray: 3 4; }
+.cursor { stroke: var(--tinta); stroke-opacity: .35; }
+@media (prefers-reduced-motion: no-preference) {
+  .serie-foco, .area-foco, .serie-contexto, circle.ponto { transition: d .32s ease, cx .32s ease, cy .32s ease; }
+}
+
+.dica { position: absolute; pointer-events: none; background: var(--superficie); border: 1px solid var(--linha-forte);
+        border-radius: 8px; padding: 8px 10px; font-size: 13px; line-height: 1.4; min-width: 170px;
+        box-shadow: 0 6px 20px rgba(20, 33, 61, .10); opacity: 0; transform: translateY(4px);
+        transition: opacity .12s, transform .12s; z-index: 2; }
+.dica.visivel { opacity: 1; transform: none; }
+.dica strong { display: block; font-weight: 600; margin-bottom: 2px; }
+.dica .linha { display: flex; justify-content: space-between; gap: 16px; color: var(--grafite); }
+.dica .linha b { color: var(--tinta); font-weight: 600; }
+
+/* Números de apoio */
+.numeros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 28px;
+           border-top: 1px solid var(--linha); }
+.numero { padding: 16px 20px 4px 0; min-width: 0; }
+.numero + .numero { padding-left: 20px; border-left: 1px solid var(--linha); }
+.numero .valor { font-size: 26px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+.numero .valor small { font-size: 15px; font-weight: 500; color: var(--grafite); }
+.numero .rotulo { color: var(--grafite); font-size: 13px; margin-top: 4px; }
+
+/* Blocos de análise */
+.blocos { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0 48px; margin-top: 48px; }
+.bloco { padding: 28px 0; border-top: 1px solid var(--linha); min-width: 0; }
+.bloco header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+.bloco .desc { color: var(--grafite); font-size: 13px; margin-bottom: 16px; max-width: 64ch; }
+.vazio { color: var(--grafite); font-size: 14px; padding: 12px 0; }
+
+/* Matriz disciplina × semestre */
+.matriz { width: 100%; border-collapse: separate; border-spacing: 2px; table-layout: fixed; }
+.matriz th { font-weight: 500; font-size: 11px; color: var(--grafite); padding: 0 0 4px; text-align: center; }
+.matriz th:first-child { text-align: left; width: 42%; }
+.matriz td { height: 26px; border-radius: 3px; padding: 0; }
+.matriz td.nome { font-size: 13px; padding-right: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.matriz td.nome .cod { color: var(--grafite); font-size: 11px; margin-right: 6px; }
+.matriz td.celula { background: var(--calor-0); }
+.matriz tr.linha-d { cursor: default; }
+.matriz tr.linha-d:hover td.nome, .matriz tr.linha-d:focus-visible td.nome { color: var(--foco); }
+.escala { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--grafite); margin-top: 10px; }
+.escala .grad { width: 120px; height: 8px; border-radius: 4px; }
+.mais { margin-top: 12px; border: 1px solid var(--linha-forte); background: none; border-radius: 8px;
+        padding: 6px 12px; cursor: pointer; font-size: 13px; }
+
+/* Ganhos e perdas */
+.variacoes { display: grid; gap: 10px; }
+.var-linha { display: grid; grid-template-columns: minmax(0, 1fr) 132px 56px; align-items: center; gap: 10px; font-size: 13px; }
+.var-linha .n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.var-linha .n .cod { color: var(--grafite); font-size: 11px; margin-right: 6px; }
+.var-linha .trilho { position: relative; height: 10px; }
+.var-linha .trilho::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--linha-forte); }
+.var-linha .b { position: absolute; top: 0; height: 10px; border-radius: 2px; }
+.var-linha .d { text-align: right; font-weight: 600; }
+.ganho { color: var(--ganho); } .perda { color: var(--perda); }
+
+/* Listas */
+.lista { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; }
+.lista li { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 10px; padding: 8px 0;
+            border-bottom: 1px solid var(--linha); font-size: 13px; align-items: baseline; }
+.lista li .cod { color: var(--grafite); font-size: 12px; }
+.lista li .nm { overflow-wrap: anywhere; }
+.lista li .tag { font-size: 12px; color: var(--grafite); white-space: nowrap; }
+.contagem { font-size: 13px; color: var(--grafite); white-space: nowrap; }
+
+/* Notas */
+.notas { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--linha);
+         display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.notas p { font: 400 14px/1.6 var(--serif); color: var(--grafite); }
+.notas p b { color: var(--tinta); font-weight: 500; }
+.erro { margin: 48px 0; font-size: 16px; }
+
+@media (max-width: 880px) {
+  .blocos { grid-template-columns: minmax(0, 1fr); }
+  .notas { grid-template-columns: minmax(0, 1fr); }
+  .numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .numero:nth-child(3) { padding-left: 0; border-left: 0; }
+  .numero:nth-child(n+3) { border-top: 1px solid var(--linha); }
+}
+@media (max-width: 520px) {
+  .pagina { padding: 20px 16px 48px; }
+  .resposta { padding-top: 26px; }
+  .numero { padding-right: 8px; }
+  .numero + .numero { padding-left: 12px; }
+  .numero:nth-child(3) { padding-left: 0; }
+  .numero .valor { font-size: 22px; }
+  .matriz th:first-child { width: 46%; }
+  .matriz td.nome .cod { display: none; }
+  .var-linha { grid-template-columns: minmax(0, 1fr) 90px 48px; }
+}
+</style>
+</head>
+<body>
+<div class="pagina">
+  <header class="topo">
+    <div>
+      <h1>Observatório de reservas da FCTE</h1>
+      <p class="sub">Vagas que as turmas da UnB reservam para os cursos de engenharia do Campus Gama</p>
+    </div>
+    <p class="status" id="status"><span class="ponto"></span><span>Carregando dados…</span></p>
+  </header>
+
+  <nav class="abas" role="tablist" aria-label="Curso" id="abas"></nav>
+
+  <main id="conteudo" aria-live="polite">
+    <section class="resposta">
+      <p class="frase" id="frase"></p>
+      <p class="apoio" id="apoio"></p>
+
+      <div class="barra-grafico">
+        <div class="legenda" id="legenda"></div>
+        <div class="alternar" role="group" aria-label="Escala do gráfico">
+          <button type="button" data-modo="vagas" aria-pressed="true">Vagas reservadas</button>
+          <button type="button" data-modo="indice" aria-pressed="false">Comparar cursos (2022.1 = 100)</button>
+        </div>
+      </div>
+      <div class="grafico-principal" id="grafico">
+        <div class="dica" id="dica" role="status"></div>
+      </div>
+
+      <div class="numeros" id="numeros"></div>
+    </section>
+
+    <div class="blocos">
+      <section class="bloco">
+        <header><h2>Reserva por disciplina, semestre a semestre</h2><span class="contagem" id="matriz-contagem"></span></header>
+        <p class="desc">Obrigatórias do currículo de referência que tiveram reserva para o curso. Quanto mais escura a célula, mais vagas; vazio significa nenhuma reserva naquele semestre.</p>
+        <div id="matriz"></div>
+      </section>
+
+      <section class="bloco">
+        <header><h2>Onde a reserva cresceu e onde caiu</h2></header>
+        <p class="desc">Obrigatórias com maior diferença de vagas reservadas entre 2022 e 2025 (os dois semestres de cada ano somados).</p>
+        <div class="variacoes" id="variacoes"></div>
+      </section>
+
+      <section class="bloco">
+        <header><h2>De que departamento vêm as vagas</h2></header>
+        <p class="desc">Vagas reservadas nas obrigatórias, pela unidade que oferece a turma. Negociar com Matemática e Física é diferente de negociar dentro da FCTE.</p>
+        <div class="legenda" id="legenda-origem"></div>
+        <div id="origem"></div>
+      </section>
+
+      <section class="bloco">
+        <header><h2>Obrigatórias sem nenhuma reserva</h2><span class="contagem" id="sem-contagem"></span></header>
+        <p class="desc">Estão no currículo de referência, mas nenhuma turma de 2022.1 a 2026.1 reservou vaga para o curso.</p>
+        <ul class="lista" id="sem-reserva"></ul>
+      </section>
+
+      <section class="bloco">
+        <header><h2>Fila de revisão: reservas de 50 vagas ou mais</h2><span class="contagem" id="alertas-contagem"></span></header>
+        <p class="desc">Gerada pelo ETL reverso a cada execução do pipeline. São as reservas grandes que valem conferir antes de renegociar o próximo semestre.</p>
+        <ul class="lista" id="alertas"></ul>
+      </section>
+
+      <section class="bloco">
+        <header><h2>Como ler estes números</h2></header>
+        <div class="notas-bloco" id="leitura"></div>
+      </section>
+    </div>
+
+    <footer class="notas" id="notas"></footer>
+  </main>
+</div>
+
+<script>
+(() => {
+  const fmt = new Intl.NumberFormat('pt-BR');
+  const pct = new Intl.NumberFormat('pt-BR', { style: 'percent', maximumFractionDigits: 0 });
+  const dataHora = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+  const NOMES_UNIDADE = { FGA: 'FCTE', FCTE: 'FCTE', MAT: 'Matemática', IFD: 'Física', CDT: 'Desenvolvimento Sustentável', EST: 'Estatística', ENM: 'Engenharia Mecânica', CIC: 'Ciência da Computação' };
+  const MINUSCULAS = new Set(['de', 'da', 'do', 'das', 'dos', 'e', 'em', 'para', 'a', 'o', 'à', 'ao', 'na', 'no', 'com']);
+  const ROMANOS = /^(i|ii|iii|iv|v|vi|vii|viii|ix|x)$/i;
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduzMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const estado = { dados: null, curso: null, modo: 'vagas', matrizCompleta: false };
+
+  function titulo(texto) {
+    return texto.toLowerCase().split(/\s+/).map((p, i) => {
+      if (ROMANOS.test(p)) return p.toUpperCase();
+      if (i > 0 && MINUSCULAS.has(p)) return p;
+      return p.charAt(0).toUpperCase() + p.slice(1);
+    }).join(' ');
+  }
+  const nomeCurto = nome => titulo(nome).replace(/^Engenharia (de )?/, '');
+  const unidade = cod => NOMES_UNIDADE[cod] || cod;
+  const el = (tag, attrs = {}, filhos = []) => {
+    const n = tag.startsWith('svg:') ? document.createElementNS(NS, tag.slice(4)) : document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'text') n.textContent = v; else if (k === 'html') n.innerHTML = v; else n.setAttribute(k, v);
+    }
+    for (const f of [].concat(filhos)) if (f) n.append(f);
+    return n;
+  };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- dados derivados ----------
+  function serieDo(curso) { return estado.dados.serie.filter(s => s.curso_codigo === curso); }
+  function nomeDoCurso(curso) { return estado.dados.cursos.find(c => c.codigo === curso).nome; }
+
+  function descreverVariacao(primeiro, ultimo) {
+    const r = ultimo / primeiro;
+    if (r >= 1.95) return { texto: `${fmt.format(Math.round(r * 10) / 10)} vezes mais`, classe: 'delta-ganho' };
+    if (r >= 1.05) return { texto: `um aumento de ${pct.format(r - 1)}`, classe: 'delta-ganho' };
+    if (r > 0.95) return { texto: 'praticamente o mesmo patamar', classe: '' };
+    return { texto: `uma queda de ${pct.format(1 - r)}`, classe: 'delta-perda' };
+  }
+
+  // ---------- cabeçalho, abas ----------
+  function desenharStatus() {
+    const f = estado.dados.freshness;
+    const st = document.getElementById('status');
+    if (!f) { st.lastElementChild.textContent = 'Freshness indisponível'; return; }
+    const dentro = f.atraso_horas <= f.sla_horas;
+    st.classList.toggle('fora', !dentro);
+    st.lastElementChild.textContent =
+      `Atualizado em ${dataHora.format(new Date(f.mart_processado_em))}, ${dentro ? 'dentro do' : 'fora do'} prazo de ${f.sla_horas} h após a carga`;
+  }
+
+  function desenharAbas() {
+    const abas = document.getElementById('abas');
+    const cursos = [...estado.dados.cursos].sort((a, b) => nomeCurto(a.nome).localeCompare(nomeCurto(b.nome), 'pt-BR'));
+    cursos.forEach(c => {
+      const b = el('button', { class: 'aba', role: 'tab', type: 'button', 'aria-selected': 'false', 'data-curso': c.codigo,
+                               title: `${titulo(c.nome)} (${c.codigo})`, tabindex: '-1', text: nomeCurto(c.nome) });
+      b.addEventListener('click', () => selecionar(c.codigo));
+      abas.append(b);
+    });
+    abas.addEventListener('keydown', e => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+      const lista = [...abas.children];
+      const i = lista.findIndex(b => b.getAttribute('aria-selected') === 'true');
+      const j = e.key === 'Home' ? 0 : e.key === 'End' ? lista.length - 1 : (i + (e.key === 'ArrowRight' ? 1 : -1) + lista.length) % lista.length;
+      lista[j].focus(); selecionar(lista[j].dataset.curso); e.preventDefault();
+    });
+  }
+
+  // ---------- resposta ----------
+  function desenharResposta() {
+    const serie = serieDo(estado.curso);
+    const nome = titulo(nomeDoCurso(estado.curso));
+    const ini = serie[0], fim = serie[serie.length - 1];
+    const v = descreverVariacao(ini.vagas_reservadas, fim.vagas_reservadas);
+    const cob = estado.dados.cobertura.filter(c => c.curso_codigo === estado.curso);
+    const pico = serie.reduce((a, b) => (b.vagas_reservadas > a.vagas_reservadas ? b : a));
+    const vale = serie.reduce((a, b) => (b.vagas_reservadas < a.vagas_reservadas ? b : a));
+    document.getElementById('frase').innerHTML =
+      `Em ${esc(nome)}, as vagas reservadas nas ${cob.length} obrigatórias foram de <b>${fmt.format(ini.vagas_reservadas)}</b> em ${ini.semestre} ` +
+      `para <b>${fmt.format(fim.vagas_reservadas)}</b> em ${fim.semestre}: <span class="${v.classe}">${v.texto}</span>.`;
+    const extremo = pico.semestre === fim.semestre
+      ? `O valor de ${fim.semestre} é o maior da série.`
+      : `O pico foi em ${pico.semestre}, com ${fmt.format(pico.vagas_reservadas)} vagas; o menor valor, em ${vale.semestre} (${fmt.format(vale.vagas_reservadas)}).`;
+    const comReserva = cob.filter(c => c.semestres_com_reserva > 0).length;
+    document.getElementById('apoio').textContent =
+      `${extremo} ${comReserva} das ${cob.length} obrigatórias tiveram reserva em pelo menos um semestre. Currículo de referência ${cob[0]?.curriculo_codigo ?? ''}.`;
+  }
+
+  // ---------- gráfico principal ----------
+  function desenharGrafico() {
+    const caixa = document.getElementById('grafico');
+    const dica = document.getElementById('dica');
+    const semestres = estado.dados.semestres.map(s => s.semestre);
+    const largura = Math.max(caixa.clientWidth, 320), estreito = largura < 560;
+    const altura = estreito ? 240 : 320;
+    const m = { e: estreito ? 40 : 52, d: estado.modo === 'indice' ? (estreito ? 78 : 116) : 16, t: 18, b: 30 };
+    const x = i => m.e + i * (largura - m.e - m.d) / (semestres.length - 1);
+
+    const valor = s => {
+      if (estado.modo === 'vagas') return s.vagas_reservadas;
+      const base = serieDo(s.curso_codigo)[0].vagas_reservadas;
+      return 100 * s.vagas_reservadas / base;
+    };
+    const visiveis = estado.modo === 'vagas' ? [estado.curso] : estado.dados.cursos.map(c => c.codigo);
+    const todos = visiveis.flatMap(c => serieDo(c).map(valor));
+    const bruto = Math.max(...todos);
+    const passo = escolherPasso(bruto);
+    const topo = Math.ceil(bruto / passo) * passo;
+    const y = v => m.t + (altura - m.t - m.b) * (1 - v / topo);
+
+    let svg = caixa.querySelector('svg');
+    if (!svg || svg.dataset.largura != largura || svg.dataset.modo !== estado.modo) {
+      svg?.remove();
+      svg = el('svg:svg', { viewBox: `0 0 ${largura} ${altura}`, role: 'img', 'data-largura': largura, 'data-modo': estado.modo });
+      caixa.prepend(svg);
+    }
+    svg.setAttribute('aria-label', `Vagas reservadas por semestre, ${titulo(nomeDoCurso(estado.curso))}`);
+    svg.querySelectorAll('.grade, .rotulos, .anot').forEach(n => n.remove());
+
+    const grade = el('svg:g', { class: 'grade' });
+    for (let v = 0; v <= topo; v += passo) {
+      grade.append(el('svg:line', { class: 'eixo-linha', x1: m.e, x2: largura - m.d, y1: y(v), y2: y(v) }));
+      grade.append(el('svg:text', { x: m.e - 8, y: y(v) + 4, 'text-anchor': 'end', text: fmt.format(v) }));
+    }
+    semestres.forEach((s, i) => {
+      if (estreito && i % 2 === 1 && i !== semestres.length - 1) return;
+      grade.append(el('svg:text', { x: x(i), y: altura - 8, 'text-anchor': 'middle', text: s }));
+    });
+    svg.prepend(grade);
+
+    const i23 = semestres.indexOf('2023.2');
+    if (i23 >= 0) {
+      const anot = el('svg:g', { class: 'anot' });
+      anot.append(el('svg:line', { class: 'marca', x1: x(i23), x2: x(i23), y1: m.t, y2: altura - m.b }));
+      anot.append(el('svg:text', { x: x(i23) + 6, y: m.t + 10, text: estreito ? 'muda o registro?' : 'reservas de 50+ vagas viram comuns' }));
+      grade.after(anot);
+    }
+
+    const ponto = (s, i) => [x(i), y(valor(s))];
+    const caminho = pts => pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join('');
+
+    const ordenados = [...visiveis.filter(c => c !== estado.curso), estado.curso];
+    const existentes = new Map([...svg.querySelectorAll('g.curso')].map(g => [g.dataset.curso, g]));
+    existentes.forEach((g, c) => { if (!visiveis.includes(c)) g.remove(); });
+    const rotulos = el('svg:g', { class: 'rotulos' });
+    const finais = [];
+
+    ordenados.forEach(c => {
+      const pts = serieDo(c).map(ponto);
+      const foco = c === estado.curso;
+      let g = existentes.get(c);
+      if (!g) {
+        g = el('svg:g', { class: 'curso', 'data-curso': c });
+        g.append(el('svg:path', { class: 'area-foco' }), el('svg:path', {}));
+      }
+      svg.append(g);
+      const [area, linha] = g.children;
+      linha.setAttribute('class', foco ? 'serie-foco' : 'serie-contexto');
+      linha.setAttribute('d', caminho(pts));
+      area.setAttribute('d', foco ? `${caminho(pts)}L${pts.at(-1)[0]},${y(0)}L${pts[0][0]},${y(0)}Z` : '');
+      g.querySelectorAll('circle').forEach(n => n.remove());
+      if (foco) pts.forEach(p => g.append(el('svg:circle', { class: 'ponto', cx: p[0], cy: p[1], r: 3.5, fill: 'var(--foco)' })));
+      if (estado.modo === 'indice') finais.push({ c, y: pts.at(-1)[1], foco, v: valor(serieDo(c).at(-1)) });
+    });
+
+    if (estado.modo === 'indice') {
+      finais.sort((a, b) => a.y - b.y);
+      for (let i = 1; i < finais.length; i++) finais[i].y = Math.max(finais[i].y, finais[i - 1].y + 15);
+      const limite = altura - m.b - 4;
+      if (finais.length && finais.at(-1).y > limite) {
+        finais.at(-1).y = limite;
+        for (let i = finais.length - 2; i >= 0; i--) finais[i].y = Math.min(finais[i].y, finais[i + 1].y - 15);
+      }
+      finais.forEach(f => rotulos.append(el('svg:text', {
+        x: largura - m.d + 8, y: f.y + 4,
+        style: `fill: ${f.foco ? 'var(--foco)' : 'var(--grafite)'}; font-weight: ${f.foco ? 600 : 400}`,
+        text: `${nomeCurto(nomeDoCurso(f.c))} ${fmt.format(Math.round(f.v))}`,
+      })));
+    } else {
+      const s = serieDo(estado.curso);
+      [0, s.length - 1].forEach(i => {
+        const [px, py] = ponto(s[i], i);
+        rotulos.append(el('svg:text', { x: px, y: py - 10, 'text-anchor': i ? 'end' : 'start',
+          style: 'fill: var(--tinta); font-weight: 600', text: fmt.format(s[i].vagas_reservadas) }));
+      });
+    }
+    svg.append(rotulos);
+
+    // cursor e dica
+    svg.querySelector('.cursor')?.remove();
+    const cursor = el('svg:line', { class: 'cursor', y1: m.t, y2: altura - m.b, visibility: 'hidden' });
+    svg.append(cursor);
+    const mover = ev => {
+      const r = svg.getBoundingClientRect();
+      const px = (ev.clientX - r.left) * largura / r.width;
+      const i = Math.max(0, Math.min(semestres.length - 1, Math.round((px - m.e) / ((largura - m.e - m.d) / (semestres.length - 1)))));
+      const s = serieDo(estado.curso)[i];
+      cursor.setAttribute('x1', x(i)); cursor.setAttribute('x2', x(i)); cursor.setAttribute('visibility', 'visible');
+      const anterior = serieDo(estado.curso)[i - 1];
+      const delta = anterior ? s.vagas_reservadas - anterior.vagas_reservadas : null;
+      dica.innerHTML = `<strong>${nomeCurto(nomeDoCurso(estado.curso))}, ${s.semestre}</strong>` +
+        `<div class="linha"><span>Vagas reservadas</span><b>${fmt.format(s.vagas_reservadas)}</b></div>` +
+        (delta === null ? '' : `<div class="linha"><span>Vs. semestre anterior</span><b class="${delta >= 0 ? 'ganho' : 'perda'}">${delta >= 0 ? '+' : ''}${fmt.format(delta)}</b></div>`) +
+        `<div class="linha"><span>Turmas</span><b>${fmt.format(s.turmas_com_reserva)}</b></div>` +
+        `<div class="linha"><span>Obrigatórias com reserva</span><b>${s.obrigatorias_com_reserva}</b></div>`;
+      const esquerda = x(i) * r.width / largura;
+      dica.style.left = `${Math.min(Math.max(esquerda - 90, 0), r.width - 190)}px`;
+      dica.style.top = `${Math.max(0, y(valor(s)) * r.height / altura - 120)}px`;
+      dica.classList.add('visivel');
+    };
+    svg.onpointermove = mover;
+    svg.onpointerleave = () => { dica.classList.remove('visivel'); cursor.setAttribute('visibility', 'hidden'); };
+
+    document.getElementById('legenda').innerHTML = estado.modo === 'vagas'
+      ? `<span><i style="background: var(--foco)"></i>${esc(titulo(nomeDoCurso(estado.curso)))}</span>`
+      : `<span><i style="background: var(--foco)"></i>${esc(nomeCurto(nomeDoCurso(estado.curso)))}</span><span><i style="background: var(--contexto)"></i>Outros cursos, em índice</span>`;
+  }
+
+  function escolherPasso(maximo) {
+    const bruto = maximo / 4;
+    const mag = 10 ** Math.floor(Math.log10(bruto));
+    return [1, 2, 2.5, 5, 10].map(f => f * mag).find(p => p >= bruto);
+  }
+
+  // ---------- números de apoio ----------
+  function desenharNumeros() {
+    const serie = serieDo(estado.curso);
+    const fim = serie.at(-1), ini = serie[0];
+    const cob = estado.dados.cobertura.filter(c => c.curso_codigo === estado.curso);
+    const comReserva = cob.filter(c => c.semestres_com_reserva > 0).length;
+    const ultimo = estado.dados.disciplinas.filter(d => d.curso_codigo === estado.curso && d.obrigatoria && d.semestre_key === Math.max(...serie.map(s => s.semestre_key)));
+    const total = ultimo.reduce((a, d) => a + d.vagas_reservadas, 0);
+    const fora = ultimo.filter(d => d.unidade_origem !== 'FGA').reduce((a, d) => a + d.vagas_reservadas, 0);
+    const d = fim.vagas_reservadas - ini.vagas_reservadas;
+    const itens = [
+      [`${comReserva}<small> de ${cob.length}</small>`, 'obrigatórias com reserva em algum semestre'],
+      [fmt.format(fim.turmas_com_reserva), `turmas reservaram vaga em ${fim.semestre}`],
+      [total ? pct.format(fora / total) : '–', `das vagas de ${fim.semestre} vêm de fora da FCTE`],
+      [`<span class="${d >= 0 ? 'ganho' : 'perda'}">${d >= 0 ? '+' : '−'}${fmt.format(Math.abs(d))}</span>`, `vagas entre ${ini.semestre} e ${fim.semestre}`],
+    ];
+    document.getElementById('numeros').innerHTML = itens.map(([v, r]) =>
+      `<div class="numero"><div class="valor">${v}</div><div class="rotulo">${r}</div></div>`).join('');
+  }
+
+  // ---------- matriz ----------
+  function desenharMatriz() {
+    const semestres = estado.dados.semestres;
+    const linhas = estado.dados.disciplinas.filter(d => d.curso_codigo === estado.curso && d.obrigatoria);
+    const porDisc = new Map();
+    linhas.forEach(d => {
+      if (!porDisc.has(d.disciplina_codigo)) porDisc.set(d.disciplina_codigo, { cod: d.disciplina_codigo, nome: d.disciplina_nome, un: d.unidade_origem, total: 0, por: {} });
+      const r = porDisc.get(d.disciplina_codigo);
+      r.total += d.vagas_reservadas; r.por[d.semestre_key] = d;
+    });
+    const todas = [...porDisc.values()].sort((a, b) => b.total - a.total);
+    const mostrar = estado.matrizCompleta ? todas : todas.slice(0, 14);
+    const maximo = Math.max(1, ...linhas.map(d => d.vagas_reservadas));
+    document.getElementById('matriz-contagem').textContent = `${todas.length} disciplinas`;
+    const alvo = document.getElementById('matriz');
+    if (!todas.length) { alvo.innerHTML = '<p class="vazio">Nenhuma obrigatória com reserva para este curso.</p>'; return; }
+    const cor = v => `color-mix(in oklab, var(--calor-1) ${Math.round(18 + 82 * Math.sqrt(v / maximo))}%, var(--calor-0))`;
+    let html = '<table class="matriz"><thead><tr><th scope="col">Disciplina</th>' +
+      semestres.map((s, i) => `<th scope="col">${i % 2 === 0 || i === semestres.length - 1 ? s.semestre.replace(/^20/, '') : ''}</th>`).join('') + '</tr></thead><tbody>';
+    mostrar.forEach(r => {
+      const resumo = `${r.cod} ${titulo(r.nome)}, ${unidade(r.un)}: ${fmt.format(r.total)} vagas no período`;
+      html += `<tr class="linha-d" tabindex="0" title="${esc(resumo)}" aria-label="${esc(resumo)}"><td class="nome"><span class="cod">${r.cod}</span>${esc(titulo(r.nome))}</td>`;
+      semestres.forEach(s => {
+        const d = r.por[s.semestre_key];
+        html += d
+          ? `<td class="celula" style="background:${cor(d.vagas_reservadas)}" title="${esc(`${r.cod}, ${s.semestre}: ${d.vagas_reservadas} vagas em ${d.turmas} turma(s)`)}"></td>`
+          : `<td class="celula" title="${esc(`${r.cod}, ${s.semestre}: sem reserva`)}" style="background:transparent; box-shadow: inset 0 0 0 1px var(--linha)"></td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    html += `<div class="escala"><span>menos</span><span class="grad" style="background:linear-gradient(90deg, ${cor(1)}, ${cor(maximo)})"></span><span>${fmt.format(maximo)} vagas</span></div>`;
+    if (todas.length > 14) html += `<button class="mais" type="button" id="matriz-mais">${estado.matrizCompleta ? 'Mostrar as 14 maiores' : `Mostrar todas as ${todas.length}`}</button>`;
+    alvo.innerHTML = html;
+    document.getElementById('matriz-mais')?.addEventListener('click', () => { estado.matrizCompleta = !estado.matrizCompleta; desenharMatriz(); });
+  }
+
+  // ---------- ganhos e perdas ----------
+  function desenharVariacoes() {
+    const linhas = estado.dados.disciplinas.filter(d => d.curso_codigo === estado.curso && d.obrigatoria);
+    const ano = k => Math.floor(k / 10);
+    const mapa = new Map();
+    linhas.forEach(d => {
+      if (![2022, 2025].includes(ano(d.semestre_key))) return;
+      const r = mapa.get(d.disciplina_codigo) || { cod: d.disciplina_codigo, nome: d.disciplina_nome, a: 0, b: 0 };
+      if (ano(d.semestre_key) === 2022) r.a += d.vagas_reservadas; else r.b += d.vagas_reservadas;
+      mapa.set(d.disciplina_codigo, r);
+    });
+    const todas = [...mapa.values()].map(r => ({ ...r, d: r.b - r.a })).filter(r => r.d !== 0);
+    const ganhos = todas.filter(r => r.d > 0).sort((a, b) => b.d - a.d).slice(0, 5);
+    const perdas = todas.filter(r => r.d < 0).sort((a, b) => a.d - b.d).slice(0, 5);
+    const maximo = Math.max(1, ...[...ganhos, ...perdas].map(r => Math.abs(r.d)));
+    const alvo = document.getElementById('variacoes');
+    if (!ganhos.length && !perdas.length) { alvo.innerHTML = '<p class="vazio">Sem diferença entre 2022 e 2025.</p>'; return; }
+    const linha = r => {
+      const w = Math.max(1.2, 50 * Math.abs(r.d) / maximo);
+      const pos = r.d > 0 ? `left:50%;width:${w}%;background:var(--ganho)` : `left:${50 - w}%;width:${w}%;background:var(--perda)`;
+      return `<div class="var-linha" title="${esc(`${r.cod} ${titulo(r.nome)}: ${r.a} vagas em 2022, ${r.b} em 2025`)}">` +
+        `<span class="n"><span class="cod">${r.cod}</span>${esc(titulo(r.nome))}</span>` +
+        `<span class="trilho"><span class="b" style="${pos}"></span></span>` +
+        `<span class="d ${r.d > 0 ? 'ganho' : 'perda'}">${r.d > 0 ? '+' : '−'}${fmt.format(Math.abs(r.d))}</span></div>`;
+    };
+    alvo.innerHTML = [...ganhos, ...perdas].map(linha).join('');
+  }
+
+  // ---------- origem ----------
+  function desenharOrigem() {
+    const semestres = estado.dados.semestres;
+    const grupos = [['FCTE', 'var(--u-fcte)', u => u === 'FGA'], ['Matemática', 'var(--u-mat)', u => u === 'MAT'],
+                    ['Física', 'var(--u-ifd)', u => u === 'IFD'], ['Outras unidades', 'var(--u-outras)', () => true]];
+    const linhas = estado.dados.disciplinas.filter(d => d.curso_codigo === estado.curso && d.obrigatoria);
+    const tabela = semestres.map(s => {
+      const r = grupos.map(() => 0);
+      linhas.filter(d => d.semestre_key === s.semestre_key).forEach(d => { r[grupos.findIndex(g => g[2](d.unidade_origem))] += d.vagas_reservadas; });
+      return { s: s.semestre, r, total: r.reduce((a, b) => a + b, 0) };
+    });
+    const presentes = grupos.map((g, i) => tabela.some(t => t.r[i] > 0));
+    document.getElementById('legenda-origem').innerHTML = grupos.filter((_, i) => presentes[i])
+      .map(g => `<span><i style="background:${g[1]}; height: 10px; width: 10px"></i>${g[0]}</span>`).join('');
+    const largura = Math.max(document.getElementById('origem').clientWidth, 300), altura = 200;
+    const m = { e: 4, d: 4, t: 14, b: 22 };
+    const banda = (largura - m.e - m.d) / tabela.length;
+    const svg = el('svg:svg', { viewBox: `0 0 ${largura} ${altura}`, role: 'img', 'aria-label': 'Proporção de vagas por unidade de origem, por semestre' });
+    tabela.forEach((t, i) => {
+      let base = altura - m.b;
+      const h = altura - m.t - m.b;
+      grupos.forEach((g, j) => {
+        if (!t.r[j] || !t.total) return;
+        const alt = h * t.r[j] / t.total;
+        svg.append(el('svg:rect', { x: m.e + i * banda + banda * .18, y: base - alt, width: banda * .64, height: Math.max(alt - 1, 0), fill: g[1], rx: 1.5 },
+          [el('svg:title', { text: `${t.s}, ${g[0]}: ${fmt.format(t.r[j])} vagas (${pct.format(t.r[j] / t.total)})` })]));
+        base -= alt;
+      });
+      const rotulo = largura < 420 ? t.s.replace(/^20/, '') : t.s;
+      svg.append(el('svg:text', { x: m.e + i * banda + banda / 2, y: altura - 6, 'text-anchor': 'middle', text: rotulo }));
+      const fcte = t.total ? t.r[0] / t.total : 0;
+      svg.append(el('svg:text', { x: m.e + i * banda + banda / 2, y: m.t - 3, 'text-anchor': 'middle', style: 'font-size: 11px', text: pct.format(fcte) }));
+    });
+    const alvo = document.getElementById('origem');
+    alvo.replaceChildren(svg);
+    alvo.append(el('p', { class: 'desc', style: 'margin: 8px 0 0', text: 'O percentual acima de cada barra é a parte da FCTE.' }));
+  }
+
+  // ---------- listas ----------
+  function desenharListas() {
+    const sem = estado.dados.cobertura.filter(c => c.curso_codigo === estado.curso && c.semestres_com_reserva === 0)
+      .sort((a, b) => a.disciplina_codigo.localeCompare(b.disciplina_codigo));
+    const total = estado.dados.cobertura.filter(c => c.curso_codigo === estado.curso).length;
+    document.getElementById('sem-contagem').textContent = `${sem.length} de ${total}`;
+    document.getElementById('sem-reserva').innerHTML = sem.length
+      ? sem.map(c => `<li><span class="cod">${c.disciplina_codigo}</span><span class="nm">${esc(titulo(c.disciplina_nome))}</span><span class="tag">${esc(unidade(c.unidade_origem))}</span></li>`).join('')
+      : '<li class="vazio">Todas as obrigatórias tiveram reserva no período.</li>';
+
+    const nomes = new Map(estado.dados.cobertura.map(c => [c.disciplina_codigo, c.disciplina_nome]));
+    estado.dados.disciplinas.forEach(d => nomes.has(d.disciplina_codigo) || nomes.set(d.disciplina_codigo, d.disciplina_nome));
+    const alertas = estado.dados.alertas.filter(a => a.curso_codigo === estado.curso);
+    document.getElementById('alertas-contagem').textContent = `${alertas.length} reservas`;
+    document.getElementById('alertas').innerHTML = alertas.length
+      ? alertas.map(a => `<li><span class="cod">${a.semestre}</span><span class="nm"><span class="cod">${a.disciplina_codigo}</span> ${esc(titulo(nomes.get(a.disciplina_codigo) || ''))}</span><span class="tag"><b>${fmt.format(a.vagas_reservadas)}</b> vagas</span></li>`).join('')
+      : '<li class="vazio">Nenhuma reserva de 50 vagas ou mais para este curso.</li>';
+  }
+
+  function desenharNotas() {
+    const f = estado.dados.freshness;
+    document.getElementById('leitura').innerHTML = `
+      <div class="notas" style="grid-template-columns: minmax(0,1fr); margin: 0; padding: 0; border: 0">
+        <p><b>Vaga reservada não é vaga ocupada.</b> É o campo "Vgs Reservadas" da página pública de turmas do SIGAA: quantas vagas de uma turma ficam guardadas para um curso. Não diz se a turma lotou nem quantas vagas ela oferece no total.</p>
+        <p><b>O conjunto de obrigatórias é fixo.</b> Toda a série usa as obrigatórias do currículo em vigor em 2026.1, inclusive nos semestres em que valia outra versão. A pergunta é sobre as disciplinas que hoje são obrigatórias.</p>
+      </div>`;
+    document.getElementById('notas').innerHTML = `
+      <p><b>A partir de 2023.2</b>, reservas de 50 vagas ou mais passam de 4 para 17 a 41 por semestre, sobretudo em Software. Isso parece mudança na forma de registrar a reserva e pede cautela ao comparar com 2022.</p>
+      <p><b>Fonte:</b> lote público coletado do SIGAA em 28/09/2026, conferido por SHA-256, carregado no PostgreSQL e transformado com dbt (staging, dimensões com histórico, fato por turma e curso, marts).</p>
+      <p><b>Atualização:</b> última carga da origem em ${f ? dataHora.format(new Date(f.ultima_carga_origem)) : '–'}; o painel deve refleti-la em até ${f ? f.sla_horas : 24} horas. Atraso atual: ${f ? fmt.format(f.atraso_horas) : '–'} h.</p>`;
+  }
+
+  // ---------- ciclo ----------
+  function selecionar(curso) {
+    estado.curso = curso; estado.matrizCompleta = false;
+    document.querySelectorAll('.aba').forEach(b => {
+      const ativo = b.dataset.curso === curso;
+      b.setAttribute('aria-selected', ativo); b.tabIndex = ativo ? 0 : -1;
+      if (ativo) b.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+    try { localStorage.setItem('observatorio.curso', curso); } catch (e) {}
+    desenharResposta(); desenharGrafico(); desenharNumeros(); desenharMatriz(); desenharVariacoes(); desenharOrigem(); desenharListas();
+  }
+
+  document.querySelectorAll('.alternar button').forEach(b => b.addEventListener('click', () => {
+    estado.modo = b.dataset.modo;
+    document.querySelectorAll('.alternar button').forEach(o => o.setAttribute('aria-pressed', o === b));
+    desenharGrafico();
+  }));
+  let espera;
+  addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(() => { if (estado.dados) { desenharGrafico(); desenharOrigem(); } }, 120); });
+
+  fetch('/api/observatorio').then(r => r.json().then(j => ({ ok: r.ok, j }))).then(({ ok, j }) => {
+    if (!ok) throw new Error(j.erro || 'Falha ao carregar os dados.');
+    estado.dados = j;
+    desenharStatus(); desenharAbas(); desenharNotas();
+    const params = new URLSearchParams(location.search);
+    let inicial = 'FGA_SOFT';
+    try { inicial = localStorage.getItem('observatorio.curso') || inicial; } catch (e) {}
+    inicial = params.get('curso') || inicial;
+    if (params.get('modo') === 'indice') {
+      estado.modo = 'indice';
+      document.querySelectorAll('.alternar button').forEach(o => o.setAttribute('aria-pressed', o.dataset.modo === 'indice'));
+    }
+    if (!j.cursos.some(c => c.codigo === inicial)) inicial = j.cursos[0].codigo;
+    selecionar(inicial);
+  }).catch(erro => {
+    document.getElementById('conteudo').innerHTML = `<p class="erro">${esc(erro.message)} Confira se o pipeline rodou (<code>docker compose up</code>) e recarregue a página.</p>`;
+    document.getElementById('status').lastElementChild.textContent = 'Sem dados';
+  });
+})();
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ with itens as (
         jsonb_build_object('tipo', d.tipo, 'unidade', u.nome) as atributos
     from {{ ref('dim_disciplina') }} d
     left join {{ source('oltp', 'unidade') }} u on u.id = d.unidade_id
+    where d.is_current
 
     union all
 

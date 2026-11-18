@@ -1,9 +1,36 @@
- linhas_historicas
--------------------
-               174
-(1 row)
+# Backfill de uma janela do fato (incremental delete+insert por semestre) — 2026-11-18T00:52Z
+## Antes
+ semestre | linhas | vagas | processado_em 
+----------+--------+-------+---------------
+ 2022.1   |    255 |  1796 | 00:50:41
+ 2022.2   |    251 |  1660 | 00:50:41
+ 2023.1   |    192 |  1491 | 00:50:41
+ 2023.2   |    193 |  2836 | 00:50:41
+ 2024.1   |    174 |  3167 | 00:50:41
+ 2024.2   |    162 |  3401 | 00:50:41
+ 2025.1   |    155 |  4769 | 00:50:41
+ 2025.2   |    170 |  4527 | 00:50:41
+ 2026.1   |    224 |  4310 | 00:50:41
+(9 rows)
 
- linhas_totais_apos_backfill
------------------------------
-                        1776
-(1 row)
+$ BACKFILL_SEMESTRE=2024.1 ./orchestration/run_pipeline.sh
+backfill da janela 2024.1
+00:52:33  25 of 52 START sql incremental model analytics.fct_reservas .................... [RUN]
+00:52:33  25 of 52 OK created sql incremental model analytics.fct_reservas ............... [INSERT 0 174 in 0.09s]
+00:52:33  Done. PASS=51 WARN=1 ERROR=0 SKIP=0 TOTAL=52
+2026-11-18T00:52:35Z pipeline concluído (backfill 2024.1)
+
+## Depois: só 2024.1 foi reprocessado (processado_em novo); contagens iguais
+ semestre | linhas | vagas | processado_em 
+----------+--------+-------+---------------
+ 2022.1   |    255 |  1796 | 00:50:41
+ 2022.2   |    251 |  1660 | 00:50:41
+ 2023.1   |    192 |  1491 | 00:50:41
+ 2023.2   |    193 |  2836 | 00:50:41
+ 2024.1   |    174 |  3167 | 00:52:33
+ 2024.2   |    162 |  3401 | 00:50:41
+ 2025.1   |    155 |  4769 | 00:50:41
+ 2025.2   |    170 |  4527 | 00:50:41
+ 2026.1   |    224 |  4310 | 00:50:41
+(9 rows)
+

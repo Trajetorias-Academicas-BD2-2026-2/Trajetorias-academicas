@@ -25,6 +25,23 @@ INSERT INTO resultado
 SELECT 'ETL reverso populado', count(*) > 0, count(*)::text
 FROM operations.alertas_reserva;
 
+INSERT INTO resultado
+SELECT 'SLA: mart até 24 h atrás da origem', bool_and(atraso_horas <= sla_horas), max(atraso_horas)::text || ' h'
+FROM analytics.metricas_freshness;
+
+INSERT INTO resultado
+SELECT 'SCD: uma versão corrente por disciplina', count(*) = 0, count(*)::text || ' disciplinas com problema'
+FROM (
+  SELECT disciplina_id FROM analytics.dim_disciplina
+  GROUP BY disciplina_id HAVING count(*) FILTER (WHERE is_current) <> 1
+) d;
+
+INSERT INTO resultado
+SELECT 'integridade: fato -> dim_semestre', count(*) = 0, count(*)::text || ' órfãs'
+FROM analytics.fct_reservas f
+LEFT JOIN analytics.dim_semestre s USING (semestre_key)
+WHERE s.semestre_key IS NULL;
+
 SELECT teste, CASE WHEN ok THEN 'ok' ELSE 'FALHOU' END status, detalhe
 FROM resultado ORDER BY ok, teste;
 

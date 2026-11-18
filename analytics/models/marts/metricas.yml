@@ -1,21 +1,91 @@
 version: 2
 
 models:
+  - name: dim_curso
+    description: "Uma linha por curso."
+    columns:
+      - name: curso_id
+        data_tests: [unique, not_null]
+      - name: curso_codigo
+        data_tests: [unique, not_null]
+
+  - name: dim_semestre
+    description: "Uma linha por semestre do calendário acadêmico."
+    columns:
+      - name: semestre_key
+        data_tests: [unique, not_null]
+
+  - name: dim_disciplina
+    description: "SCD tipo 2: uma linha por versão de disciplina (nome, carga horária, tipo, unidade)."
+    data_tests:
+      - uma_versao_corrente
+    columns:
+      - name: disciplina_sk
+        data_tests: [unique, not_null]
+      - name: disciplina_id
+        data_tests: [not_null]
+      - name: tipo
+        data_tests:
+          - accepted_values:
+              values: ['DISCIPLINA', 'ATIVIDADE']
+
+  - name: dim_curriculo_componente
+    description: "SCD tipo 2 em tempo de negócio: natureza da disciplina no curso, por versão curricular."
+    columns:
+      - name: curriculo_componente_sk
+        data_tests: [unique, not_null]
+      - name: natureza
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['OBRIGATORIA', 'OPTATIVA']
+      - name: curso_id
+        data_tests:
+          - relationships:
+              to: ref('dim_curso')
+              field: curso_id
+
   - name: fct_reservas
-    description: "Uma linha por turma, curso e disciplina em um semestre."
+    description: >
+      Uma linha por turma e curso: as vagas que uma turma de um semestre
+      reservou para um curso. Incremental por semestre.
     columns:
       - name: turma_id
         data_tests: [not_null]
       - name: curso_id
-        data_tests: [not_null]
-      - name: disciplina_id
-        data_tests: [not_null]
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_curso')
+              field: curso_id
+      - name: disciplina_sk
+        description: "Versão da disciplina vigente quando a reserva foi ingerida."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_disciplina')
+              field: disciplina_sk
+      - name: semestre_key
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_semestre')
+              field: semestre_key
       - name: vagas_reservadas
         data_tests: [not_null]
       - name: obrigatoria
         data_tests: [not_null]
-  - name: mart_serie_curso
-    description: "Métricas da pergunta de gestão por curso e semestre."
+      - name: natureza_na_epoca
+        description: "Natureza pela versão curricular vigente no semestre; nula quando essa versão não foi coletada."
+        data_tests:
+          - accepted_values:
+              values: ['OBRIGATORIA', 'OPTATIVA']
+
+  - name: mart_observatorio
+    description: >
+      Indicadores oficiais do observatório, uma linha por curso e semestre.
+      vagas_reservadas é a soma do campo SIGAA Vgs Reservadas; não representa
+      ocupação nem oferta total.
     columns:
       - name: curso_codigo
         data_tests: [not_null]
@@ -23,7 +93,30 @@ models:
         data_tests: [not_null]
       - name: vagas_reservadas
         data_tests: [not_null]
-  - name: mart_observatorio
-    description: >
-      Indicadores oficiais do observatório. vagas_reservadas é a soma do
-      campo SIGAA Vgs Reservadas; não representa ocupação nem oferta total.
+
+  - name: metricas_freshness
+    description: "Freshness do mart_observatorio frente à última carga da origem; SLA de 24 h."
+
+  - name: mart_disciplina_semestre
+    description: "Uma linha por curso, disciplina e semestre."
+    data_tests:
+      - unique_combination:
+          columns: [curso_codigo, disciplina_codigo, semestre_key]
+    columns:
+      - name: curso_codigo
+        data_tests:
+          - relationships:
+              to: ref('dim_curso')
+              field: curso_codigo
+
+  - name: mart_cobertura_curriculo
+    description: "Uma linha por curso e obrigatória do currículo de referência de 2026.1."
+    data_tests:
+      - unique_combination:
+          columns: [curso_codigo, disciplina_codigo]
+    columns:
+      - name: curso_codigo
+        data_tests:
+          - relationships:
+              to: ref('dim_curso')
+              field: curso_codigo
