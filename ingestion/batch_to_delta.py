@@ -13,6 +13,10 @@ Dois modos:
 Particionamento por ano/periodo porque todas as leituras a jusante filtram
 ou agrupam por semestre; zstd porque o dado é lido muitas vezes e escrito
 uma vez por semestre (ver medição no ADR-0005).
+
+LGPD (E4): o nome dos docentes é dado pessoal e nenhuma análise a jusante
+precisa dele. A coluna `docentes` da fonte NÃO entra no armazenamento
+analítico: é trocada por `qtd_docentes` (minimização, docs/lgpd.md).
 """
 
 from __future__ import annotations
@@ -46,6 +50,11 @@ COLUMNS = (
     "coletado_em",
 )
 INTEGER_COLUMNS = {"ano", "periodo", "vagas_reservadas"}
+PESSOAIS = {"docentes"}  # lidas da fonte, nunca gravadas
+
+
+def contar_docentes(campo: str) -> int:
+    return len([nome for nome in campo.split(",") if nome.strip()])
 PROPERTIES = WriterProperties(compression="ZSTD")
 
 
@@ -55,10 +64,12 @@ def read_rows(source: Path, janela: tuple[int, int] | None = None) -> list[dict[
         missing = set(COLUMNS) - set(reader.fieldnames or ())
         if missing:
             raise ValueError(f"colunas obrigatórias ausentes: {sorted(missing)}")
-        rows = [
-            {column: int(row[column]) if column in INTEGER_COLUMNS else row[column] for column in COLUMNS}
-            for row in reader
-        ]
+        rows = []
+        for row in reader:
+            saida = {column: int(row[column]) if column in INTEGER_COLUMNS else row[column]
+                     for column in COLUMNS if column not in PESSOAIS}
+            saida["qtd_docentes"] = contar_docentes(row["docentes"])
+            rows.append(saida)
     if not rows:
         raise ValueError("a fonte pública está vazia")
     if janela:
