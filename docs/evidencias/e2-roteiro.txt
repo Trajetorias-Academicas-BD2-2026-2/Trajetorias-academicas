@@ -1,0 +1,217 @@
+# Saída de: docker compose run --rm --build e2-cdc bash ingestion/run_e2.sh
+# Executado em 2026-11-18T00:45Z, banco recém-criado (docker compose down -v && docker compose up --build)
+#1 [internal] load local bake definitions
+#1 reading from stdin 436B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 191B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.3s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 289B done
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b
+#5 resolve docker.io/library/python:3.12-slim@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 144B done
+#6 DONE 0.0s
+
+#7 [2/4] WORKDIR /workspace
+#7 CACHED
+
+#8 [3/4] COPY ingestion/requirements.txt /tmp/requirements.txt
+#8 CACHED
+
+#9 [4/4] RUN pip install --no-cache-dir -r /tmp/requirements.txt
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 exporting manifest sha256:b43986030aad6bb0fbe707237f4398bf63ae908c4b971b69b3d73699d4f6892d done
+#10 exporting config sha256:cc48e1a344d229437f0ab506f00f540cedd0251bc8c2cc4a9bd36d6b7396dd52 done
+#10 exporting attestation manifest sha256:d76dde44f34141fca37a51e06e17e00e9d60a8afc8d54c68b83904af7aacebf5 done
+#10 exporting manifest list sha256:66abc33506c349a67bb23147b263a931ee5643136f947f9ede172cd0248306ce done
+#10 naming to docker.io/library/trajetorias-academicas-e2-cdc:latest done
+#10 unpacking to docker.io/library/trajetorias-academicas-e2-cdc:latest done
+#10 DONE 0.0s
+
+#11 resolving provenance for metadata file
+#11 DONE 0.0s
+
+===== 1. Lote completo, duas vezes (idempotência) =====
+{
+  "compression": "zstd",
+  "partitioning": [
+    "ano",
+    "periodo"
+  ],
+  "delivery_semantics": "at-least-once com overwrite determinístico por partição",
+  "delta_version": 0,
+  "rows": 1786,
+  "ultima_execucao": {
+    "modo": "completo",
+    "janela": null,
+    "source": "data/coleta_publica_2026-09-28/ofertas_por_curso.csv",
+    "source_sha256": "3bba2352d8c08ffc59b308bc3f5169003de43aa061a90037387d1c59d2a321df",
+    "linhas_escritas": 1786,
+    "executado_em": "2026-11-18T00:44:55+00:00"
+  }
+}
+{
+  "compression": "zstd",
+  "partitioning": [
+    "ano",
+    "periodo"
+  ],
+  "delivery_semantics": "at-least-once com overwrite determinístico por partição",
+  "delta_version": 0,
+  "rows": 1786,
+  "ultima_execucao": {
+    "modo": "completo",
+    "janela": null,
+    "source": "data/coleta_publica_2026-09-28/ofertas_por_curso.csv",
+    "source_sha256": "3bba2352d8c08ffc59b308bc3f5169003de43aa061a90037387d1c59d2a321df",
+    "linhas_escritas": 1786,
+    "executado_em": "2026-11-18T00:44:55+00:00"
+  }
+}
+
+===== 2. Dado atrasado: reserva de 2023.1 numa coleta posterior, reprocessando só a janela =====
+{
+  "antes": {
+    "versao_delta": 0,
+    "linhas_por_semestre": {
+      "2022.1": 255,
+      "2022.2": 251,
+      "2023.1": 192,
+      "2023.2": 193,
+      "2024.1": 174,
+      "2024.2": 162,
+      "2025.1": 165,
+      "2025.2": 170,
+      "2026.1": 224
+    }
+  },
+  "depois_do_atraso": {
+    "versao_delta": 1,
+    "linhas_por_semestre": {
+      "2022.1": 255,
+      "2022.2": 251,
+      "2023.1": 193,
+      "2023.2": 193,
+      "2024.1": 174,
+      "2024.2": 162,
+      "2025.1": 165,
+      "2025.2": 170,
+      "2026.1": 224
+    }
+  },
+  "linha_atrasada_gravada_em": [
+    {
+      "ano": 2023,
+      "periodo": 1,
+      "turma_codigo": "99",
+      "fonte": "coleta_posterior_demo",
+      "coletado_em": "2026-11-17T12:00:00.000Z"
+    }
+  ],
+  "so_a_particao_2023_1_mudou": {
+    "2023.1": [
+      192,
+      193
+    ]
+  },
+  "arquivos_das_outras_particoes_intactos": true,
+  "restaurado_da_fonte_original": {
+    "versao_delta": 2,
+    "igual_ao_inicio": true
+  }
+}
+
+===== 3. CDC: primeiro consumo (eventos da carga do OLTP) =====
+{
+  "checkpoint_antes": 0,
+  "checkpoint_depois": 3057,
+  "eventos_lidos": 3057,
+  "eventos_por_operacao": {
+    "INSERT": 3034,
+    "UPDATE": 23
+  },
+  "linhas_no_delta": 3034,
+  "duracao_s": 0.039
+}
+
+===== 4. Mudança real no OLTP: renomear FGA0137 e mudar a carga horária =====
+OLTP disciplina FGA0137: 'SISTEMAS DE BANCO DE DADOS 1'/60h -> 'SISTEMAS DE BANCO DE DADOS 1 (REVISADA)'/90h
+último evento na outbox para a chave: (3058, 'UPDATE')
+
+===== 5. Consumidor cai depois de escrever no Delta e antes do checkpoint =====
+falha simulada: 1 eventos escritos no Delta, checkpoint NÃO avançado (3057)
+(falha esperada)
+
+===== 6. Reexecução: relê os mesmos eventos (at-least-once), o MERGE não duplica =====
+{
+  "checkpoint_antes": 3057,
+  "checkpoint_depois": 3058,
+  "eventos_lidos": 1,
+  "eventos_por_operacao": {
+    "UPDATE": 1
+  },
+  "linhas_no_delta": 3034,
+  "duracao_s": 0.027
+}
+
+===== 7. Terceira execução: nada novo =====
+{
+  "checkpoint_antes": 3058,
+  "checkpoint_depois": 3058,
+  "eventos_lidos": 0,
+  "eventos_por_operacao": {},
+  "linhas_no_delta": 3034,
+  "duracao_s": 0.014
+}
+
+===== 8. Reverter a disciplina (outro UPDATE) e consumir =====
+OLTP disciplina FGA0137: 'SISTEMAS DE BANCO DE DADOS 1 (REVISADA)'/90h -> 'SISTEMAS DE BANCO DE DADOS 1'/60h
+último evento na outbox para a chave: (3059, 'UPDATE')
+{
+  "checkpoint_antes": 3058,
+  "checkpoint_depois": 3059,
+  "eventos_lidos": 1,
+  "eventos_por_operacao": {
+    "UPDATE": 1
+  },
+  "linhas_no_delta": 3034,
+  "duracao_s": 0.033
+}
+
+===== 9. Verificação contra o OLTP =====
+{
+  "lote_linhas": 1786,
+  "fonte_linhas": 1786,
+  "cdc_por_tabela": {
+    "disciplina": 633,
+    "reserva_vaga": 1776,
+    "curriculo_componente": 625
+  },
+  "oltp_por_tabela": {
+    "reserva_vaga": 1776,
+    "disciplina": 633,
+    "curriculo_componente": 625
+  },
+  "checks": {
+    "lote: linhas no Delta = linhas da fonte": true,
+    "cdc: uma linha por (tabela, chave)": true,
+    "cdc: contagem por tabela = OLTP": true,
+    "cdc: FGA0137 no Delta = valor atual no OLTP": true
+  }
+}
+
+E2 concluída: lote idempotente, janela reprocessada com dado atrasado, CDC reexecutado sem duplicação.

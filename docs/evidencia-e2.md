@@ -1,70 +1,62 @@
 # Evidência da E2
 
-## Lote público
-
-Com a branch na raiz do projeto:
-
-```bash
-docker compose run --rm --build --profile e2 e2-batch
-```
-
-O comando lê `data/coleta_publica_2026-09-28/ofertas_por_curso.csv`,
-calcula o SHA-256, grava Parquet com Zstandard em partições
-`ano/periodo` e cria a tabela Delta em `analytical/batch/ofertas`.
-
-Na validação local desta branch, o manifesto registrou:
-
-| Medição | Resultado |
-|---|---:|
-| Linhas de entrada/saída | 1.786 |
-| Partições | `ano`, `periodo` |
-| Compressão | Zstandard |
-| Arquivos Parquet no Delta | 9 |
-| SHA-256 da fonte | `3bba2352d8c08ffc59b308bc3f5169003de43aa061a90037387d1c59d2a321df` |
-
-Executar o mesmo comando novamente substitui a tabela derivada de forma
-determinística. O número de linhas permanece 1.786; não há `append` cego.
-
-## Mudança no OLTP
-
-Depois de `docker compose up --build`, a migração V006 já está aplicada.
-A alteração abaixo ocorre no mesmo container com as dependências da E2:
+Tudo abaixo foi executado num banco recém-criado
+(`docker compose down -v && docker compose up --build`), em 17/11/2026. A
+saída completa está em [`evidencias/e2-roteiro.txt`](evidencias/e2-roteiro.txt).
 
 ```bash
-docker compose run --rm --build --profile e2 e2-cdc \
-  python ingestion/demo_change.py --id E2-DEMO-001 --vagas 30
-docker compose run --rm --build --profile e2 e2-cdc
+docker compose run --rm --build e2-cdc bash ingestion/run_e2.sh
 ```
 
-O `AFTER INSERT/UPDATE/DELETE` grava a mudança em
-`e2_cdc_outbox`. O consumidor lê a sequência, publica o estado por
-`aggregate_key` em `analytical/cdc/reservas` e só avança
-`e2_cdc_checkpoint` depois da escrita.
+## 1. Lote idempotente
 
-Para demonstrar atualização, reprocessamento e ausência de duplicação:
+`ingestion/batch_to_delta.py` lê `data/coleta_publica_2026-09-28/ofertas_por_curso.csv`
+(SHA-256 `3bba2352…a321df`), grava Parquet zstd em `ano=/periodo=` e a
+tabela Delta `analytical/batch/ofertas/delta`.
 
-```bash
-docker compose run --rm --build --profile e2 e2-cdc \
-  python ingestion/demo_change.py --id E2-DEMO-001 --vagas 35
-docker compose run --rm --build --profile e2 e2-cdc
-docker compose run --rm --build --profile e2 e2-cdc
-```
+| Execução | Linhas | Partições | Tempo |
+|---|---:|---:|---:|
+| 1ª | 1.786 | 9 | 185 ms |
+| 2ª (mesma fonte) | 1.786 | 9 | 140 ms |
+| janela `--semestre 2024.1` | 174 reescritas | 1 | 82 ms |
 
-O estado final contém uma linha para `E2-DEMO-001`, com `vagas=35`; a terceira
-execução não acrescenta outra linha. `ingestion/verify_e2.py` automatiza essa
-conferência.
+A segunda execução reconstrói a tabela e chega às mesmas 1.786 linhas. Não
+há append.
 
-## Dado atrasado
+## 2. Dado atrasado
 
-O período do evento, e não o horário em que o consumidor o processa, define a
-partição do lote. Uma coleta posterior que contenha um evento de período antigo
-reprocessa a janela `ano/periodo` e substitui a versão daquela partição. Isso
-evita que o registro atrasado caia na partição da data de ingestão ou seja
-perdido.
+`ingestion/demo_atraso.py` acrescenta, a uma cópia da fonte, uma reserva de
+2023.1 coletada em 17/11/2026 e reprocessa só a janela 2023.1:
 
-## Limitação da validação nesta máquina
+- 2023.1: 192 → 193 linhas; os outros 8 semestres ficam iguais;
+- os arquivos das outras partições continuam os mesmos (`arquivos_das_outras_particoes_intactos: true`);
+- a linha atrasada fica em `ano=2023/periodo=1`, com `coletado_em` de novembro;
+- no fim, a janela é reprocessada a partir da fonte original e a tabela volta ao estado inicial (Delta versão 2).
 
-Os testes Python de materialização foram executados localmente. A execução
-integral da migração e do CDC depende do Docker Desktop, que estava desligado
-no momento da validação; o roteiro acima é a reprodução a executar pelos
-colegas antes do PR.
+## 3. CDC sobre o OLTP real
+
+A migração V010 captura `reserva_vaga`, `disciplina` e `curriculo_componente`.
+
+| Passo | O que acontece | Eventos lidos | Linhas no Delta | Checkpoint |
+|---|---|---:|---:|---:|
+| 3. primeiro consumo | INSERTs da carga (1.776 reservas, 633 disciplinas, 625 componentes) + 23 UPDATEs do próprio upsert do loader | 3.057 | 3.034 | 0 → 3.057 |
+| 4. mudança no OLTP | `FGA0137`: nome "… (REVISADA)", 60 h → 90 h | — | — | — |
+| 5. queda simulada | MERGE feito, checkpoint **não** avançado | 1 | 3.034 | 3.057 |
+| 6. reexecução | relê o mesmo evento; MERGE não duplica | 1 | 3.034 | 3.058 |
+| 7. de novo | nada novo | 0 | 3.034 | 3.058 |
+| 8. reverter FGA0137 | novo UPDATE, consumido | 1 | 3.034 | 3.059 |
+
+## 4. Verificação
+
+`ingestion/verify_e2.py` (passo 9):
+
+- lote: 1.786 linhas no Delta = 1.786 na fonte;
+- CDC: uma linha por `(tabela, chave)`;
+- CDC: 1.776 / 633 / 625 linhas = contagens atuais no OLTP;
+- CDC: FGA0137 no Delta = valor atual no OLTP.
+
+## Formato e compressão
+
+`ingestion/medir_formatos.py`; tabela completa em
+[`evidencias/e2-formatos.txt`](evidencias/e2-formatos.txt) e a
+interpretação no [ADR-0005](adr/0005-ingestao-e2.md).

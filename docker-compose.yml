@@ -111,7 +111,7 @@ services:
       - python
       - ingestion/cdc_consumer.py
       - --output
-      - analytical/cdc/reservas
+      - analytical/cdc/oltp
     volumes:
       - .:/workspace
     working_dir: /workspace

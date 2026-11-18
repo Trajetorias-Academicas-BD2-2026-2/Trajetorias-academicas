@@ -53,37 +53,38 @@ institutos, como Cálculo e Física) sem ver como essas reservas evoluíram.
 
 ## E2 — ingestão em lote e captura de mudanças
 
-A branch `feat/e2-ingestao-cdc-parquet` adiciona os dois caminhos exigidos:
+Dois caminhos levam o dado da origem ao armazenamento analítico aberto
+(Parquet + Delta Lake, em `analytical/`):
 
-- `ingestion/batch_to_delta.py` lê o lote público, gera Parquet particionado
-  por `ano/periodo` com Zstandard e publica uma tabela Delta;
-- `db/migrations/V006__e2_ingestao.sql` cria uma outbox transacional no OLTP;
-- `ingestion/demo_change.py` altera uma linha no OLTP e
-  `ingestion/cdc_consumer.py` consome `INSERT`, `UPDATE` e `DELETE` para a
-  tabela Delta de mudanças.
+- **Lote** (`ingestion/batch_to_delta.py`): lê o lote público versionado e
+  grava Parquet zstd particionado por `ano/periodo` e uma tabela Delta.
+  Idempotente (overwrite determinístico); `--semestre 2023.1` reprocessa só
+  uma janela, que é como o dado atrasado entra.
+- **Mudanças** (`ingestion/cdc_consumer.py`): a migração V010 grava, na mesma
+  transação, cada INSERT/UPDATE/DELETE de `reserva_vaga`, `disciplina` e
+  `curriculo_componente` numa outbox. O consumidor lê a partir do checkpoint
+  e aplica MERGE por chave no Delta `analytical/cdc/oltp`.
 
-Para executar depois da carga normal:
-
-```bash
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-cdc
-```
-
-Para demonstrar reexecução e mudança no OLTP:
+Roteiro completo (lote duas vezes, dado atrasado, mudança real no OLTP,
+queda do consumidor antes do checkpoint, reexecução e verificação), depois
+do `docker compose up`:
 
 ```bash
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-batch
-docker compose run --rm --build --profile e2 e2-cdc
-docker compose run --rm --build --profile e2 e2-cdc
+docker compose run --rm --build e2-cdc bash ingestion/run_e2.sh
 ```
 
-O segundo lote substitui a mesma tabela Delta sem duplicar linhas. O segundo
-consumo não reaplica eventos já confirmados pelo checkpoint. O [ADR-0005](docs/adr/0005-ingestao-e2.md)
-registra a comparação com a opção nula e a política para dados atrasados.
+Passos isolados:
 
-O roteiro com contagens, checksum, atualização do OLTP e caso de dado atrasado
-está em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
+```bash
+docker compose run --rm --build e2-batch                       # lote completo
+docker compose run --rm e2-batch python ingestion/batch_to_delta.py --semestre 2024.1
+docker compose run --rm e2-cdc python ingestion/demo_change.py --disciplina FGA0137 --carga-horaria 90
+docker compose run --rm e2-cdc                                 # consome a outbox
+docker compose run --rm e2-batch python ingestion/medir_formatos.py
+```
+
+Decisão e medições no [ADR-0005](docs/adr/0005-ingestao-e2.md); saída
+executada em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
 
 ## E3/E4 — observatório analítico e governança
 
