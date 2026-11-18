@@ -97,7 +97,7 @@ O serviço `analytics` roda o dbt sobre o OLTP:
   e curso, incremental por semestre.
 - **Marts:** `mart_observatorio`, `mart_disciplina_semestre`,
   `mart_cobertura_curriculo` e `metricas_freshness`.
-- **Testes:** 50 testes de esquema, unicidade, integridade referencial,
+- **Testes:** 45 testes de esquema, unicidade, integridade referencial,
   volume e distribuição.
 - **ETL reverso.**
 
