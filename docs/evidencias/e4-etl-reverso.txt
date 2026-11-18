@@ -1,0 +1,36 @@
+# Saída de ./orchestration/demo_etl_reverso.sh — 2026-11-18T18:28Z, banco recém-criado
+
+===== 0. Começo limpo: fila de envio vazia e Pauta sem itens =====
+
+===== 1. A Pauta da coordenação está fora do ar e o pipeline roda =====
+AVISO: Pauta da coordenação fora do ar ([Errno -2] Name or service not known). 206 itens ficam pendentes e serão reenviados na próxima execução.
+ETL reverso → Pauta da coordenação: {"itens": 206, "novos": 206, "nova_versao": 0, "inalterados": 0, "retirados": 0, "enviados": 0, "criados_no_destino": 0, "ja_existiam_no_destino": 0, "pendentes": 206}
+fila de envio: pendente | 206 | 1 tentativas | Pauta fora do ar: [Errno -2] Name or service not known
+
+===== 2. A Pauta volta e o pipeline roda de novo: os pendentes são entregues =====
+ETL reverso → Pauta da coordenação: {"itens": 206, "novos": 0, "nova_versao": 0, "inalterados": 206, "retirados": 0, "enviados": 206, "criados_no_destino": 206, "ja_existiam_no_destino": 0, "pendentes": 0}
+fila de envio: enviado | 206 | 2 tentativas | 
+itens na Pauta: 206 | revisados: 0
+
+===== 3. Nova execução, nada mudou: nada é reenviado =====
+ETL reverso → Pauta da coordenação: {"itens": 206, "novos": 0, "nova_versao": 0, "inalterados": 206, "retirados": 0, "enviados": 0, "criados_no_destino": 0, "ja_existiam_no_destino": 0, "pendentes": 0}
+itens na Pauta: 206 | revisados: 0
+
+===== 4. Reenvio forçado da mesma versão (como após uma queda no meio do envio): o destino não duplica =====
+ETL reverso → Pauta da coordenação: {"itens": 206, "novos": 0, "nova_versao": 0, "inalterados": 206, "retirados": 0, "enviados": 206, "criados_no_destino": 0, "ja_existiam_no_destino": 206, "pendentes": 0}
+itens na Pauta: 206 | revisados: 0
+
+===== 5. O coordenador de Eletrônica abre a pauta e marca um item como revisado =====
+revisado: Algoritmos e Programação de Computadores nunca guardou lugar para Eletrônica em 2026-11-18T18:28:41+00:00
+itens na Pauta: 206 | revisados: 1
+
+===== 6. Opção nula: o mesmo conteúdo como CSV por curso =====
+CSV da pauta: 206 itens em 5 arquivos (/workspace/saida), 38 ms
+      41 saida/pauta_FGA_AERO.csv
+      39 saida/pauta_FGA_AUTO.csv
+      48 saida/pauta_FGA_ELET.csv
+      43 saida/pauta_FGA_ENERG.csv
+      40 saida/pauta_FGA_SOFT.csv
+     211 total
+
+ETL reverso demonstrado: destino fora do ar não derruba o pipeline nem perde item; reenvio não duplica.

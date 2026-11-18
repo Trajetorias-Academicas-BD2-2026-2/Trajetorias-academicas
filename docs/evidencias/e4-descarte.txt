@@ -1,0 +1,58 @@
+# Descarte de dado pessoal (LGPD, E4) — 2026-11-18T18:28Z, banco recém-criado
+== 1. Antes: nomes de docente no banco (amostra mascarada nesta evidência: só a inicial) ==
+ id | nome_mascarado | tamanho_do_nome 
+----+----------------+-----------------
+  1 | M********      |              25
+  3 | P********      |              13
+  4 | J********      |              19
+(3 rows)
+
+== 2. Simulação: o que seria descartado ==
+     tabela     | coluna | linhas_afetadas | executado 
+----------------+--------+-----------------+-----------
+ public.docente | nome   |              98 | f
+(1 row)
+
+BEGIN
+== 3. Descarte confirmado (fim da retenção) ==
+     tabela     | coluna | linhas_afetadas | executado 
+----------------+--------+-----------------+-----------
+ public.docente | nome   |              98 | t
+(1 row)
+
+== 4. Depois: nomes pseudonimizados, vínculos preservados ==
+ id |     nome     
+----+--------------
+  1 | DOCENTE-0001
+  3 | DOCENTE-0003
+  4 | DOCENTE-0004
+(3 rows)
+
+ docentes_com_nome_real 
+------------------------
+                      0
+(1 row)
+
+ vinculos_turma_docente 
+------------------------
+                    773
+(1 row)
+
+           motivo            |     tabela     | coluna | linhas 
+-----------------------------+----------------+--------+--------
+ fim da retenção: 30/06/2027 | public.docente | nome   |     98
+(1 row)
+
+== 5. Camada analítica e painel: nada muda (não usam nome de docente) ==
+ lugares_guardados_total 
+-------------------------
+                   22943
+(1 row)
+
+ROLLBACK
+== 6. Transação revertida: o banco de desenvolvimento continua como estava ==
+ docentes_com_nome_real 
+------------------------
+                     98
+(1 row)
+

@@ -31,9 +31,9 @@ Regras:
 | 11 | 20/10 | Modelagem de dados | | [semana-11](semana-11.md) |
 | 12 | 27/10 | Transformações | | [semana-12](semana-12.md) |
 | 13 | 03/11 | Disponibilização | **E3** | [semana-13](semana-13.md) |
-| 14 | 10/11 | Segurança e privacidade | | |
-| 15 | 17/11 | Futuro da engenharia de dados | | |
-| 16 | 24/11 | Defesa final e retrospectiva | **E4** | |
+| 14 | 10/11 | Segurança e privacidade | | [semana-14](semana-14.md) |
+| 15 | 17/11 | Futuro da engenharia de dados | | [semana-15](semana-15.md) |
+| 16 | 24/11 | Defesa final e retrospectiva | **E4** | [semana-16](semana-16.md) · [retrospectiva](retrospectiva.md) |
 
 ## Modelo
 

@@ -1,0 +1,22 @@
+# Controle de acesso (E4) — 2026-11-18T18:28Z, banco recém-criado
+$ docker compose --profile test run --rm --no-deps acesso-tests
+    papel     |                     verificacao                     | status |                 detalhe                  
+--------------+-----------------------------------------------------+--------+------------------------------------------
+ auditor_lgpd | coluna: lê docente.id                               | ok     | 98 docentes
+ auditor_lgpd | coluna: NÃO lê docente.nome (dado pessoal)          | ok     | permission denied for column
+ coord_elet   | linha: mart_observatorio só de FGA_ELET             | ok     | 9 linhas de FGA_ELET
+ coord_soft   | linha: fct_reservas só de FGA_SOFT                  | ok     | vê 595 linhas de FGA_SOFT (esperado 595)
+ coord_soft   | linha: métricas oficiais só de FGA_SOFT             | ok     | 258 valores de FGA_SOFT
+ coord_soft   | não lê o OLTP (public.reserva_vaga)                 | ok     | permission denied
+ dbt          | RLS ativo depois do build: fct_reservas             | ok     | 2 políticas
+ dbt          | RLS ativo depois do build: mart_cobertura_curriculo | ok     | 2 políticas
+ dbt          | RLS ativo depois do build: mart_disciplina_semestre | ok     | 2 políticas
+ dbt          | RLS ativo depois do build: mart_observatorio        | ok     | 2 políticas
+ dbt          | RLS ativo depois do build: metricas_oficiais        | ok     | 2 políticas
+ etl_reverso  | escreve na fila de envio                            | ok     | UPDATE em operations.envio_pauta
+ etl_reverso  | lê as métricas oficiais                             | ok     | 820 valores
+ etl_reverso  | não altera a camada analítica                       | ok     | permission denied
+ painel       | lê a camada de consumo inteira                      | ok     | 5 cursos
+ painel       | não lê o OLTP (public.turma)                        | ok     | permission denied
+
+psql:/tests/acesso_checks.sql:115: NOTICE:  Controle de acesso: todas as verificações passaram.

@@ -1,6 +1,6 @@
 # ADR-0005: Lote idempotente por partição e CDC por outbox transacional na E2
 
-- **Status:** aceito para a E2 (revisado em 2026-11-17: CDC passou das tabelas de demonstração para as tabelas reais, com medições)
+- **Status:** aceito para a E2 (revisado em 2026-11-17: CDC passou das tabelas de demonstração para as tabelas reais, com medições; revisado em 2026-11-18, na E4: o lote Delta deixa de levar nomes de docente)
 - **Data:** 2026-10-19
 - **Decisores:** Squad G2 — Ana Joyce · Gustavo Alves · Gabriel Lima da Silva · Nathan Abreu · Guilherme Evangelista · Angélica Campos · Davi Araújo
 
@@ -123,6 +123,18 @@ comum, com `occurred_at` de hoje e o semestre do evento no payload.
 - **Não é Debezium:** mudanças feitas com os triggers desligados (por
   exemplo, `session_replication_role = replica`) não são capturadas, coisa
   que a leitura do WAL pegaria.
+
+## Revisão da E4 (2026-11-18): minimização de dado pessoal
+
+A análise de LGPD da E4 ([`docs/lgpd.md`](../lgpd.md)) mostrou que o lote
+Delta (`analytical/batch/ofertas`) copiava a coluna `docentes` da fonte, com
+nomes de pessoas, e que nenhuma leitura a jusante usava essa coluna.
+
+**Decisão:** `batch_to_delta.py` lê a coluna e grava só `qtd_docentes`. O
+restante desta decisão não muda: idempotência, partição, zstd e dado atrasado.
+O roteiro da E2 foi executado de novo e continua passando
+([`e2-roteiro.txt`](../evidencias/e2-roteiro.txt)). O Delta do CDC nunca teve
+nome de pessoa.
 
 ## Gatilho de revisão
 

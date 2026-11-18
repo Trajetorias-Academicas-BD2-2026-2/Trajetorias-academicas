@@ -1,0 +1,16 @@
+# Evidência da E4: plataforma completa, governada e defendida
+
+Cada item do checklist de aceite, com o que foi construído, a evidência executada e o comando que a reproduz depois de `docker compose up --build`.
+
+| Item do checklist | O que foi construído | Evidência | Reproduzir |
+|---|---|---|---|
+| **Consumo duplo:** painel + camada semântica com definição versionada | 8 métricas em `analytics/models/semantic/semantica.yml` (MetricFlow, `meta.versao`); `analytics/semantica.py` grava `analytics.metricas_oficiais`; o painel lê só dela e mostra as definições no rodapé | [`e4-consistencia.txt`](evidencias/e4-consistencia.txt): 586 comparações sem divergência; uma divergência provocada é pega | `docker compose run --rm --no-deps analytics python /workspace/tests/metricas_consistentes.py` |
+| **ETL reverso** para sistema onde alguém age | Pauta da coordenação (`coordenacao/`, porta 8090, banco próprio); `analytics/etl_reverso.py` com fila `operations.envio_pauta` e `Idempotency-Key`; CSV por curso como opção nula | [`e4-etl-reverso.txt`](evidencias/e4-etl-reverso.txt): destino fora do ar → 206 pendentes; volta → entregues; reenvio → 0 duplicados; coordenador marca revisado | `./orchestration/demo_etl_reverso.sh` |
+| **Catálogo e linhagem** publicados, da fonte ao consumo | dbt docs com toda tabela e coluna descrita, `meta` de dado pessoal e fonte pública, 4 exposições; linhagem coluna a coluna até o campo do SIGAA | [Catálogo publicado](https://trajetorias-academicas-bd2-2026-2.github.io/Trajetorias-academicas/catalogo/); [`catalogo-e-linhagem.md`](catalogo-e-linhagem.md); `tests/catalogo_cobertura.py` (160 colunas) | `docker compose run --rm --no-deps analytics bash -c 'cd /workspace/analytics && dbt docs generate --profiles-dir . && python /workspace/tests/catalogo_cobertura.py'` |
+| **LGPD** do que foi construído | Inventário por artefato, base legal, minimização (Delta sem nomes), retenção até 30/06/2027, descarte por pseudonimização (V014), reidentificação | [`lgpd.md`](lgpd.md); [`e4-descarte.txt`](evidencias/e4-descarte.txt) | `./orchestration/demo_descarte.sh` |
+| **Controle de acesso** com recorte de linha **e** de coluna | V012: papéis `painel`, `etl_reverso`, `coord_soft`, `coord_elet`, `auditor_lgpd`; RLS por curso reaplicada a cada `dbt build`; `docente.nome` sem SELECT; o painel deixa de usar o superusuário | [`e4-acesso.txt`](evidencias/e4-acesso.txt): 16 verificações | `docker compose --profile test run --rm --no-deps acesso-tests` |
+| **5 ADRs** com gatilhos revisados | ADR-0003, 0004, 0005, 0006 e 0007 vigentes, 0001 e 0002 substituídos; revisão gatilho a gatilho | [`adr/README.md`](adr/README.md), [ADR-0007](adr/0007-disponibilizacao-e4.md) | — |
+| **Retrospectiva** no diário | Semanas 14–16 e retrospectiva por estágio do ciclo de vida | [`diario/retrospectiva.md`](diario/retrospectiva.md) | — |
+| **Defesa** de 20 min para banca mista | Roteiro cronometrado com plano B por demonstração; 25 perguntas com resposta e evidência; slides | [`defesa/roteiro.md`](defesa/roteiro.md), [`defesa/perguntas.md`](defesa/perguntas.md) | — |
+
+Tudo isso roda no CI: o workflow `Publicar painel` executa os testes de origem, analítico, acesso, ETL reverso, consistência e catálogo, e só publica o painel e o catálogo se todos passarem.

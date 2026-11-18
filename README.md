@@ -86,7 +86,7 @@ docker compose run --rm e2-batch python ingestion/medir_formatos.py
 Decisão e medições no [ADR-0005](docs/adr/0005-ingestao-e2.md); saída
 executada em [`docs/evidencia-e2.md`](docs/evidencia-e2.md).
 
-## E3/E4 — observatório analítico e governança
+## E3 — observatório analítico
 
 O serviço `analytics` roda o dbt sobre o OLTP:
 
@@ -124,6 +124,27 @@ Retry, backfill e o roteiro de `EXPLAIN (ANALYZE, BUFFERS)` estão em
 As evidências executadas e o roteiro de defesa estão em
 [`docs/evidencias/`](docs/evidencias/) e
 [`docs/roteiro-apresentacao.md`](docs/roteiro-apresentacao.md).
+
+## E4 — plataforma completa, governada e defendida
+
+| O quê | Onde |
+|---|---|
+| **Camada semântica:** 8 métricas definidas uma vez (MetricFlow), lidas pelo painel, pela Pauta e pelo CSV | [`analytics/models/semantic/semantica.yml`](analytics/models/semantic/semantica.yml), `analytics/semantica.py` |
+| **ETL reverso:** Pauta da coordenação em `http://localhost:8090`, com fila de envio e reenvio sem duplicar | [`coordenacao/`](coordenacao/), `analytics/etl_reverso.py`, V013 |
+| **Acesso:** papéis com privilégio mínimo, RLS por curso, coluna `docente.nome` bloqueada | V012, `tests/acesso_checks.sql` |
+| **Catálogo e linhagem:** dbt docs publicado em `/catalogo/`, linhagem até o SIGAA | [`docs/catalogo-e-linhagem.md`](docs/catalogo-e-linhagem.md) |
+| **LGPD:** inventário, base legal, retenção, descarte (V014) | [`docs/lgpd.md`](docs/lgpd.md) |
+| **Decisões:** ADR-0007 e portfólio dos 5 ADRs com os gatilhos revisados | [`docs/adr/README.md`](docs/adr/README.md) |
+| **Defesa:** roteiro e banco de perguntas | [`docs/defesa/`](docs/defesa/) |
+
+```bash
+docker compose run --rm --no-deps analytics python /workspace/tests/metricas_consistentes.py   # mesmas métricas em todas as telas
+docker compose --profile test run --rm --no-deps acesso-tests                                 # recorte de linha e coluna
+./orchestration/demo_etl_reverso.sh                                                           # Pauta fora do ar, volta, reenvio
+./orchestration/demo_descarte.sh                                                              # descarte LGPD (transação revertida)
+```
+
+Checklist com evidências: [`docs/evidencia-e4.md`](docs/evidencia-e4.md).
 
 ## Camada vetorial para ML (opcional)
 
@@ -286,6 +307,10 @@ docker-compose.yml
   fonte de cada data); o banco recusa turma coletada antes do encerramento.
 - **Lote versionado com checksum**: a carga não depende do SIGAA
   ([ADR-0004](docs/adr/0004-coleta-publica-versionada.md)).
+- **Uma definição por métrica, e o dado volta para quem age**: camada
+  semântica, cópia por arquivo para o público e ETL reverso por API com fila
+  ([ADR-0007](docs/adr/0007-disponibilizacao-e4.md)). Portfólio e gatilhos em
+  [`docs/adr/README.md`](docs/adr/README.md).
 
 ## Processo da Squad
 

@@ -1,0 +1,30 @@
+# Teste de consistência das métricas (E4) — 2026-11-18T18:28Z, banco recém-criado
+## 1. Estado normal
+Valores conferidos por comparação:
+  mart×oficial             135
+  mf×oficial               190
+  painel×oficial           210
+  painel×pauta              23
+  pauta×oficial             28
+
+OK: 586 valores, 0 divergências entre MetricFlow, tabela oficial, mart, painel e Pauta.
+exit=0
+
+## 2. Divergência provocada: alguém 'corrige' à mão Software 2026.1 de 3816 para 3900 na tabela oficial
+Valores conferidos por comparação:
+  mart×oficial             135
+  mf×oficial               190
+  painel×oficial           210
+  painel×pauta              23
+  pauta×oficial             28
+
+FALHOU: 2 divergências
+  mf×oficial:lugares_guardados:FGA_SOFT:2026.1: 3816 ≠ 3900
+  mart×oficial:lugares:FGA_SOFT:2026.1: 3816 ≠ 3900
+
+exit=1
+
+## 3. Regerar a partir da definição (semantica.py) e conferir de novo
+metricas_oficiais: 820 valores de 8 métricas, calculados em 2026-11-18 18:29 UTC
+OK: 586 valores, 0 divergências entre MetricFlow, tabela oficial, mart, painel e Pauta.
+exit=0
