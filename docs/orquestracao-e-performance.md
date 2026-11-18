@@ -13,7 +13,7 @@ O backfill recalcula o histórico completo ou uma janela de semestre:
 
 ```bash
 docker compose run --rm analytics
-psql -h localhost -U g2 -d ofertas_unb \
+psql -h localhost -p 5433 -U g2 -d ofertas_unb \
   -v semestre=2024.1 -f orchestration/backfill.sql
 ```
 

@@ -182,7 +182,7 @@ medição do ADR-0003. A interpretação está em
 [`docs/carga-de-trabalho.md`](docs/carga-de-trabalho.md).
 
 Para explorar o banco sem escrever SQL, use o [DBeaver](https://dbeaver.io)
-(host `localhost`, porta `5432`, banco `ofertas_unb`, usuário `g2`,
+(host `localhost`, porta `5433` — ou o valor de `DB_PORT_HOST` —, banco `ofertas_unb`, usuário `g2`,
 senha `g2_dev_only`).
 
 ## Limites dos dados

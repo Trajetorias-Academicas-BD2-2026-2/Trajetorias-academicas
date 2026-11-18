@@ -13,7 +13,9 @@ services:
       POSTGRES_USER: g2
       POSTGRES_PASSWORD: g2_dev_only
     ports:
-      - "5432:5432"
+      # Porta do host configurável: 5433 por padrão para não colidir com um
+      # PostgreSQL local na 5432. Os serviços usam db:5432 pela rede interna.
+      - "${DB_PORT_HOST:-5433}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     healthcheck:

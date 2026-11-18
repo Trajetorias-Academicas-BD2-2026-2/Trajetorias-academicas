@@ -1,0 +1,12 @@
+# Contexto de build dos serviços com context: . (analytics, ingestion, ml).
+# data/ não entra em nenhuma imagem: os serviços leem pelo bind mount.
+.git
+docs
+site
+debug
+analytical
+data
+analytics/target
+analytics/logs
+**/__pycache__
+**/*.py[cod]
